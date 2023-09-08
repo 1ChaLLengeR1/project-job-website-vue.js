@@ -1,6 +1,6 @@
 <template>
   <main class="w-full h-screen flex-col bg-color-bg">
-    <navigation-panel @open-sliderbar="openSliderBar"></navigation-panel>
+    <navigation-panel v-if="true" @open-sliderbar="openSliderBar"></navigation-panel>
     <div class="w-full flex flex-row relative overflow-hidden">
       <Transition name="slide-fade-left">
         <block-silderbar
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import NavigationVue from "./components/Header/Navigation.vue";
 import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
 import ArrayListArtek from "./components/JS/ArrayLinksArtek.js";
@@ -59,6 +59,7 @@ export default defineComponent({
       sildeBars.id = val.id;
       sildeBars.value = val.value;
     };
+
     return { openSliderBar, sildeBars, arrayLinks };
   },
 });
