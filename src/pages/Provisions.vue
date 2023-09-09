@@ -6,9 +6,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { SavePage } from "../components/JS/SavePage";
 
 export default defineComponent({
   setup() {
+    SavePage("provision");
     return {};
   },
 });

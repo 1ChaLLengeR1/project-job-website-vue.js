@@ -55,7 +55,9 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 import { fetchData } from "../components/JS/fetchData";
+import { LoadPage } from "../components/JS/LoadPage";
 import LoadingSpinnerVue from "../components/utils/LoadingSpinner.vue";
 import ConfigVue from "../components/JS/ConfigVue";
 
@@ -67,6 +69,7 @@ export default defineComponent({
   setup() {
     //values
     const store = useStore();
+    const router = useRouter();
     const config_vue = ref<{ url_server: string }>(ConfigVue);
     const inputs_values = reactive<{ username: string; password: string }>({
       username: "",
@@ -98,10 +101,32 @@ export default defineComponent({
       setTimeout(() => {
         error_information.value = "";
       }, 4000);
-      store.commit("auth/login", inputs_values);
+
+      localStorage.setItem(
+        "tokens",
+        JSON.stringify({
+          access_token: response.access_token,
+          refresh_token: response.refresh_token,
+        })
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: response.id,
+          username: response.username,
+        })
+      );
+
+      store.commit("auth/login", {
+        id: response.id,
+        username: response.username,
+        access_token: response.access_token || "",
+        refresh_token: response.refresh_token || "",
+      });
       inputs_values.username = "";
       inputs_values.password = "";
-      console.log(response);
+      LoadPage()
     };
 
     return { signIn, inputs_values, loading_spinner, error_information };

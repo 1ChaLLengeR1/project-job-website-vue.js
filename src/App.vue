@@ -1,6 +1,9 @@
 <template>
   <main class="w-full h-screen flex-col bg-color-bg">
-    <navigation-panel v-if="true" @open-sliderbar="openSliderBar"></navigation-panel>
+    <navigation-panel
+      v-if="true"
+      @open-sliderbar="openSliderBar"
+    ></navigation-panel>
     <div class="w-full flex flex-row relative overflow-hidden">
       <Transition name="slide-fade-left">
         <block-silderbar
@@ -28,10 +31,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 import NavigationVue from "./components/Header/Navigation.vue";
 import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
 import ArrayListArtek from "./components/JS/ArrayLinksArtek.js";
 import ArrayListPatryk from "./components/JS/ArrayLinksPatryk.js";
+import { AutomaticallyLogin } from "./components/JS/AutomaticallyLogin";
+import { LoadPage } from "./components/JS/LoadPage";
 
 export default defineComponent({
   name: "App",
@@ -41,6 +47,7 @@ export default defineComponent({
   },
   setup() {
     //values
+    const router = useRouter();
     const sildeBars = reactive<{ id: string; value: boolean }>({
       id: "",
       value: false,
@@ -59,6 +66,9 @@ export default defineComponent({
       sildeBars.id = val.id;
       sildeBars.value = val.value;
     };
+
+    LoadPage();
+    AutomaticallyLogin();
 
     return { openSliderBar, sildeBars, arrayLinks };
   },

@@ -4,12 +4,12 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { SavePage } from "../components/JS/SavePage";
 
 export default defineComponent({
   setup() {
+    SavePage("shoppinglist");
     return {};
   },
 });
 </script>
-
-<style scoped></style>
