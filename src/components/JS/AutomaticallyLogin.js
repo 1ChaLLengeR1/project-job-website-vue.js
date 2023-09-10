@@ -5,6 +5,16 @@ import { fetchData } from "../JS/fetchData";
 import { LoadPage } from "./LoadPage";
 
 export async function AutomaticallyLogin() {
+  if (!localStorage.getItem("user")) {
+    LoadPage("loginpanel");
+    return;
+  }
+
+  if (!localStorage.getItem("tokens")) {
+    LoadPage("loginpanel");
+    return;
+  }
+
   const user = JSON.parse(localStorage.getItem("user"));
   const tokens = JSON.parse(localStorage.getItem("tokens"));
   const url = `${ConfigVue.url_server}/authentication/automatically-login`;
@@ -18,8 +28,10 @@ export async function AutomaticallyLogin() {
   };
 
   const response = await fetchData(url, method, headers, body, "body");
+  let isAuth = true
   if (response.error) {
     router.push({ name: "loginpanel" });
+    isAuth = false
     return;
   }
 
@@ -28,6 +40,7 @@ export async function AutomaticallyLogin() {
     JSON.stringify({
       id: response.id,
       username: response.username,
+      isAuth: isAuth,
     })
   );
 
@@ -42,9 +55,10 @@ export async function AutomaticallyLogin() {
   store.commit("auth/login", {
     id: response.id,
     username: response.username,
+    isAuth: isAuth,
     access_token: response.access_token || "",
     refresh_token: response.refresh_token || "",
   });
 
-  LoadPage()
+  LoadPage();
 }

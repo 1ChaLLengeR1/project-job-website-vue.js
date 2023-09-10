@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Authentification } from "../components/JS/Authentification";
+import { Authentication } from "../components/JS/Authentication";
 
 //pages
 import LoginPanel from "../pages/LoginPanel.vue";
@@ -78,7 +78,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authentification = Authentification()
+  const authentification = Authentication()
   if (to.meta.isAuth && !authentification) {
     next("/login-panel");
   } else {

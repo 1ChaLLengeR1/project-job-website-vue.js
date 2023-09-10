@@ -1,7 +1,14 @@
 import store from "../../storage/index";
 
-export function Authentification() {
-  //values
+export function Authentication() {
+  if (!localStorage.getItem("user")) {
+    return;
+  }
+
+  if (!localStorage.getItem("tokens")) {
+    return;
+  }
+
   const user_localStorage = localStorage.getItem("user");
   const user_object = JSON.parse(user_localStorage);
 
@@ -11,6 +18,7 @@ export function Authentification() {
   const user_getters = {
     id: store.getters["auth/getUser"].id,
     username: store.getters["auth/getUser"].username,
+    isAuth: store.getters["auth/getUser"].isAuth,
   };
 
   const tokens_getters = {
@@ -24,14 +32,17 @@ export function Authentification() {
   if (Object.keys(tokens_object).length === 0) {
     return false;
   }
-  if (user_getters.id === '' && user_getters.username === '') {
+  if (
+    user_getters.id === "" &&
+    user_getters.username === "" &&
+    user_getters.isAuth === false
+  ) {
     return false;
   }
   if (
-    tokens_getters.access_token === '' &&
-    tokens_getters.refresh_token === ''
+    tokens_getters.access_token === "" &&
+    tokens_getters.refresh_token === ""
   ) {
-    console.log('brak usera')
     return false;
   }
 

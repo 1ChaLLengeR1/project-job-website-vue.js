@@ -9,6 +9,7 @@ export default {
       user: {
         id: "",
         username: "",
+        isAuth: false
       },
       tokens: {
         access_token: "",

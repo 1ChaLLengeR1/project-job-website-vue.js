@@ -1,7 +1,7 @@
 <template>
   <main class="w-full h-screen flex-col bg-color-bg">
     <navigation-panel
-      v-if="true"
+      v-if="navigation_authentification"
       @open-sliderbar="openSliderBar"
     ></navigation-panel>
     <div class="w-full flex flex-row relative overflow-hidden">
@@ -13,7 +13,7 @@
           @close-silderBar="openSliderBar"
         ></block-silderbar>
       </Transition>
-      <div class="w-full" @click="openSliderBar('', false)">
+      <div class="w-full" @click="openSliderBar({ id: '', value: false })">
         <router-view></router-view>
       </div>
 
@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, reactive, computed } from "vue";
+import { useStore } from "vuex";
 import NavigationVue from "./components/Header/Navigation.vue";
 import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
 import ArrayListArtek from "./components/JS/ArrayLinksArtek.js";
@@ -47,7 +47,7 @@ export default defineComponent({
   },
   setup() {
     //values
-    const router = useRouter();
+    const store = useStore();
     const sildeBars = reactive<{ id: string; value: boolean }>({
       id: "",
       value: false,
@@ -70,7 +70,17 @@ export default defineComponent({
     LoadPage();
     AutomaticallyLogin();
 
-    return { openSliderBar, sildeBars, arrayLinks };
+    //computed
+    const navigation_authentification = computed(() => {
+      return store.getters["auth/getUser"].isAuth;
+    });
+
+    return {
+      openSliderBar,
+      sildeBars,
+      arrayLinks,
+      navigation_authentification,
+    };
   },
 });
 </script>
@@ -102,3 +112,4 @@ export default defineComponent({
   transform: translateX(-120%);
 }
 </style>
+./components/JS/Authentication

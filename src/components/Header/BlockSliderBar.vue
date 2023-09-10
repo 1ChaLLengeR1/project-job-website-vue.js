@@ -35,12 +35,19 @@
           >{{ link.title }}</router-link
         >
       </li>
+      <li
+        class="w-full flex justify-center items-center text-color-yellow py-3 bg-color-bg border border-black text-lg duration-300 hover:border-white hover:text-white"
+      >
+        <button @click="logout">Wyloguj się</button>
+      </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { useStore } from "vuex";
+import { LoadPage } from "../JS/LoadPage";
 
 export default defineComponent({
   name: "BlockSliderBar",
@@ -56,11 +63,27 @@ export default defineComponent({
   },
   emits: ["close-silderBar"],
   setup(_, ctx) {
+    //values
+    const store = useStore();
     //functions
     const closeSliderBar = () => {
       ctx.emit("close-silderBar", { id: "", value: false });
     };
-    return { closeSliderBar };
+
+    const logout = () => {
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokens");
+      localStorage.removeItem("page");
+      store.commit("auth/login", {
+        id: "",
+        username: "",
+        isAuth: false,
+        access_token: "",
+        refresh_token: "",
+      });
+      LoadPage("loginpanel");
+    };
+    return { closeSliderBar, logout };
   },
 });
 </script>

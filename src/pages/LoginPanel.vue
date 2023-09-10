@@ -92,10 +92,14 @@ export default defineComponent({
         password: inputs_values.password,
       };
 
+      let isAuth = true;
       const response = await fetchData(url, method, headers, body, "body");
-      if (!response.ok) {
+      
+      if (response.error) {
         error_information.value = response.error;
+        isAuth = false;
       }
+
       loading_spinner.value = false;
 
       setTimeout(() => {
@@ -115,18 +119,20 @@ export default defineComponent({
         JSON.stringify({
           id: response.id,
           username: response.username,
+          isAuth: isAuth,
         })
       );
 
       store.commit("auth/login", {
         id: response.id,
         username: response.username,
+        isAuth: isAuth,
         access_token: response.access_token || "",
         refresh_token: response.refresh_token || "",
       });
       inputs_values.username = "";
       inputs_values.password = "";
-      LoadPage()
+      LoadPage();
     };
 
     return { signIn, inputs_values, loading_spinner, error_information };
