@@ -45,7 +45,7 @@
           @click.prevent="signIn()"
           class="w-full text-2xl py-1 shadow shadow-black text-color-yellow bg-transparent rounded-lg uppercase hover:bg-black duration-500"
         >
-          Login
+          Logins
         </button>
       </div>
     </div>
