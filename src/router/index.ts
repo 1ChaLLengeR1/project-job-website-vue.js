@@ -13,6 +13,7 @@ import MoneySettlement from "../pages/MoneySettlement.vue";
 import Provision from "../pages/Provisions.vue";
 import ShoppingList from "../pages/ShoppingList.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
+import Logs from "@/pages/Logs.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,14 @@ const router = createRouter({
         isAuth: true,
       },
     },
+    {
+      path:'/logs',
+      name:'logs',
+      component: Logs,
+      meta:{
+        isAuth: true
+      }
+    }
   ],
 });
 

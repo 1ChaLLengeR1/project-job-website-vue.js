@@ -19,4 +19,8 @@ export default [
     title: "Kalkulator paliwa",
     name_router: "fuelcalculator",
   },
+  {
+    title: "Logi serwera",
+    name_router: "logs",
+  },
 ];
