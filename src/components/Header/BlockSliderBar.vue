@@ -80,6 +80,7 @@ export default defineComponent({
         access_token: "",
         refresh_token: "",
       });
+      ctx.emit("close-silderBar", { id: "", value: false });
       LoadPage("loginpanel");
     };
     return { closeSliderBar, logout };

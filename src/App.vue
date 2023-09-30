@@ -1,5 +1,6 @@
 <template>
-  <main class="w-full h-screen flex-col bg-color-bg">
+  <main class="w-full h-full relative flex-col bg-color-bg">
+    <image-dots v-if="show_dots"></image-dots>
     <navigation-panel
       v-if="navigation_authentification"
       @open-sliderbar="openSliderBar"
@@ -30,20 +31,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed } from "vue";
+import { defineComponent, reactive, computed, ref } from "vue";
 import { useStore } from "vuex";
+import { AutomaticallyLogin } from "./components/JS/AutomaticallyLogin";
+import { LoadPage } from "./components/JS/LoadPage";
+// componets
 import NavigationVue from "./components/Header/Navigation.vue";
 import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
 import ArrayListArtek from "./components/JS/ArrayLinksArtek.js";
 import ArrayListPatryk from "./components/JS/ArrayLinksPatryk.js";
-import { AutomaticallyLogin } from "./components/JS/AutomaticallyLogin";
-import { LoadPage } from "./components/JS/LoadPage";
+import ImageDotsVue from "./components/App/ImageDots.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     "navigation-panel": NavigationVue,
     "block-silderbar": BlockSliderBar,
+    "image-dots": ImageDotsVue,
   },
   setup() {
     //values
@@ -52,6 +56,8 @@ export default defineComponent({
       id: "",
       value: false,
     });
+
+    const show_dots = ref<boolean>(false);
 
     const arrayLinks = reactive<{
       links_artek: { title: string; name_router: string }[];
@@ -67,6 +73,16 @@ export default defineComponent({
       sildeBars.value = val.value;
     };
 
+    const check_screen = () => {
+      if (window.innerWidth <= 640) {
+        show_dots.value = false;
+      } else {
+        show_dots.value = true;
+      }
+    };
+    window.addEventListener("resize", check_screen);
+    check_screen();
+
     LoadPage();
     AutomaticallyLogin();
 
@@ -80,6 +96,7 @@ export default defineComponent({
       sildeBars,
       arrayLinks,
       navigation_authentification,
+      show_dots,
     };
   },
 });

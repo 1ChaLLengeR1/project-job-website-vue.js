@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full h-16 flex justify-between p-2">
+  <header class="w-full h-16 relative z-10 flex justify-between p-2">
     <div class="flex justify-center items-center gap-1">
       <open-button-navigation
         @button-information="openSliderBar"

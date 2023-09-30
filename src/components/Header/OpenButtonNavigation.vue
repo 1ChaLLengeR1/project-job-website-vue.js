@@ -2,8 +2,9 @@
   <button
     type="button"
     @click="openNavigation(buttonName)"
-    class="w-32 sm:w-40 p-1 rounded-sm text-lg text-white bg-color-yellow duration-500 hover:scale-105"
+    class="w-32 sm:w-40 flex items-center gap-1 rounded-xl p-2 text-sm sm:text-lg text-white bg-color-bg-dark sm:bg-color-bg duration-500 hover:scale-105"
   >
+  <img src="../../images/logo_menu.webp" alt="logo_button" class="w-7 h-7"/>
     {{ buttonName }}
   </button>
 </template>
