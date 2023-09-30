@@ -6,7 +6,6 @@
       :description="notification.description"
     ></notification>
     <p>Logs</p>
-    <button class="border-2" @click="testNotification">AddNotification</button>
   </main>
 </template>
 
@@ -29,15 +28,9 @@ export default defineComponent({
     });
 
     //fucntions
-    const testNotification = () => {
-      notification.id = Math.random();
-      notification.type = "success";
-      notification.description = "nowa";
-    };
-
     SavePage("logs");
 
-    return { testNotification, notification };
+    return { notification };
   },
 });
 </script>

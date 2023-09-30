@@ -2,7 +2,6 @@
   <div
     class="w-52 h-full flex flex-col gap-2 p-1 absolute top-0"
     :class="{ 'right-0': site }"
-    @click="closeSliderBar"
   >
     <div
       class="w-full flex justify-start items-center"

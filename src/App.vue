@@ -13,7 +13,7 @@
           @close-silderBar="openSliderBar"
         ></block-silderbar>
       </Transition>
-      <div class="w-full" @click="openSliderBar({ id: '', value: false })">
+      <div class="w-full">
         <router-view></router-view>
       </div>
 

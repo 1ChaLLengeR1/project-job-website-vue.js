@@ -1,53 +1,61 @@
 <template>
   <main
-    class="w-full h-[calc(100vh-64px)] flex justify-center items-center px-1"
+    class="w-full h-screen bg-[url('../images/loginPanel/background.webp')] flex justify-center items-center px-1"
   >
     <loading-spinner v-if="loading_spinner"></loading-spinner>
-    <div class="w-72 flex flex-col gap-5 bg-white rounded-lg px-6 py-5">
-      <div class="w-full flex justify-center py-5">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="80px"
-          height="80px"
-          fill="#FCA311"
-          viewBox="0 0 512 512"
-        >
-          <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-          <path
-            d="M399 384.2C376.9 345.8 335.4 320 288 320H224c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"
-          />
-        </svg>
+    <div
+      class="w-96 flex flex-col items-center gap-5 bg-color-bg rounded-[8px_0_8px_0] px-2 py-5 sm:shadow-[21px_21px_4px_0_rgba(0,0,0,0.25)]"
+    >
+      <div class="w-full text-center py-10">
+        <h2 class="font-syne text-2xl text-white">Sign into Your Accont</h2>
       </div>
-      <div
-        class="w-full h-56 flex flex-col justify-around items-center gap-5 border border-color-yellow rounded-lg"
-      >
-        <h2 class="text-3xl">Sign In</h2>
-        <form class="w-full flex flex-col items-center gap-3 p-1">
+      <form class="w-60 flex flex-col justify-center items-center gap-2">
+        <div class="w-full relative flex justify-center mb-5">
+          <svg-user></svg-user>
           <input
             type="text"
-            placeholder="username"
+            placeholder="Email ID"
+            class="w-full py-3 pl-14 pr-1 rounded-lg text-xl outline-none bg-color-yellow"
             v-model="inputs_values.username"
-            class="bg-transparent p-2 rounded-lg outline-none hover:bg-black focus:text-color-yellow focus:bg-black duration-500"
           />
+        </div>
+        <div class="w-full relative flex justify-center mt-5 mb-6">
+          <svg-password></svg-password>
           <input
-            type="password"
-            placeholder="password"
+            :type="input_type"
+            placeholder="Password"
+            class="w-full py-3 pl-14 pr-9 rounded-lg text-xl outline-none bg-color-yellow"
             v-model="inputs_values.password"
-            class="bg-transparent p-2 rounded-lg outline-none hover:bg-black focus:text-color-yellow focus:bg-black duration-500"
           />
-        </form>
-      </div>
-      <div class="w-full h-5 flex justify-center">
-        <p class="mr-0 p-0 text-red-600">{{ error_information }}</p>
-      </div>
-      <div>
-        <button
-          @click.prevent="signIn()"
-          class="w-full text-2xl py-1 shadow shadow-black text-color-yellow bg-transparent rounded-lg uppercase hover:bg-black duration-500"
+          <svg-eye
+            :type="input_type"
+            @show-password="change_password"
+          ></svg-eye>
+        </div>
+        <div
+          v-if="error_information.show"
+          class="w-full flex items-center gap-3 p-2 bg-[#192D57] rounded-lg shadow-[0_7px_2px_0_rgba(0,0,0,0.25)]"
         >
-          Login
-        </button>
-      </div>
+          <div class="px-2 bg-color-bg rounded-[8px_8px_0_8px]">
+            <p class="text-lg text-[#192D57] font-bold">
+              {{ error_information.status }}
+            </p>
+          </div>
+          <div>
+            <p class="text-xs text-white">
+              {{ error_information.description }}
+            </p>
+          </div>
+        </div>
+        <div class="w-full">
+          <button
+            @click.prevent="signIn"
+            class="w-full font-syne p-3 mt-20 mb-14 bg-color-yellow rounded-xl font-bold text-3xl"
+          >
+            Login
+          </button>
+        </div>
+      </form>
     </div>
   </main>
 </template>
@@ -58,13 +66,20 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import { fetchData } from "../components/JS/fetchData";
 import { LoadPage } from "../components/JS/LoadPage";
-import LoadingSpinnerVue from "../components/utils/LoadingSpinner.vue";
 import ConfigVue from "../components/JS/ConfigVue";
+// componets
+import LoadingSpinnerVue from "../components/utils/LoadingSpinner.vue";
+import SvgEyeVue from "../components/LoginPanel/SvgEye.vue";
+import SvgPasswordVue from "../components/LoginPanel/SvgPassword.vue";
+import SvgUserVue from "../components/LoginPanel/SvgUser.vue";
 
 export default defineComponent({
   name: "LoginPanel",
   components: {
     "loading-spinner": LoadingSpinnerVue,
+    "svg-eye": SvgEyeVue,
+    "svg-password": SvgPasswordVue,
+    "svg-user": SvgUserVue,
   },
   setup() {
     //values
@@ -76,7 +91,16 @@ export default defineComponent({
       password: "",
     });
     const loading_spinner = ref<boolean>(false);
-    const error_information = ref<string>("");
+    const error_information = reactive<{
+      status: string;
+      description: string;
+      show: boolean;
+    }>({
+      status: "",
+      description: "",
+      show: false,
+    });
+    const input_type = ref<string>("password");
 
     //functions
     const signIn = async () => {
@@ -94,16 +118,20 @@ export default defineComponent({
 
       let isAuth = true;
       const response = await fetchData(url, method, headers, body, "body");
-      
+
       if (response.error) {
-        error_information.value = response.error;
+        error_information.description = response.error;
+        error_information.status = "Error";
+        error_information.show = true;
         isAuth = false;
       }
 
       loading_spinner.value = false;
 
       setTimeout(() => {
-        error_information.value = "";
+        error_information.description = "";
+        error_information.status = "";
+        error_information.show = false;
       }, 4000);
 
       localStorage.setItem(
@@ -135,7 +163,18 @@ export default defineComponent({
       LoadPage();
     };
 
-    return { signIn, inputs_values, loading_spinner, error_information };
+    const change_password = (value: string) => {
+      input_type.value = value;
+    };
+
+    return {
+      signIn,
+      inputs_values,
+      loading_spinner,
+      error_information,
+      input_type,
+      change_password,
+    };
   },
 });
 </script>

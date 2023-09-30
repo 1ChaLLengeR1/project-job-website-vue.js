@@ -10,7 +10,6 @@ import CalculatorVat from "../pages/CalculatorVat.vue";
 //pages Artur
 import HousingSettlement from "../pages/HousingSettlement.vue";
 import MoneySettlement from "../pages/MoneySettlement.vue";
-import Provision from "../pages/Provisions.vue";
 import ShoppingList from "../pages/ShoppingList.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
@@ -52,14 +51,6 @@ const router = createRouter({
       },
     },
     {
-      path: "/provision",
-      name: "provision",
-      component: Provision,
-      meta: {
-        isAuth: true,
-      },
-    },
-    {
       path: "/shopping-list",
       name: "shoppinglist",
       component: ShoppingList,
@@ -82,7 +73,8 @@ const router = createRouter({
       meta:{
         isAuth: true
       }
-    }
+    },
+    { path: '/:pathMatch(.*)*', component: Logs }, 
   ],
 });
 
