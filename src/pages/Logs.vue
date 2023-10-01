@@ -6,7 +6,11 @@
       :description="notification_value.description"
       :type="notification_value.type"
     ></new-notification>
-    <div class="w-full sm:pt-28 pb-3">
+    <div class="w-full flex flex-col items-center gap-3 py-3">
+      <h1 class=" text-3xl sm:text-[70px] font-syne text-color-grey sm:pb-3">
+        Server Logs
+      </h1>
+      <buttons-number-logs @number-logs="get_logs"></buttons-number-logs>
       <table class="w-full flex flex-col items-center gap-3">
         <tr class="flex gap-3">
           <item-name :name="names_table.id" rounded="left"></item-name>
@@ -33,6 +37,7 @@
 import { defineComponent, reactive, ref, computed } from "vue";
 import { SavePage } from "../components/JS/SavePage";
 import { fetchData } from "../components/JS/fetchData";
+import { AddLog } from "../components/JS/AddLog";
 import ConfigVue from "../components/JS/ConfigVue";
 
 //components
@@ -40,6 +45,7 @@ import ItemNameVue from "../components/Logs/ItemName.vue";
 import LoadingSpinner from "@/components/utils/LoadingSpinner.vue";
 import Notification from "@/components/utils/Notification.vue";
 import ItemValueVue from "../components/Logs/ItemValue.vue";
+import ButtonsNumberLogsVue from "../components/Logs/ButtonsNumberLogs.vue";
 
 export default defineComponent({
   name: "Logs",
@@ -48,10 +54,12 @@ export default defineComponent({
     "item-value": ItemValueVue,
     "loading-spinner": LoadingSpinner,
     "new-notification": Notification,
+    "buttons-number-logs": ButtonsNumberLogsVue,
   },
   setup() {
     //values
     const loading_spinner = ref<boolean>(false);
+    const number_logs = ref<number>(10);
 
     const names_table = reactive({
       id: "Username/Id",
@@ -89,11 +97,11 @@ export default defineComponent({
         date_response.value = false;
       }
     };
-    window.addEventListener("resize", check_date_length)
-    check_date_length()
+    window.addEventListener("resize", check_date_length);
+    check_date_length();
 
     const load_logs = async () => {
-      const url = `${config_vue.value.url_server}/routers/log_routers/log/logs_values/5`;
+      const url = `${config_vue.value.url_server}/routers/log_routers/log/logs_values/${number_logs.value}`;
       const method = "GET";
       const headers = {
         "Content-Type": "application/json",
@@ -108,11 +116,17 @@ export default defineComponent({
         return;
       }
       loading_spinner.value = false;
+      logs.value = [];
       for (const item of response) {
         logs.value.push(item);
       }
     };
     load_logs();
+
+    const get_logs = (val: number) => {
+      number_logs.value = val;
+      load_logs();
+    };
 
     const change_names_table = () => {
       if (window.innerWidth <= 640) {
@@ -131,6 +145,15 @@ export default defineComponent({
 
     SavePage("logs");
 
+    const add_log = async () => {
+      const response_log = await AddLog("Logi");
+      if (response_log.error) {
+        notification_value.description = response_log.error;
+        notification_value.type = "error";
+      }
+    };
+    add_log();
+
     //computed
     const load_logs_computed = computed(() => {
       return logs.value;
@@ -143,6 +166,7 @@ export default defineComponent({
       load_logs_computed,
       data_length,
       date_response,
+      get_logs,
     };
   },
 });
