@@ -7,7 +7,7 @@
       :type="notification_value.type"
     ></new-notification>
     <div class="w-full flex flex-col items-center gap-3 py-3">
-      <h1 class=" text-3xl sm:text-[70px] font-syne text-color-grey sm:pb-3">
+      <h1 class="text-3xl sm:text-[70px] font-syne text-color-grey sm:pb-3">
         Server Logs
       </h1>
       <buttons-number-logs @number-logs="get_logs"></buttons-number-logs>
@@ -121,7 +121,9 @@ export default defineComponent({
         logs.value.push(item);
       }
     };
-    load_logs();
+    setTimeout(() => {
+      load_logs();
+    }, 100);
 
     const get_logs = (val: number) => {
       number_logs.value = val;
