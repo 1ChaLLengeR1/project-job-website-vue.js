@@ -5,6 +5,7 @@
       height="30px"
       viewBox="0 0 448 512"
       class="cursor-pointer"
+      @click="open_edit_panel"
     >
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
       <path
@@ -18,8 +19,12 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  setup() {
-    return {};
+  emits: ["open-edit-panel"],
+  setup(_, ctx) {
+    const open_edit_panel = () => {
+      ctx.emit("open-edit-panel", true);
+    };
+    return { open_edit_panel };
   },
 });
 </script>

@@ -8,21 +8,21 @@
       </div>
     </div>
     <div class="w-full flex flex-col gap-3 p-2 bg-color-bg-dark rounded-b-3xl">
-      <div class="text-white text-xl sm:text-3xl bg-color-bg py-3 px-2">
+      <div class="text-white text-xl sm:text-2xl bg-color-bg py-3 px-2">
         <p>
-          Brutto: <span class="text-red-600">{{ brutto }}</span>
+          Brutto: <span class="text-red-600">{{ brutto }}</span> zł
         </p>
       </div>
-      <div class="text-white text-xl sm:text-3xl bg-color-bg py-3 px-2">
+      <div class="text-white text-xl sm:text-2xl bg-color-bg py-3 px-2">
         <p>
-          Na czysto: <span class="text-blue-700">{{ netto }}</span>
+          Na czysto: <span class="text-blue-700">{{ netto }}</span> zł
         </p>
       </div>
       <div
-        class="text-white text-xl sm:text-3xl bg-color-bg py-3 px-2 rounded-b-3xl"
+        class="text-white text-xl sm:text-2xl bg-color-bg py-3 px-2 rounded-b-3xl"
       >
         <p>
-          Zwrot Procentowy: <span class="text-green-700">{{ precent }}</span>
+          Zwrot Procentowy: <span class="text-green-700">{{ precent }}</span> %
         </p>
       </div>
     </div>

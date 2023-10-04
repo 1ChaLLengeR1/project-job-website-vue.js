@@ -8,16 +8,26 @@
       :type="notification_value.type"
     ></the-notification>
     <div class="w-full flex flex-wrap-reverse justify-center p-1 gap-4">
-      <the-result :brutto="10" :netto="10" :precent="10"></the-result>
-      <the-options></the-options>
+      <the-result
+        :brutto="results_value.brutto"
+        :netto="results_value.netto"
+        :precent="results_value.precent"
+      ></the-result>
+      <the-options
+        @calculator-options="submit"
+        @response-message="response_message"
+      ></the-options>
     </div>
   </main>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
+import { useStore } from "vuex";
 import { SavePage } from "../components/JS/SavePage";
 import { AddLog } from "../components/JS/AddLog";
+import { fetchData } from "../components/JS/fetchData";
+import ConfigVue from "../components/JS/ConfigVue";
 
 //componets
 import Notification from "@/components/utils/Notification.vue";
@@ -32,15 +42,28 @@ export default defineComponent({
   },
   setup() {
     //values
+    const store = useStore();
     const notification_value = reactive<{
       id: number;
       description: string;
       type: string;
     }>({
-      id: Math.random(),
+      id: 0,
       description: "",
       type: "",
     });
+
+    const results_value = reactive<{
+      brutto: number;
+      netto: number;
+      precent: number;
+    }>({
+      brutto: 0,
+      netto: 0,
+      precent: 0,
+    });
+
+    const config_vue = ref<{ url_server: string }>(ConfigVue);
 
     //functions
 
@@ -52,9 +75,55 @@ export default defineComponent({
       }
     };
 
+    const response_message = (val: {
+      id: number;
+      description: string;
+      type: string;
+    }) => {
+      notification_value.id = val.id;
+      notification_value.description = val.description;
+      notification_value.type = val.type;
+    };
+
+    const submit = async (val: {
+      referrer: string;
+      gross_sales: number;
+      gross_purchase: number;
+      provision: number;
+      distinction: number;
+    }) => {
+      const url = `${config_vue.value.url_server}/routers/patryk_routers/calculator_work/calculator_earning/calculations`;
+      const headers = {
+        "Content-Type": "application/json",
+      };
+
+      const body = {
+        id: store.getters["auth/getUser"].id,
+        username: store.getters["auth/getUser"].username,
+        referrer: val.referrer,
+        gross_sales: val.gross_sales,
+        gross_purchase: val.gross_purchase,
+        provision: val.provision,
+        distinction: val.distinction,
+      };
+
+      const response = await fetchData(url, "POST", headers, body, "body");
+      if (response.error) {
+        notification_value.id = Math.random();
+        notification_value.description =
+          "Cena i Sprzdaż nie mogą być puste lub zerami!" || response.error;
+        notification_value.type = "error";
+        return;
+      }
+
+      results_value.brutto = response.brutto;
+      results_value.netto = response.na_czysto;
+      results_value.precent = response.zysk_procentowy;
+    };
+
     add_log();
     SavePage("calculatorvat");
-    return { notification_value };
+    return { notification_value, results_value, submit, response_message };
   },
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-0 right-0">
+  <div class="absolute top-0 right-0 z-50">
     <ul class="flex flex-col gap-1 p-1">
       <li
         v-for="(item, index) in array_notifications"
@@ -36,7 +36,7 @@
           </svg>
         </div>
         <div
-          class="w-80 flex flex-col items-start justify-center border-r border-gray-600"
+          class="w-full sm:w-80 flex flex-col items-start justify-center border-r border-gray-600"
         >
           <h1 class="font-bold" v-if="item.type === 'success'">
             Success Title Goes Here
@@ -45,7 +45,7 @@
           <h2>{{ item.description }}</h2>
         </div>
         <div
-          class="w-20 h-full flex justify-center items-center hover:bg-green-400"
+          class="w-12 sm:w-20 h-full flex justify-center items-center hover:bg-green-400"
           :class="{ 'hover:bg-red-400': item.type === 'error' }"
         >
           <svg
