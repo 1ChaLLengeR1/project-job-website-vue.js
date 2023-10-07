@@ -2,14 +2,13 @@
   <div>
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 448 512"
+      viewBox="0 0 384 512"
       class="cursor-pointer"
       :style="{'fill':color, 'height': height}"
-      @click="open_edit_panel"
     >
       <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
       <path
-        d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"
+        d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"
       />
     </svg>
   </div>
@@ -19,7 +18,6 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  emits: ["open-edit-panel"],
   props: {
     color: {
       required: true,
@@ -30,11 +28,8 @@ export default defineComponent({
       type: String,
     },
   },
-  setup(_, ctx) {
-    const open_edit_panel = () => {
-      ctx.emit("open-edit-panel", true);
-    };
-    return { open_edit_panel };
+  setup() {
+    return {};
   },
 });
 </script>

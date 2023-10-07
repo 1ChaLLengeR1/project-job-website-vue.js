@@ -4,7 +4,7 @@
       <div
         class="w-full flex justify-end bg-color-yellow py-5 px-2 rounded-t-3xl relative"
       >
-        <ellipsis-svg @open-edit-panel="open_panel"></ellipsis-svg>
+        <ellipsis-svg @open-edit-panel="open_panel" color="black" height="30px"></ellipsis-svg>
         <edit-options
           @close-edit-panel="open_panel"
           @response-message="response_message"
