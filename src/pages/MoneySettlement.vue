@@ -14,9 +14,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, onMounted } from "vue";
 import { SavePage } from "../components/JS/SavePage";
 import { AddLog } from "@/components/JS/AddLog";
+import { useStore } from "vuex";
 
 //componets
 import Title from "../components/MoneySettlement/Title.vue";
@@ -33,6 +34,7 @@ export default defineComponent({
   },
   setup() {
     //values
+    const store = useStore();
     const notification = reactive<{
       id: number;
       description: string;
@@ -43,10 +45,10 @@ export default defineComponent({
       type: "",
     });
 
-    //functions
     const add_log = async () => {
       const response_log = await AddLog("Lista Zaległych");
       if (response_log.error) {
+        notification.id = Math.random();
         notification.description = response_log.error;
         notification.type = "error";
       }
@@ -64,6 +66,20 @@ export default defineComponent({
 
     SavePage("moneysettlement");
     add_log();
+
+    //hoks
+    onMounted(async () => {
+      await store.dispatch("response/get_list_settlement");
+      if (!store.getters["response/response_error"]) {
+        return store.getters["response/response_error"];
+      } else {
+        notification.id = Math.random();
+        notification.description =
+          store.getters["response/response_error"].error;
+        notification.type = "error";
+      }
+    });
+
     return { response_notification, notification };
   },
 });
