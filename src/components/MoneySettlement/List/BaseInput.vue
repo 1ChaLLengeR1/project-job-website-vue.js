@@ -1,9 +1,10 @@
 <template>
-  <div class="w-full sm:w-52 ">
+  <div class="w-full sm:w-64">
     <input
       :type="type_input"
       :value="value"
       @input="base_input"
+      :placeholder="placeholder"
       class="w-full p-1 sm:p-3 text-center outline-none bg-color-bg text-white"
     />
   </div>
@@ -17,7 +18,7 @@ export default defineComponent({
   props: {
     value: {
       required: true,
-      type: String,
+      type: [String, Number],
     },
     type_input: {
       required: true,
@@ -25,6 +26,14 @@ export default defineComponent({
     },
     type: {
       required: true,
+      type: [String, Number],
+    },
+    placeholder: {
+      required: false,
+      type: String,
+    },
+    width: {
+      required: false,
       type: String,
     },
   },

@@ -5,6 +5,7 @@
       :height="svg.arrow.height"
       padding="8px"
       bg="#FCA311"
+      @click="show_items_list"
     ></svg-arrow-down>
     <form class="w-full flex justify-center items-center p-1">
       <p
@@ -24,7 +25,7 @@
           @input-update="input_update"
         ></base-input>
         <button
-          class="w-full sm:w-52 p-1 sm:p-3 bg-color-yellow text-white font-syne"
+          class="w-full sm:w-64 p-1 sm:p-3 bg-color-yellow text-white font-syne"
           @click.prevent="submit_edit"
         >
           Zapisz
@@ -45,13 +46,14 @@
         :height="svg.xmark.height"
         padding="8px"
         bg="#FCA311"
+        @click.prevent="submit_delete"
       ></svg-xmark>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import ConfigVue from "../../JS/ConfigVue";
 import { fetchData } from "../../JS/fetchData";
 import { useStore } from "vuex";
@@ -79,7 +81,8 @@ export default defineComponent({
       type: String,
     },
   },
-  setup(props) {
+  emits: ["response-error", "open-list", "confirm-box"],
+  setup(props, ctx) {
     //values
     const store = useStore();
     const input_values = reactive({
@@ -129,16 +132,51 @@ export default defineComponent({
         name: input_values.title,
       };
       const response = await fetchData(url, method, headers, body, "body");
-      if(response.error){
-        console.log(response)
-        return
+      if (response.error) {
+        ctx.emit("response-error", {
+          id: Math.random(),
+          description: response.error,
+          type: "error",
+        });
+        return;
       }
-      store.dispatch("response/get_list_settlement")
-      console.log(response);
+      ctx.emit("response-error", {
+        id: Math.random(),
+        description: response.detail,
+        type: "success",
+      });
+      input_values.change = false;
+      store.dispatch("response/get_list_settlement");
+    };
+
+    const submit_delete = async () => {
+      ctx.emit("confirm-box", {
+        info:"Czy na pewno chcesz usunąć liste?",
+        url: "/routers/outstanding_money/names_overdue/delete_list",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
+        },
+        body: {
+          id_user: store.getters["auth/getUser"].id,
+          username: store.getters["auth/getUser"].username,
+          id: input_values.id,
+        },
+        method_fetch: "body",
+        store_paramms: {
+          url: "response/get_list_settlement",
+          type: true,
+        },
+      });
     };
 
     const open_edit = () => {
       input_values.change = !input_values.change;
+    };
+
+    const show_items_list = () => {
+      ctx.emit("open-list", props.id);
     };
 
     const input_update = (val: { type: string; value: string }) => {
@@ -147,7 +185,15 @@ export default defineComponent({
 
     window.addEventListener("resize", response_svg);
     response_svg();
-    return { svg, input_values, input_update, submit_edit, open_edit };
+    return {
+      svg,
+      input_values,
+      input_update,
+      submit_edit,
+      open_edit,
+      submit_delete,
+      show_items_list,
+    };
   },
 });
 </script>

@@ -45,7 +45,7 @@
           v-if="show_list"
         >
           <li
-            class="w-40 flex flex-col gap-3 items-center bg-color-bg-dark p-1 text-white cursor-pointer"
+            class="w-40 flex flex-col gap-3 items-center justify-center bg-color-bg-dark p-1 text-white cursor-pointer"
             v-for="item in array_settlement"
             :key="item.id"
             @click="delete_item(item.id)"
@@ -115,7 +115,15 @@ export default defineComponent({
 
       const response = await fetchData(url, method, headers, body, "body");
       if (response.error) {
-        console.log(response);
+        item.name_list = "";
+        item.name = "";
+        item.amount = 0;
+        array_settlement.value = [];
+        ctx.emit("response-notification", {
+          id: Math.random(),
+          description: response.error,
+          type: "error",
+        });
         return;
       }
       item.name_list = "";
@@ -127,6 +135,7 @@ export default defineComponent({
         description: response.detail,
         type: "success",
       });
+      await store.dispatch("response/get_list_settlement");
     };
 
     const add_item = () => {

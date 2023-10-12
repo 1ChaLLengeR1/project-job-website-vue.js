@@ -2,6 +2,18 @@
   <main
     class="w-full min-h-[calc(100vh-64px)] flex flex-col items-center gap-5 p-2"
   >
+    <confirm-box
+      v-if="show_confirm"
+      :info="values_confirm_box.info"
+      :url="values_confirm_box.url"
+      :method="values_confirm_box.method"
+      :headers="values_confirm_box.headers"
+      :body="values_confirm_box.body"
+      :method_fetch="values_confirm_box.method_fetch"
+      :store_paramms="values_confirm_box.store_paramms"
+      @show-confirm-box="show_confirm_box"
+      @response-error="response_notification"
+    ></confirm-box>
     <new-notification
       :id="notification.id"
       :description="notification.description"
@@ -9,12 +21,15 @@
     ></new-notification>
     <the-title name="List Zaległych"></the-title>
     <create-list @response-notification="response_notification"></create-list>
-    <list-settlement></list-settlement>
+    <list-settlement
+      @response-error="response_notification"
+      @confirm-box="confirm_box"
+    ></list-settlement>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted } from "vue";
+import { defineComponent, reactive, onMounted, ref } from "vue";
 import { SavePage } from "../components/JS/SavePage";
 import { AddLog } from "@/components/JS/AddLog";
 import { useStore } from "vuex";
@@ -24,6 +39,7 @@ import Title from "../components/MoneySettlement/Title.vue";
 import CreateListVue from "../components/MoneySettlement/CreateList.vue";
 import Notification from "@/components/utils/Notification.vue";
 import ListSettlementVue from "../components/MoneySettlement/ListSettlement.vue";
+import ConfirmBox from "@/components/utils/ConfirmBox.vue";
 
 export default defineComponent({
   components: {
@@ -31,6 +47,7 @@ export default defineComponent({
     "create-list": CreateListVue,
     "new-notification": Notification,
     "list-settlement": ListSettlementVue,
+    "confirm-box": ConfirmBox,
   },
   setup() {
     //values
@@ -44,6 +61,47 @@ export default defineComponent({
       description: "",
       type: "",
     });
+    const show_confirm = ref<boolean>(false);
+    const values_confirm_box = reactive({
+      info: "",
+      url: "",
+      method: "",
+      headers: {},
+      body: {},
+      method_fetch: "",
+      store_paramms: {},
+    });
+
+    //functions
+    const show_confirm_box = (val: boolean) => {
+      show_confirm.value = val;
+      values_confirm_box.info = "";
+      values_confirm_box.url = "";
+      values_confirm_box.method = "";
+      values_confirm_box.headers = {};
+      values_confirm_box.body = {};
+      values_confirm_box.method_fetch = "";
+      values_confirm_box.store_paramms = {};
+    };
+
+    const confirm_box = (val: {
+      info: string;
+      url: string;
+      method: string;
+      headers: object;
+      body: object;
+      method_fetch: string;
+      store_paramms: object;
+    }) => {
+      show_confirm.value = true;
+      values_confirm_box.info = val.info;
+      values_confirm_box.url = val.url;
+      values_confirm_box.method = val.method;
+      values_confirm_box.headers = val.headers;
+      values_confirm_box.body = val.body;
+      values_confirm_box.method_fetch = val.method_fetch;
+      values_confirm_box.store_paramms = val.store_paramms;
+    };
 
     const add_log = async () => {
       const response_log = await AddLog("Lista Zaległych");
@@ -80,7 +138,14 @@ export default defineComponent({
       }
     });
 
-    return { response_notification, notification };
+    return {
+      response_notification,
+      notification,
+      show_confirm,
+      show_confirm_box,
+      confirm_box,
+      values_confirm_box,
+    };
   },
 });
 </script>
