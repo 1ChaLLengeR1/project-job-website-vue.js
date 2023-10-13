@@ -19,6 +19,7 @@
           :price="item.full_price"
           :id_name="item.id_name"
           @response-error="response_error"
+          @confirm-box="confirm_box"
         ></items-list>
       </li>
     </ul>

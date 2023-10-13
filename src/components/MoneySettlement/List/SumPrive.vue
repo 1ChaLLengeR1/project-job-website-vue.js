@@ -1,7 +1,7 @@
 <template>
   <li class="w-full text-center p-3 text-color-yellow text-xl">
     <p>
-      <span class="text-white">Cała suma: </span>{{ price }}
+      <span class="text-white">Cała suma: </span>{{ price.toFixed(2) }}
       <span class="text-white">zł</span>
     </p>
   </li>

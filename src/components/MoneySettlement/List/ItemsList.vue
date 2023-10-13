@@ -10,10 +10,13 @@
       <buttons-edit
         :id="item.id"
         @open-buttons-edit="open_buttons_edit"
+        @confirm-box="confirm_box"
       ></buttons-edit>
       <inputs-edit
+        :id="item.id"
         :name="item.name"
         :amount="item.amount"
+        @response-error="response_error"
         v-if="show_input_edit === item.id"
       ></inputs-edit>
       <item-paragraf
@@ -65,7 +68,7 @@ export default defineComponent({
       type: String,
     },
   },
-  emits: ["response-error"],
+  emits: ["response-error", "confirm-box"],
   setup(_, ctx) {
     //values
     const show_input_edit = ref<string>("");
@@ -79,6 +82,18 @@ export default defineComponent({
       show_input_edit.value = val;
     };
 
+    const confirm_box = (val: {
+      info: string;
+      url: string;
+      method: string;
+      headers: object;
+      body: object;
+      method_fetch: string;
+      store_paramms: object;
+    }) => {
+      ctx.emit("confirm-box", val);
+    };
+
     const response_error = (val: {
       id: number;
       description: string;
@@ -86,7 +101,7 @@ export default defineComponent({
     }) => {
       ctx.emit("response-error", val);
     };
-    return { response_error, show_input_edit, open_buttons_edit };
+    return { response_error, show_input_edit, open_buttons_edit, confirm_box };
   },
 });
 </script>
