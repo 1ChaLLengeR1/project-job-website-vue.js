@@ -14,9 +14,9 @@
     </button>
     <button
       class="w-16 bg-color-bg-dark text-xl rounded-lg text-color-yellow p-3"
-      @click="item_logs(0)"
+      @click="item_logs(100)"
     >
-      ALL
+      100
     </button>
   </div>
 </template>

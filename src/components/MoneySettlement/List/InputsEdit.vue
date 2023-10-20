@@ -92,7 +92,7 @@ export default defineComponent({
       }
       ctx.emit("response-error", {
         id: Math.random(),
-        description: response.error,
+        description: response.detail,
         type: "success",
       });
       await store.dispatch("response/get_list_settlement");
