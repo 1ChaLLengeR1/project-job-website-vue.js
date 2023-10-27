@@ -26,7 +26,7 @@ export default defineComponent({
     const show_list = ref<boolean>(false);
 
     //finctions
-    const open_panel_list = (val) => {
+    const open_panel_list = (val:boolean) => {
       show_list.value = val;
     };
 

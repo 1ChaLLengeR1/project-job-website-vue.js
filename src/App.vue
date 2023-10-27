@@ -104,11 +104,11 @@ export default defineComponent({
 
 <style scoped>
 .slide-fade-right-enter-active {
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .slide-fade-right-leave-active {
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .slide-fade-right-enter-from,
@@ -117,11 +117,11 @@ export default defineComponent({
 }
 
 .slide-fade-left-enter-active {
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .slide-fade-left-leave-active {
-  transition: all 1s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .slide-fade-left-enter-from,
