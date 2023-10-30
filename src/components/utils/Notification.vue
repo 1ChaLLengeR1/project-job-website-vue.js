@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-0 right-0 z-50">
+  <div class="fixed top-0 right-0 z-50">
     <ul class="flex flex-col gap-1 p-1">
       <li
         v-for="(item, index) in array_notifications"

@@ -8,7 +8,7 @@
         <edit-options
           @close-edit-panel="open_panel"
           @response-message="response_message"
-          v-if="panel_edit"
+          v-show="panel_edit"
         ></edit-options>
       </div>
       <div class="w-full flex flex-wrap sm:flex-nowrap gap-3">

@@ -4,7 +4,7 @@
     :type="type"
     :value="value"
     @input="value_input"
-    class="w-full px-3 font-syne font-bold text-center py-2 xl:py-6 text-color-yellow placeholder-color-yellow text-2xl xl:rounded-t-3xl outline-none bg-color-bg-dark"
+    class="w-full px-3 font-syne font-bold text-center p-1 xl:py-6 text-color-yellow placeholder-color-yellow text-xl rounded-3xl xl:rounded-t-3xl xl:rounded-none outline-none bg-color-bg-dark"
   />
 </template>
 
