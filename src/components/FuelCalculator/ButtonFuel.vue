@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full bg-color-bg p-2 rounded-b-3xl">
+  <div class="w-full rounded-b-3xl bg-color-bg p-2">
     <button
-      class="w-full text-center bg-color-yellow py-2 rounded-b-3xl text-3xl font-syne font-bold"
+      class="w-full rounded-b-3xl bg-color-yellow py-2 text-center font-syne text-3xl font-bold"
     >
       Oblicz
     </button>

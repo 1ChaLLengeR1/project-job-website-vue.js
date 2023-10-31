@@ -1,5 +1,5 @@
 <template>
-  <li class="w-full text-center p-3 text-color-yellow text-xl">
+  <li class="w-full p-3 text-center text-xl text-color-yellow">
     <p>
       <span class="text-white">Cała suma: </span>{{ price.toFixed(2) }}
       <span class="text-white">zł</span>

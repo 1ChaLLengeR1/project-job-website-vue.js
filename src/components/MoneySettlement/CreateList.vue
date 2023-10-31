@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full sm:w-4/6 flex flex-col gap-3">
+  <div class="flex w-full flex-col gap-3 sm:w-4/6">
     <open-panel-list @open-panel-list="open_panel_list"></open-panel-list>
     <create-list
       v-if="show_list"
@@ -26,7 +26,7 @@ export default defineComponent({
     const show_list = ref<boolean>(false);
 
     //finctions
-    const open_panel_list = (val:boolean) => {
+    const open_panel_list = (val: boolean) => {
       show_list.value = val;
     };
 

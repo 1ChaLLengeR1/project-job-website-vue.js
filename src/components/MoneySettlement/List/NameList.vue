@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex gap-3 bg-color-bg-dark">
+  <div class="flex w-full gap-3 bg-color-bg-dark">
     <svg-arrow-down
       :color="svg.arrow.color"
       :height="svg.arrow.height"
@@ -7,16 +7,16 @@
       bg="#FCA311"
       @click="show_items_list"
     ></svg-arrow-down>
-    <form class="w-full flex justify-center items-center p-1">
+    <form class="flex w-full items-center justify-center p-1">
       <p
         v-if="!input_values.change"
-        class="text-sm sm:text-3xl text-white font-syne font-bold"
+        class="font-syne text-sm font-bold text-white sm:text-3xl"
       >
         {{ title }}
       </p>
       <div
         v-else
-        class="w-full flex flex-col justify-center items-center lg:flex-row gap-3"
+        class="flex w-full flex-col items-center justify-center gap-3 lg:flex-row"
       >
         <base-input
           :value="input_values.title"
@@ -25,7 +25,7 @@
           @input-update="input_update"
         ></base-input>
         <button
-          class="w-full sm:w-64 p-1 sm:p-3 bg-color-yellow text-white font-syne"
+          class="w-full bg-color-yellow p-1 font-syne text-white sm:w-64 sm:p-3"
           @click.prevent="submit_edit"
         >
           Zapisz
@@ -151,7 +151,7 @@ export default defineComponent({
 
     const submit_delete = async () => {
       ctx.emit("confirm-box", {
-        info:"Czy na pewno chcesz usunąć liste?",
+        info: "Czy na pewno chcesz usunąć liste?",
         url: "/routers/outstanding_money/names_overdue/delete_list",
         method: "DELETE",
         headers: {

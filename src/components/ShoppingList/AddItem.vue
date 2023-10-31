@@ -1,10 +1,10 @@
 <template>
-  <form class="w-full h-full xl:h-28 relative bg-color-bg rounded-3xl p-2">
+  <form class="relative h-full w-full rounded-3xl bg-color-bg p-2 xl:h-28">
     <div
-      class="w-full xl:absolute xl:bottom-0 xl:left-0 flex flex-wrap xl:flex-nowrap gap-3 px-2 xl:px-6"
+      class="flex w-full flex-wrap gap-3 px-2 xl:absolute xl:bottom-0 xl:left-0 xl:flex-nowrap xl:px-6"
     >
       <div
-        class="w-full xl:w-4/6 flex flex-col lg:flex-row justify-start gap-3 xl:gap-10"
+        class="flex w-full flex-col justify-start gap-3 lg:flex-row xl:w-4/6 xl:gap-10"
       >
         <base-input
           placeholder="Nazwa"
@@ -28,7 +28,7 @@
           @input-value="input_value"
         ></base-input>
       </div>
-      <div class="w-full xl:w-2/6 flex justify-end">
+      <div class="flex w-full justify-end xl:w-2/6">
         <the-button
           :button_disabled="check_inputs"
           @click.prevent="submit"
@@ -55,18 +55,18 @@ export default defineComponent({
     //values
     const inputs_value = reactive<{
       name: string;
-      amount: number;
+      amount: number | string;
       type: string;
     }>({
       name: "",
-      amount: 0,
+      amount: "",
       type: "",
     });
 
     //functions
     const input_value = (val: {
       type_input: string;
-      value: [string, number];
+      value: string | number;
     }) => {
       inputs_value[`${val.type_input}`] = val.value;
     };
@@ -74,7 +74,7 @@ export default defineComponent({
     const submit = () => {
       ctx.emit("submit-shop-list", inputs_value);
       inputs_value.name = "";
-      inputs_value.amount = 0;
+      inputs_value.amount = "";
       inputs_value.type = "";
     };
 
@@ -82,7 +82,7 @@ export default defineComponent({
     const check_inputs = computed(() => {
       if (
         inputs_value.name === "" ||
-        inputs_value.amount === 0 ||
+        inputs_value.amount === "" ||
         inputs_value.type === ""
       ) {
         return true;

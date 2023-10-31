@@ -1,17 +1,17 @@
 <template>
-  <div class="w-full flex justify-center gap-3">
+  <div class="flex w-full justify-center gap-3">
     <p
-      class="w-64 text-color-yellow font-syne font-bold text-sm sm:text-lg  sm:p-3 text-center bg-color-bg"
+      class="w-64 bg-color-bg text-center font-syne text-sm font-bold text-color-yellow sm:p-3 sm:text-lg"
     >
       {{ name }}
     </p>
     <p
-      class="w-64 text-color-yellow font-syne font-bold text-sm sm:text-lg  sm:p-3 text-center bg-color-bg"
+      class="w-64 bg-color-bg text-center font-syne text-sm font-bold text-color-yellow sm:p-3 sm:text-lg"
     >
       {{ amount }} <span class="text-white">zł</span>
     </p>
     <p
-      class="w-64 text-color-yellow font-syne font-bold text-sm sm:text-lg  sm:p-3 text-center bg-color-bg"
+      class="w-64 bg-color-bg text-center font-syne text-sm font-bold text-color-yellow sm:p-3 sm:text-lg"
     >
       {{ date }}
     </p>

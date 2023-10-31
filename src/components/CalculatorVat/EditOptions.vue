@@ -1,8 +1,8 @@
 <template>
   <div
-    class="w-full absolute top-1 left-0 flex flex-col gap-3 rounded-t-3xl rounded-b-3xl bg-color-yellow p-1"
+    class="absolute left-0 top-1 flex w-full flex-col gap-3 rounded-b-3xl rounded-t-3xl bg-color-yellow p-1"
   >
-    <div class="w-full flex justify-end px-2 py-2">
+    <div class="flex w-full justify-end px-2 py-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="50px"
@@ -16,7 +16,7 @@
         />
       </svg>
     </div>
-    <div class="w-full flex justify-center gap-3 flex-wrap">
+    <div class="flex w-full flex-wrap justify-center gap-3">
       <edit-input
         name="vat"
         :number="keys_calculator.vat"
@@ -62,7 +62,7 @@
     </div>
     <div class="w-full">
       <button
-        class="w-full p-3 bg-color-bg text-white rounded-b-3xl text-lg"
+        class="w-full rounded-b-3xl bg-color-bg p-3 text-lg text-white"
         @click.prevent="submit"
       >
         Zapisz

@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full sm:w-max flex justify-end items-center gap-3 p-1">
+  <div class="flex w-full items-center justify-end gap-3 p-1 sm:w-max">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 512 512"
-      class="w-[30px] h-[30px] cursor-pointer"
+      class="h-[30px] w-[30px] cursor-pointer"
       fill="red"
       @click="submit_delete"
     >
@@ -16,7 +16,7 @@
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 384 512"
-        class="w-[30px] h-[30px] cursor-pointer p-1"
+        class="h-[30px] w-[30px] cursor-pointer p-1"
         fill="white"
       >
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -37,11 +37,10 @@ export default defineComponent({
     const close_edit_panel = () => {
       ctx.emit("close-edit-panel", false);
     };
-    const submit_delete = () =>{
-      ctx.emit('submit-delete')
-    }
-    return { close_edit_panel
-    , submit_delete };
+    const submit_delete = () => {
+      ctx.emit("submit-delete");
+    };
+    return { close_edit_panel, submit_delete };
   },
 });
 </script>

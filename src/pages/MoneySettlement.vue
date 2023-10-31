@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full min-h-[calc(100vh-64px)] flex flex-col items-center gap-5 p-2"
+    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center gap-5 p-2"
   >
     <confirm-box
       v-if="show_confirm"

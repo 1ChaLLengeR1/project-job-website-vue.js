@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full sm:w-80 flex items-center gap-2 bg-color-bg-dark">
-    <label class="w-56 text-color-grey text-lg text-center">{{ name }}:</label>
+  <div class="flex w-full items-center gap-2 bg-color-bg-dark sm:w-80">
+    <label class="w-56 text-center text-lg text-color-grey">{{ name }}:</label>
     <input
       type="number"
-      class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+      class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
       :value="number"
       @input="update_number"
     />

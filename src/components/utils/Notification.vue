@@ -1,13 +1,13 @@
 <template>
-  <div class="fixed top-0 right-0 z-50">
+  <div class="fixed right-0 top-0 z-50">
     <ul class="flex flex-col gap-1 p-1">
       <li
         v-for="(item, index) in array_notifications"
         :key="index"
-        class="flex flex-row h-28 bg-green-300"
+        class="flex h-28 flex-row bg-green-300"
         :class="{ 'bg-red-300': item.type === 'error' }"
       >
-        <div class="w-20 h-full flex justify-center items-center">
+        <div class="flex h-full w-20 items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="35px"
@@ -36,7 +36,7 @@
           </svg>
         </div>
         <div
-          class="w-full sm:w-80 flex flex-col items-start justify-center border-r border-gray-600"
+          class="flex w-full flex-col items-start justify-center border-r border-gray-600 sm:w-80"
         >
           <h1 class="font-bold" v-if="item.type === 'success'">
             Success Title Goes Here
@@ -45,7 +45,7 @@
           <h2>{{ item.description }}</h2>
         </div>
         <div
-          class="w-12 sm:w-20 h-full flex justify-center items-center hover:bg-green-400"
+          class="flex h-full w-12 items-center justify-center hover:bg-green-400 sm:w-20"
           :class="{ 'hover:bg-red-400': item.type === 'error' }"
         >
           <svg
@@ -127,7 +127,7 @@ export default defineComponent({
       });
       setTimeout(() => {
         removeItem(newVal.id);
-      },4000);
+      }, 4000);
     });
 
     return { array_notifications, removeItem };

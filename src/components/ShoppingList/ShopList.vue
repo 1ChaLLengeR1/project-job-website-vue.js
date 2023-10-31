@@ -1,5 +1,5 @@
 <template>
-  <ul class="w-full flex flex-col gap-3 p-3 bg-color-bg rounded-3xl">
+  <ul class="flex w-full flex-col gap-3 rounded-3xl bg-color-bg p-3">
     <item-list
       v-for="item in array_shop_list"
       :key="item.id"
@@ -45,7 +45,7 @@ export default defineComponent({
       name: string;
       amount: number;
       model: string;
-      type:boolean
+      type: boolean;
     }) => {
       ctx.emit("submit-edit-form", val);
     };

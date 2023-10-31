@@ -1,25 +1,25 @@
 <template>
-  <form class="w-full flex flex-col sm:flex-row gap-1">
+  <form class="flex w-full flex-col gap-1 sm:flex-row">
     <input
       type="text"
       placeholder="nazwa"
       v-model="input_values.name"
-      class="w-full outline-none p-1 bg-color-bg-dark text-white"
+      class="w-full bg-color-bg-dark p-1 text-white outline-none"
     />
     <input
       type="number"
       placeholder="ilość"
       v-model="input_values.amount"
-      class="w-full outline-none p-1 bg-color-bg-dark text-white"
+      class="w-full bg-color-bg-dark p-1 text-white outline-none"
     />
     <input
       type="text"
       placeholder="model"
       v-model="input_values.model"
-      class="w-full outline-none p-1 bg-color-bg-dark text-white"
+      class="w-full bg-color-bg-dark p-1 text-white outline-none"
     />
     <button
-      class="w-full outline-none p-1 bg-blue-700 text-white"
+      class="w-full bg-blue-700 p-1 text-white outline-none"
       @click.prevent="submit_edit"
     >
       Zapisz

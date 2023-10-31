@@ -1,12 +1,12 @@
 <template>
-  <header class="w-full h-16 relative z-10 flex justify-between p-2">
-    <div class="flex justify-center items-center gap-1">
+  <header class="relative z-10 flex h-16 w-full justify-between p-2">
+    <div class="flex items-center justify-center gap-1">
       <open-button-navigation
         @button-information="openSliderBar"
         buttonName="Menu Patryk"
       ></open-button-navigation>
     </div>
-    <div class="flex justify-center items-center gap-1">
+    <div class="flex items-center justify-center gap-1">
       <open-button-navigation
         buttonName="Menu Artur"
         @button-information="openSliderBar"

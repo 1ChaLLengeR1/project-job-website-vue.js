@@ -1,17 +1,17 @@
 <template>
-  <main class="w-full min-h-[calc(100vh-64px)]">
+  <main class="min-h-[calc(100vh-64px)] w-full">
     <loading-spinner v-if="loading_spinner"></loading-spinner>
     <new-notification
       :id="notification_value.id"
       :description="notification_value.description"
       :type="notification_value.type"
     ></new-notification>
-    <div class="w-full flex flex-col items-center gap-3 py-3">
-      <h1 class="text-3xl sm:text-[70px] font-syne text-color-grey sm:pb-3">
+    <div class="flex w-full flex-col items-center gap-3 py-3">
+      <h1 class="font-syne text-3xl text-color-grey sm:pb-3 sm:text-[70px]">
         Server Logs
       </h1>
       <buttons-number-logs @number-logs="get_logs"></buttons-number-logs>
-      <table class="w-full flex flex-col items-center gap-3">
+      <table class="flex w-full flex-col items-center gap-3">
         <tr class="flex gap-3">
           <item-name :name="names_table.id" rounded="left"></item-name>
           <item-name :name="names_table.description" rounded="none"></item-name>

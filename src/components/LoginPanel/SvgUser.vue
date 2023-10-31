@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full absolute left-0 flex justify-center items-center px-1 bg-color-yellow-light rounded-lg"
+    class="absolute left-0 flex h-full items-center justify-center rounded-lg bg-color-yellow-light px-1"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

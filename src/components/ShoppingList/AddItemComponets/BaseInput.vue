@@ -4,7 +4,7 @@
     :type="type"
     :value="value"
     @input="value_input"
-    class="w-full px-3 font-syne font-bold text-center p-1 xl:py-6 text-color-yellow placeholder-color-yellow text-xl rounded-3xl xl:rounded-t-3xl xl:rounded-none outline-none bg-color-bg-dark"
+    class="w-full rounded-3xl bg-color-bg-dark p-1 px-3 text-center font-syne text-xl font-bold text-color-yellow placeholder-color-yellow outline-none xl:rounded-none xl:rounded-t-3xl xl:py-6"
   />
 </template>
 
@@ -26,10 +26,10 @@ export default defineComponent({
       required: true,
       type: String,
     },
-    value:{
+    value: {
       required: true,
-      type:[String, Number]
-    }
+      type: [String, Number],
+    },
   },
   setup(props, ctx) {
     //function

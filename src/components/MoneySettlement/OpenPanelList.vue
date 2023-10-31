@@ -1,16 +1,16 @@
 <template>
   <div
-    class="w-full flex items-center justify-between bg-color-bg-dark rounded-t-3xl cursor-pointer"
+    class="flex w-full cursor-pointer items-center justify-between rounded-t-3xl bg-color-bg-dark"
     @click="open_panel_list"
   >
     <div class="w-full text-center">
-      <p class="text-lg sm:text-3xl text-white font-syne font-bold">
+      <p class="font-syne text-lg font-bold text-white sm:text-3xl">
         Stwórz Liste zalełgych
       </p>
     </div>
 
     <div
-      class="w-20 h-full flex justify-center items-center py-3 bg-color-yellow rounded-tr-3xl"
+      class="flex h-full w-20 items-center justify-center rounded-tr-3xl bg-color-yellow py-3"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

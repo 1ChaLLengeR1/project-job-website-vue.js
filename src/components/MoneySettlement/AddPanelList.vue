@@ -1,24 +1,24 @@
 <template>
   <div class="w-full bg-color-bg-dark p-3">
-    <form class="w-full flex flex-col gap-3">
-      <div class="w-full flex flex-col sm:flex-row gap-3">
+    <form class="flex w-full flex-col gap-3">
+      <div class="flex w-full flex-col gap-3 sm:flex-row">
         <div>
           <input
             type="text"
             placeholder="Nazwa Listy"
             v-model="item.name_list"
-            class="w-full outline-none bg-color-bg text-white rounded-t-3xl sm:rounded-[16px_0_0_0] p-3"
+            class="w-full rounded-t-3xl bg-color-bg p-3 text-white outline-none sm:rounded-[16px_0_0_0]"
           />
         </div>
         <div
-          class="w-full flex justify-center flex-wrap xl:flex-nowrap gap-3 py-7 px-2 bg-color-bg sm:rounded-tr-3xl"
+          class="flex w-full flex-wrap justify-center gap-3 bg-color-bg px-2 py-7 sm:rounded-tr-3xl xl:flex-nowrap"
         >
           <div class="w-full bg-color-bg p-1">
             <input
               type="text"
               placeholder="Nazwa produktu"
               v-model="item.name"
-              class="w-full p-3 outline-none bg-color-bg-dark text-white"
+              class="w-full bg-color-bg-dark p-3 text-white outline-none"
             />
           </div>
           <div class="w-full bg-color-bg p-1">
@@ -26,12 +26,12 @@
               type="number"
               placeholder="Cena produktu"
               v-model="item.amount"
-              class="w-full p-3 outline-none bg-color-bg-dark text-white"
+              class="w-full bg-color-bg-dark p-3 text-white outline-none"
             />
           </div>
           <div class="w-full p-1">
             <button
-              class="w-full h-full bg-color-yellow sm:rounded-tr-3xl p-3 font-bold font-syne"
+              class="h-full w-full bg-color-yellow p-3 font-syne font-bold sm:rounded-tr-3xl"
               @click.prevent="add_item"
             >
               Dodaj produkt do listy
@@ -41,23 +41,23 @@
       </div>
       <div class="w-full">
         <ul
-          class="w-full h-full flex justify-center gap-3 flex-wrap bg-color-bg p-2"
+          class="flex h-full w-full flex-wrap justify-center gap-3 bg-color-bg p-2"
           v-if="show_list"
         >
           <li
-            class="w-40 flex flex-col gap-3 items-center justify-center bg-color-bg-dark p-1 text-white cursor-pointer"
+            class="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 bg-color-bg-dark p-1 text-white"
             v-for="item in array_settlement"
             :key="item.id"
             @click="delete_item(item.id)"
           >
-            <p class="w-full text-center bg-color-bg">{{ item.name }}</p>
-            <p class="w-full text-center bg-color-bg">{{ item.amount }}zł</p>
+            <p class="w-full bg-color-bg text-center">{{ item.name }}</p>
+            <p class="w-full bg-color-bg text-center">{{ item.amount }}zł</p>
           </li>
         </ul>
       </div>
       <div class="w-full">
         <button
-          class="w-full py-3 font-syne font-bold text-3xl bg-color-yellow rounded-b-3xl"
+          class="w-full rounded-b-3xl bg-color-yellow py-3 font-syne text-3xl font-bold"
           :class="{ 'cursor-not-allowed': check_value_form }"
           :disabled="check_value_form"
           @click.prevent="submit"
@@ -152,7 +152,7 @@ export default defineComponent({
 
     const delete_item = (id: number) => {
       const find_id = array_settlement.value.findIndex(
-        (element) => element.id === id
+        (element) => element.id === id,
       );
       array_settlement.value.splice(find_id, 1);
     };

@@ -1,11 +1,11 @@
 <template>
-  <ul class="w-full flex flex-col 2xl:items-center gap-3 p-2 bg-color-bg-dark">
+  <ul class="flex w-full flex-col gap-3 bg-color-bg-dark p-2 2xl:items-center">
     <add-item :id_name="id_name" @response-error="response_error"></add-item>
     <sum-price :price="price"></sum-price>
     <li
       v-for="item in array"
       :key="item.id"
-      class="flex gap-3 items-center justify-center sm:flex-row-reverse flex-wrap 2xl:flex-nowrap shadow-[0_0_3px_0] 2xl:shadow-none shadow-color-yellow p-1"
+      class="flex flex-wrap items-center justify-center gap-3 p-1 shadow-[0_0_3px_0] shadow-color-yellow sm:flex-row-reverse 2xl:flex-nowrap 2xl:shadow-none"
     >
       <buttons-edit
         :id="item.id"

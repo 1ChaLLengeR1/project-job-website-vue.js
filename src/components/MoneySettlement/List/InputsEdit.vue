@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <form class="w-full flex gap-3 justify-center">
+    <form class="flex w-full justify-center gap-3">
       <base-input
         type_input="text"
         type="name"
@@ -15,7 +15,7 @@
         @input-update="input_update"
       ></base-input>
       <button
-        class="w-full sm:w-64 p-1 sm:p-3 bg-color-yellow font-syne font-bold"
+        class="w-full bg-color-yellow p-1 font-syne font-bold sm:w-64 sm:p-3"
         @click.prevent="submit"
       >
         Zapisz

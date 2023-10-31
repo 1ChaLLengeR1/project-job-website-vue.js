@@ -1,19 +1,19 @@
 <template>
   <div class="flex gap-3">
     <button
-      class="w-16 bg-color-bg-dark text-xl rounded-lg text-color-yellow p-3"
+      class="w-16 rounded-lg bg-color-bg-dark p-3 text-xl text-color-yellow"
       @click="item_logs(10)"
     >
       10
     </button>
     <button
-      class="w-16 bg-color-bg-dark text-xl rounded-lg text-color-yellow p-3"
+      class="w-16 rounded-lg bg-color-bg-dark p-3 text-xl text-color-yellow"
       @click="item_logs(30)"
     >
       30
     </button>
     <button
-      class="w-16 bg-color-bg-dark text-xl rounded-lg text-color-yellow p-3"
+      class="w-16 rounded-lg bg-color-bg-dark p-3 text-xl text-color-yellow"
       @click="item_logs(100)"
     >
       100

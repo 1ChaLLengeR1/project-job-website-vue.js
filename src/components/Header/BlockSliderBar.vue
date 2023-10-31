@@ -1,10 +1,10 @@
 <template>
   <div
-    class="w-52 h-full flex flex-col gap-2 p-1 absolute top-0"
+    class="absolute top-0 flex h-full w-52 flex-col gap-2 p-1"
     :class="{ 'right-0': site }"
   >
     <div
-      class="w-full flex justify-start items-center"
+      class="flex w-full items-center justify-start"
       :class="{ 'justify-end': site }"
     >
       <svg
@@ -13,7 +13,7 @@
         height="40px"
         viewBox="0 0 384 512"
         fill="#FCA311"
-        class="cursor-pointer bg-black rounded-3xl p-1 duration-300 hover:scale-110"
+        class="cursor-pointer rounded-3xl bg-black p-1 duration-300 hover:scale-110"
         @click="closeSliderBar"
       >
         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -22,20 +22,20 @@
         />
       </svg>
     </div>
-    <ul class="w-full flex flex-col gap-1 mr-0">
+    <ul class="mr-0 flex w-full flex-col gap-1">
       <li
         @click="closeSliderBar"
         v-for="(link, index) in arrayList"
         :key="index"
       >
         <router-link
-          class="w-full flex justify-center items-center text-color-yellow py-3 bg-color-bg border border-black text-lg duration-300 hover:border-white hover:text-white"
+          class="flex w-full items-center justify-center border border-black bg-color-bg py-3 text-lg text-color-yellow duration-300 hover:border-white hover:text-white"
           :to="{ name: `${link.name_router}` }"
           >{{ link.title }}</router-link
         >
       </li>
       <li
-        class="w-full flex justify-center items-center text-color-yellow py-3 bg-color-bg border border-black text-lg duration-300 hover:border-white hover:text-white"
+        class="flex w-full items-center justify-center border border-black bg-color-bg py-3 text-lg text-color-yellow duration-300 hover:border-white hover:text-white"
       >
         <button @click="logout">Wyloguj się</button>
       </li>

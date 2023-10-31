@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-full xl:w-4/6 font-syne font-bold px-3 text-syne text-center p-0 xl:py-6 text-color-bg text-2xl rounded-3xl xl:rounded-none xl:rounded-t-3xl outline-none bg-color-yellow disabled:cursor-not-allowed disabled:bg-color-grey"
+    class="text-syne w-full rounded-3xl bg-color-yellow p-0 px-3 text-center font-syne text-2xl font-bold text-color-bg outline-none disabled:cursor-not-allowed disabled:bg-color-grey xl:w-4/6 xl:rounded-none xl:rounded-t-3xl xl:py-6"
     :disabled="button_disabled"
   >
     Dodaj

@@ -5,7 +5,7 @@
       :value="value"
       @input="base_input"
       :placeholder="placeholder"
-      class="w-full p-1 sm:p-3 text-center outline-none bg-color-bg text-white"
+      class="w-full bg-color-bg p-1 text-center text-white outline-none sm:p-3"
     />
   </div>
 </template>

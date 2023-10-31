@@ -1,16 +1,16 @@
 <template>
   <div
-    class="w-full h-full fixed top-0 left-0 flex justify-center items-center bg-white opacity-90 p-2"
+    class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-white p-2 opacity-90"
   >
     <button
       disabled
       type="button"
-      class="w-80 flex items-center justify-center text-black bg-color-yellow focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-2xl px-5 py-2.5"
+      class="flex w-80 items-center justify-center rounded-lg bg-color-yellow px-5 py-2.5 text-2xl font-medium text-black focus:ring-4 focus:ring-blue-300"
     >
       <svg
         aria-hidden="true"
         role="status"
-        class="inline w-10 h-10 mr-3 text-black animate-spin"
+        class="mr-3 inline h-10 w-10 animate-spin text-black"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

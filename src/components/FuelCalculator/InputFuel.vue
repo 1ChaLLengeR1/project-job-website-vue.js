@@ -1,12 +1,12 @@
 <template>
-  <div class="w-full h-16 flex bg-color-bg p-2 rounded-tr-3xl">
+  <div class="flex h-16 w-full rounded-tr-3xl bg-color-bg p-2">
     <label
-      class="w-2/5 flex justify-center items-center text-center text-color-grey text-sm sm:text-lg"
+      class="flex w-2/5 items-center justify-center text-center text-sm text-color-grey sm:text-lg"
       >{{ name_label }}</label
     >
     <input
       :type="type_input"
-      class="w-3/5 outline-none rounded-tr-3xl bg-color-bg-dark px-3 text-color-grey text-center"
+      class="w-3/5 rounded-tr-3xl bg-color-bg-dark px-3 text-center text-color-grey outline-none"
       @input="update_number"
     />
   </div>

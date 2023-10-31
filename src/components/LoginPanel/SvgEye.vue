@@ -1,6 +1,6 @@
 <template>
   <div
-    class="h-full absolute right-0 flex items-center px-1 cursor-pointer"
+    class="absolute right-0 flex h-full cursor-pointer items-center px-1"
     @click="show_password(type)"
   >
     <svg

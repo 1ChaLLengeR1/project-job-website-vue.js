@@ -1,22 +1,22 @@
 <template>
   <div
-    class="w-full h-full fixed top-0 left-0 flex justify-center items-center z-50 backdrop-blur-md bg-white/30 p-3"
+    class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-white/30 p-3 backdrop-blur-md"
   >
     <div
-      class="w-[40rem] h-64 flex flex-col justify-center bg-color-bg rounded-3xl p-3 gap-3"
+      class="flex h-64 w-[40rem] flex-col justify-center gap-3 rounded-3xl bg-color-bg p-3"
     >
-      <div class="w-full h-full flex justify-center items-center">
-        <p class="text-3xl font-syne font-bold text-color-yellow">{{info}}</p>
+      <div class="flex h-full w-full items-center justify-center">
+        <p class="font-syne text-3xl font-bold text-color-yellow">{{ info }}</p>
       </div>
-      <form class="w-full h-full flex items-end justify-end gap-3">
+      <form class="flex h-full w-full items-end justify-end gap-3">
         <button
-          class="w-28 p-1 font-syne font-bold bg-green-700"
+          class="w-28 bg-green-700 p-1 font-syne font-bold"
           @click.prevent="submit_yes"
         >
           Tak
         </button>
         <button
-          class="w-28 p-1 font-syne font-bold bg-red-700"
+          class="w-28 bg-red-700 p-1 font-syne font-bold"
           @click.prevent="submit_no"
         >
           Nie
@@ -41,9 +41,9 @@ interface ObjectStore {
 export default defineComponent({
   emits: ["show-confirm-box", "response-error"],
   props: {
-    info:{
-      required:true,
-      type:String
+    info: {
+      required: true,
+      type: String,
     },
     url: {
       required: true,
@@ -92,7 +92,7 @@ export default defineComponent({
         method,
         headers,
         body,
-        method_fetch
+        method_fetch,
       );
       if (response.error) {
         ctx.emit("response-error", {

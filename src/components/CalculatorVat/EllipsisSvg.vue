@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{ padding: padding, 'background-color': bg }"
-    class="flex justify-center items-center cursor-pointer"
+    class="flex cursor-pointer items-center justify-center"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

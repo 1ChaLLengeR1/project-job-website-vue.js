@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full flex justify-center items-center gap-3 font-syne font-bold text-color-yellow text-sm sm:text-2xl px-1 cursor-pointer"
+    class="flex w-full cursor-pointer items-center justify-center gap-3 px-1 font-syne text-sm font-bold text-color-yellow sm:text-2xl"
   >
     <p>
       {{ name }} <span class="text-color-grey">{{ amount }}</span> {{ model }}

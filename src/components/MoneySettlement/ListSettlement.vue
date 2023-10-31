@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full sm:w-4/6 flex flex-col gap-3">
-    <ul class="w-full flex flex-col gap-3">
+  <div class="flex w-full flex-col gap-3 sm:w-4/6">
+    <ul class="flex w-full flex-col gap-3">
       <li
         v-for="item in get_list_settlement"
         :key="item.id_name"
-        class="w-full flex flex-col gap-3"
+        class="flex w-full flex-col gap-3"
       >
         <name-list
           :title="item.name_overdue"

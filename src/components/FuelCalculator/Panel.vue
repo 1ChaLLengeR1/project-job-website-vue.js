@@ -1,17 +1,17 @@
 <template>
-  <div class="w-full xl:w-3/6 bg-color-bg-dark p-3 rounded-3xl relative">
+  <div class="relative w-full rounded-3xl bg-color-bg-dark p-3 xl:w-3/6">
     <img
       src="../../images/dystrybutor.png"
       alt="image_distributor"
-      class="h-5/6 absolute top-[-0.1rem] right-[-5.5rem] -z-0 hidden xl:block"
+      class="absolute right-[-5.5rem] top-[-0.1rem] -z-0 hidden h-5/6 xl:block"
     />
     <div
-      class="w-full flex flex-col items-center gap-3 rounded-3xl p-2 bg-gradient-to-b from-yellow-600 from-10% to-#121D35 to-90%"
+      class="to-#121D35 flex w-full flex-col items-center gap-3 rounded-3xl bg-gradient-to-b from-yellow-600 from-10% to-90% p-2"
     >
-      <h1 class="font-syne font-bold text-xl sm:text-3xl py-4">
+      <h1 class="py-4 font-syne text-xl font-bold sm:text-3xl">
         Koszt Przjechania Trasy
       </h1>
-      <form class="w-full flex flex-col gap-9">
+      <form class="flex w-full flex-col gap-9">
         <input-fuel
           type_input="number"
           name_label="Średnia spalania"

@@ -1,45 +1,49 @@
 <template>
-  <div class="w-96 sm:w-[70rem] bg-color-bg-dark rounded-3xl p-2 flex">
-    <div class="w-full flex flex-col justify-between gap-3">
+  <div class="flex w-96 rounded-3xl bg-color-bg-dark p-2 sm:w-[70rem]">
+    <div class="flex w-full flex-col justify-between gap-3">
       <div
-        class="w-full flex justify-end bg-color-yellow py-5 px-2 rounded-t-3xl relative"
+        class="relative flex w-full justify-end rounded-t-3xl bg-color-yellow px-2 py-5"
       >
-        <ellipsis-svg @open-edit-panel="open_panel" color="black" height="30px"></ellipsis-svg>
+        <ellipsis-svg
+          @open-edit-panel="open_panel"
+          color="black"
+          height="30px"
+        ></ellipsis-svg>
         <edit-options
           @close-edit-panel="open_panel"
           @response-message="response_message"
           v-show="panel_edit"
         ></edit-options>
       </div>
-      <div class="w-full flex flex-wrap sm:flex-nowrap gap-3">
+      <div class="flex w-full flex-wrap gap-3 sm:flex-nowrap">
         <input
           type="number"
           placeholder="Cena sprzedaży (zł)"
-          class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+          class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.gross_sales"
         />
         <input
           type="number"
           placeholder="Cena zakupu (zł)"
-          class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+          class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.gross_purchase"
         />
         <input
           type="number"
           placeholder="Prowizja (%)"
-          class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+          class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.provision"
         />
         <input
           type="number"
           placeholder="Wyróżnienie (%)"
-          class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+          class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.distinction"
         />
       </div>
       <div class="w-full">
         <select
-          class="w-full p-4 outline-none bg-color-bg placeholder-white text-color-grey"
+          class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.referrer"
         >
           <option
@@ -53,7 +57,7 @@
       </div>
       <div class="w-full">
         <button
-          class="w-full py-3 bg-color-yellow rounded-b-3xl text-3xl font-bold me-auto"
+          class="me-auto w-full rounded-b-3xl bg-color-yellow py-3 text-3xl font-bold"
           @click="submit"
         >
           Oblicz
@@ -78,10 +82,10 @@ export default defineComponent({
   setup(_, ctx) {
     //values
     const input_values = reactive<{
-      gross_sales: number;
-      gross_purchase: number;
-      provision: number;
-      distinction: number;
+      gross_sales: number | null | string;
+      gross_purchase: number | null | string;
+      provision: number | null | string;
+      distinction: number | null | string;
       referrer: string;
     }>({
       gross_sales: null,
@@ -140,21 +144,23 @@ export default defineComponent({
         distinction: input_values.distinction,
       };
 
-      if (obj.gross_sales === null) {
+      if (obj.gross_sales === null || obj.gross_sales === "") {
         obj.gross_sales = 0;
       }
 
-      if (obj.gross_purchase === null) {
+      if (obj.gross_purchase === null || obj.gross_purchase === "") {
         obj.gross_purchase = 0;
       }
 
-      if (obj.provision === null) {
+      if (obj.provision === null || obj.provision === "") {
         obj.provision = 0;
       }
 
-      if (obj.distinction === null) {
+      if (obj.distinction === null || obj.distinction === "") {
         obj.distinction = 0;
       }
+
+      // console.log(obj);
 
       ctx.emit("calculator-options", obj);
     };

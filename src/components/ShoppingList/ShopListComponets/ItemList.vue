@@ -1,7 +1,7 @@
 <template>
   <li
     :class="{ 'bg-red-600': !type }"
-    class="w-full relative flex flex-col-reverse gap-3 lg:flex-row bg-green-600 p-1 sm:p-0 rounded-3xl"
+    class="relative flex w-full flex-col-reverse gap-3 rounded-3xl bg-green-600 p-1 sm:p-0 lg:flex-row"
   >
     <result-information
       :name="name"

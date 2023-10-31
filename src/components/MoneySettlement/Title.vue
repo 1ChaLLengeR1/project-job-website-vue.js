@@ -1,6 +1,6 @@
 <template>
   <div class="w-full text-center">
-    <h1 class="text-3xl sm:text-[50px] font-syne text-white font-bold">
+    <h1 class="font-syne text-3xl font-bold text-white sm:text-[50px]">
       {{ name }}
     </h1>
   </div>

@@ -1,13 +1,13 @@
 <template>
   <div
-    class="w-full xl:w-3/6 lg:h-32 flex flex-col gap-3 sm:gap-5 items-center justify-center bg-color-bg-dark rounded-3xl p-2"
+    class="flex w-full flex-col items-center justify-center gap-3 rounded-3xl bg-color-bg-dark p-2 sm:gap-5 lg:h-32 xl:w-3/6"
   >
-    <h1 class="font-syne text-xl lg:text-[60px] uppercase text-color-yellow">
+    <h1 class="font-syne text-xl uppercase text-color-yellow lg:text-[60px]">
       kalkulator paliw
     </h1>
     <p
       v-if="pattern !== '' && result !== 0"
-      class="text-color-yellow-light text-center text-sm lg:text-2xl"
+      class="text-center text-sm text-color-yellow-light lg:text-2xl"
     >
       {{ pattern }} =
       <span class="text-color-grey"> {{ resultC }}zł</span>

@@ -1,30 +1,30 @@
 <template>
   <main
-    class="w-full h-screen bg-[url('../images/loginPanel/background.webp')] flex justify-center items-center px-1"
+    class="flex h-screen w-full items-center justify-center bg-[url('../images/loginPanel/background.webp')] px-1"
   >
     <loading-spinner v-if="loading_spinner"></loading-spinner>
     <div
-      class="w-96 flex flex-col items-center gap-5 bg-color-bg rounded-[8px_0_8px_0] px-2 py-5 sm:shadow-[21px_21px_4px_0_rgba(0,0,0,0.25)]"
+      class="flex w-96 flex-col items-center gap-5 rounded-[8px_0_8px_0] bg-color-bg px-2 py-5 sm:shadow-[21px_21px_4px_0_rgba(0,0,0,0.25)]"
     >
-      <div class="w-full text-center py-10">
+      <div class="w-full py-10 text-center">
         <h2 class="font-syne text-2xl text-white">Sign into Your Accont</h2>
       </div>
-      <form class="w-60 flex flex-col justify-center items-center gap-2">
-        <div class="w-full relative flex justify-center mb-5">
+      <form class="flex w-60 flex-col items-center justify-center gap-2">
+        <div class="relative mb-5 flex w-full justify-center">
           <svg-user></svg-user>
           <input
             type="text"
             placeholder="Email ID"
-            class="w-full py-3 pl-14 pr-1 rounded-lg text-xl outline-none bg-color-yellow"
+            class="w-full rounded-lg bg-color-yellow py-3 pl-14 pr-1 text-xl outline-none"
             v-model="inputs_values.username"
           />
         </div>
-        <div class="w-full relative flex justify-center mt-5 mb-6">
+        <div class="relative mb-6 mt-5 flex w-full justify-center">
           <svg-password></svg-password>
           <input
             :type="input_type"
             placeholder="Password"
-            class="w-full py-3 pl-14 pr-9 rounded-lg text-xl outline-none bg-color-yellow"
+            class="w-full rounded-lg bg-color-yellow py-3 pl-14 pr-9 text-xl outline-none"
             v-model="inputs_values.password"
           />
           <svg-eye
@@ -34,10 +34,10 @@
         </div>
         <div
           v-if="error_information.show"
-          class="w-full flex items-center gap-3 p-2 bg-[#192D57] rounded-lg shadow-[0_7px_2px_0_rgba(0,0,0,0.25)]"
+          class="flex w-full items-center gap-3 rounded-lg bg-[#192D57] p-2 shadow-[0_7px_2px_0_rgba(0,0,0,0.25)]"
         >
-          <div class="px-2 bg-color-bg rounded-[8px_8px_0_8px]">
-            <p class="text-lg text-[#192D57] font-bold">
+          <div class="rounded-[8px_8px_0_8px] bg-color-bg px-2">
+            <p class="text-lg font-bold text-[#192D57]">
               {{ error_information.status }}
             </p>
           </div>
@@ -50,7 +50,7 @@
         <div class="w-full">
           <button
             @click.prevent="signIn"
-            class="w-full font-syne p-3 mt-20 mb-14 bg-color-yellow rounded-xl font-bold text-3xl"
+            class="mb-14 mt-20 w-full rounded-xl bg-color-yellow p-3 font-syne text-3xl font-bold"
           >
             Login
           </button>
@@ -139,7 +139,7 @@ export default defineComponent({
         JSON.stringify({
           access_token: response.access_token,
           refresh_token: response.refresh_token,
-        })
+        }),
       );
 
       localStorage.setItem(
@@ -148,7 +148,7 @@ export default defineComponent({
           id: response.id,
           username: response.username,
           isAuth: isAuth,
-        })
+        }),
       );
 
       store.commit("auth/login", {

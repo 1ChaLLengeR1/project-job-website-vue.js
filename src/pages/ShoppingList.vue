@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full min-h-[calc(100vh-64px)] flex flex-col items-center justify-center gap-5 p-2"
+    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-5 p-2"
   >
     <the-notification
       :id="notification.id"
@@ -8,7 +8,7 @@
       :type="notification.type"
     ></the-notification>
     <div
-      class="w-full sm:w-5/6 2xl:w-3/6 flex flex-col gap-3 p-2 bg-color-bg-dark rounded-3xl"
+      class="flex w-full flex-col gap-3 rounded-3xl bg-color-bg-dark p-2 sm:w-5/6 2xl:w-3/6"
     >
       <!-- <the-image></the-image> -->
       <add-item @submit-shop-list="submit_shop_list"></add-item>

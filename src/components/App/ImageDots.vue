@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full absolute flex justify-between top-0 z-9">
+  <div class="z-9 absolute top-0 flex w-full justify-between">
     <img src="../../images/dot_left.webp" alt="dot_left" />
     <img src="../../images/dot_right.webp" alt="dot_right" />
   </div>

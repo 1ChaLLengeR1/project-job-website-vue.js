@@ -1,13 +1,13 @@
 <template>
   <main
-    class="w-full min-h-[calc(100vh-64px)] flex justify-center items-center p-1"
+    class="flex min-h-[calc(100vh-64px)] w-full items-center justify-center p-1"
   >
     <the-notification
       :id="notification_value.id"
       :description="notification_value.description"
       :type="notification_value.type"
     ></the-notification>
-    <div class="w-full flex flex-wrap-reverse justify-center p-1 gap-4">
+    <div class="flex w-full flex-wrap-reverse justify-center gap-4 p-1">
       <the-result
         :brutto="results_value.brutto"
         :netto="results_value.netto"
@@ -110,8 +110,7 @@ export default defineComponent({
       const response = await fetchData(url, "POST", headers, body, "body");
       if (response.error) {
         notification_value.id = Math.random();
-        notification_value.description =
-          "Cena i Sprzdaż nie mogą być puste lub zerami!" || response.error;
+        notification_value.description = response.error;
         notification_value.type = "error";
         return;
       }

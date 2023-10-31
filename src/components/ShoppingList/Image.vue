@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full flex justify-center bg-color-bg rounded-3xl">
-    <img src="../../images//panel_gorny.png" alt="image_top"/>
+  <div class="flex w-full justify-center rounded-3xl bg-color-bg">
+    <img src="../../images//panel_gorny.png" alt="image_top" />
   </div>
 </template>
 

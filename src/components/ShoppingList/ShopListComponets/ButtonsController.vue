@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full absolute top-0 left-0 z-10 flex flex-col-reverse sm:flex-row gap-3 bg-color-bg"
+    class="absolute left-0 top-0 z-10 flex w-full flex-col-reverse gap-3 bg-color-bg sm:flex-row"
   >
     <form-edit-inputs
       :id="id"

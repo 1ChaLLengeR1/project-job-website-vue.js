@@ -1,6 +1,6 @@
 <template>
   <main
-    class="w-full min-h-[calc(100vh-64px)] flex flex-col justify-center items-center gap-3 p-3"
+    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center justify-center gap-3 p-3"
   >
     <the-result
       :pattern="pattern_value.pattern"

@@ -1,6 +1,6 @@
 <template>
   <th
-    class="w-20 sm:w-40 lg:w-80 flex justify-center items-center p-3 text-[10px] sm:text-sm bg-color-bg-dark"
+    class="flex w-20 items-center justify-center bg-color-bg-dark p-3 text-[10px] sm:w-40 sm:text-sm lg:w-80"
     :class="{
       'text-color-yellow': name === 'yoho',
       'text-color-grey': name !== 'yoho',

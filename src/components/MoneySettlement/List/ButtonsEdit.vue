@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full flex justify-end gap-3">
+  <div class="flex w-full justify-end gap-3">
     <svg-ellipsi
       :height="svg_values"
       bg="#FCA311"
@@ -32,7 +32,7 @@ export default defineComponent({
       type: String,
     },
   },
-  emits: ["open-buttons-edit", "confirm-box",],
+  emits: ["open-buttons-edit", "confirm-box"],
   components: {
     "svg-xmark": SvgXmark,
     "svg-ellipsi": EllipsisSvg,
