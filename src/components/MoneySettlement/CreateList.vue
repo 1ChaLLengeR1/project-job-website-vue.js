@@ -1,6 +1,9 @@
 <template>
   <div class="flex w-full flex-col gap-3 sm:w-4/6">
-    <open-panel-list @open-panel-list="open_panel_list"></open-panel-list>
+    <open-panel-list
+      name="Stwórz Liste zalełgych"
+      @open-panel-list="open_panel_list"
+    ></open-panel-list>
     <create-list
       v-if="show_list"
       @response-notification="response_notification"

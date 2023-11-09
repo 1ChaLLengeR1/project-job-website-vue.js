@@ -5,7 +5,7 @@
   >
     <div class="w-full text-center">
       <p class="font-syne text-lg font-bold text-white sm:text-3xl">
-        Stwórz Liste zalełgych
+        {{ name }}
       </p>
     </div>
 
@@ -32,6 +32,12 @@
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
+  props: {
+    name: {
+      required: true,
+      type: String,
+    },
+  },
   emits: ["open-panel-list"],
   setup(_, ctx) {
     //values

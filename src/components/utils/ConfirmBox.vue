@@ -31,12 +31,6 @@ import { defineComponent } from "vue";
 import ConfigVue from "../JS/ConfigVue";
 import { fetchData } from "../JS/fetchData";
 import { useStore } from "vuex";
-import type { PropType } from "vue";
-
-interface ObjectStore {
-  url: String;
-  type: Boolean;
-}
 
 export default defineComponent({
   emits: ["show-confirm-box", "response-error"],
@@ -67,7 +61,7 @@ export default defineComponent({
     },
     store_paramms: {
       required: true,
-      type: Object as PropType<ObjectStore>,
+      type: Object,
     },
   },
   setup(props, ctx) {

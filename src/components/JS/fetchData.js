@@ -21,7 +21,6 @@ export async function fetchData(url, method, headers, body, method_fetch) {
     }
 
     const responseData = await response.json();
-
     if (!response.ok) {
       return {
         error: responseData.detail,
