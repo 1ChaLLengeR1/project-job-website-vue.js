@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full bg-color-bg-dark p-2">
+  <div class="w-full bg-color-bg-dark p-1">
     <form class="flex w-full flex-col gap-3 bg-color-bg p-1 xl:flex-row">
       <base-input
         id="house_name"
@@ -29,6 +29,7 @@
         name="Dodaj mieszkanie"
         @click.prevent="add_flats"
         :disabled="checkInputs"
+        :rounded="true"
       ></add-button>
     </form>
   </div>

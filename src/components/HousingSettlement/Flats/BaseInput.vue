@@ -31,7 +31,7 @@ export default defineComponent({
     },
     value: {
       required: true,
-      type: String,
+      type: [String, Number],
     },
     rounded_class: {
       required: true,

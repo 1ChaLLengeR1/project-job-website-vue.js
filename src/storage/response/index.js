@@ -7,6 +7,7 @@ export default {
   state() {
     return {
       array_settlement: [],
+      array_flats: [],
       error: {},
     };
   },

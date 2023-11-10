@@ -1,6 +1,7 @@
 <template>
   <button
-    class="h-full w-full rounded-none rounded-b-3xl bg-color-yellow p-3 font-syne font-bold disabled:bg-color-grey xl:rounded-none xl:rounded-tr-3xl"
+    :class="{ 'rounded-b-3xl xl:rounded-none xl:rounded-tr-3xl': rounded }"
+    class="h-full w-full bg-color-yellow p-3 font-syne font-bold disabled:bg-color-grey"
     :disabled="disabled"
   >
     {{ name }}
@@ -17,6 +18,10 @@ export default defineComponent({
       type: String,
     },
     disabled: {
+      required: true,
+      type: Boolean,
+    },
+    rounded: {
       required: true,
       type: Boolean,
     },

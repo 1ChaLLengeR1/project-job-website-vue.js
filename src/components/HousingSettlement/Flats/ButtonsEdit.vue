@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end gap-3">
+  <div class="flex justify-end gap-1">
     <svg-ellipsi
       :height="svg_values"
       bg="#FCA311"
@@ -44,8 +44,7 @@ export default defineComponent({
 
     //functions
     const open_edit_panel = (val: boolean) => {
-      console.log(val);
-      // ctx.emit("open-buttons-edit", props.id);
+      ctx.emit("open-buttons-edit", props.id);
     };
 
     const delete_item = () => {
@@ -56,7 +55,7 @@ export default defineComponent({
       if (window.innerWidth >= 640) {
         svg_values.value = "40px";
       } else {
-        svg_values.value = "15px";
+        svg_values.value = "20px";
       }
     };
     window.addEventListener("resize", response_svg);
