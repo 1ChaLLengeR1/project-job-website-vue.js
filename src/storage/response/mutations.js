@@ -11,6 +11,12 @@ export default {
       state.array_flats.push(key);
     }
   },
+  get_renting_users(state, payload) {
+    state.array_renting_user = [];
+    for (const key of payload) {
+      state.array_renting_user.push(key);
+    }
+  },
   error_response(state, payload) {
     state.error = payload;
   },

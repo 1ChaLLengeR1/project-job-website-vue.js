@@ -25,10 +25,23 @@ export default {
     };
     const response = await fetchData(url, method, headers, null, null);
     if (response.error) {
-      console.log(response);
       ctx.commit("error_response", response);
       return;
     }
     ctx.commit("get_list_flats", response);
+  },
+
+  async get_renting_user(ctx) {
+    const url = `${ConfigVue.url_server}/routers/house_settlement_money/renting_user/renting_user/get_users`;
+    const method = "GET";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await fetchData(url, method, headers, null, null);
+    if (response.error) {
+      ctx.commit("error_response", response);
+      return;
+    }
+    ctx.commit("get_renting_users", response);
   },
 };

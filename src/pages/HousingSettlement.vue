@@ -1,6 +1,6 @@
 <template>
   <main
-    class="flex min-h-[calc(100vh-64px)] w-full justify-center p-2 text-white"
+    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center gap-3 p-2 text-white"
   >
     <confirm-box
       v-if="confirm_box_values.show_confirm_box"
@@ -23,6 +23,7 @@
       @notification-values="response_notification"
       @show-confirm-box="show_confirm_box"
     ></the-flats>
+    <rent-user></rent-user>
   </main>
 </template>
 
@@ -36,10 +37,12 @@ import { useStore } from "vuex";
 import Notification from "../components/utils/Notification.vue";
 import ConfirmBox from "../components/utils/ConfirmBox.vue";
 import FlatsVue from "../components/HousingSettlement/Flats.vue";
+import RentUserVue from "../components/HousingSettlement/RentUser.vue";
 
 export default defineComponent({
   components: {
     "the-flats": FlatsVue,
+    "rent-user": RentUserVue,
     "the-notification": Notification,
     "confirm-box": ConfirmBox,
   },
@@ -119,8 +122,7 @@ export default defineComponent({
       notification_values.type = val.type;
     };
 
-    //hooks
-    onMounted(async () => {
+    const load_flats = async () => {
       await store.dispatch("response/get_flats");
       if (!store.getters["response/response_error"]) {
         return store.getters["response/response_error"];
@@ -129,7 +131,27 @@ export default defineComponent({
         notification_values.description =
           store.getters["response/response_error"].error;
         notification_values.type = "error";
+        store.commit("response/error_response", {});
       }
+    };
+
+    const load_renting_users = async () => {
+      await store.dispatch("response/get_renting_user");
+      if (!store.getters["response/response_error"]) {
+        return store.getters["response/response_error"];
+      } else {
+        notification_values.id = Math.random();
+        notification_values.description =
+          store.getters["response/response_error"].error;
+        notification_values.type = "error";
+        store.commit("response/error_response", {});
+      }
+    };
+
+    //hooks
+    onMounted(async () => {
+      await load_flats();
+      await load_renting_users();
     });
 
     return {

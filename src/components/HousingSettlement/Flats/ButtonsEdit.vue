@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { useStore } from "vuex";
 
 //componets
 import SvgXmark from "../../MoneySettlement/List/SvgXmark.vue";
@@ -39,7 +38,6 @@ export default defineComponent({
   },
   setup(props, ctx) {
     //values
-    const store = useStore();
     const svg_values = ref<string>("40px");
 
     //functions
