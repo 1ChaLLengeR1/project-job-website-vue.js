@@ -6,7 +6,7 @@ export default {
     return state.array_flats;
   },
   get_renting_users(state) {
-    return state.get_renting_users;
+    return state.array_renting_user;
   },
   response_error(state) {
     if (state.error.error) {

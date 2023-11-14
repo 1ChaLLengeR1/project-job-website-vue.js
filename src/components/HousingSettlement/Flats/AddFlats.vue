@@ -55,7 +55,6 @@ export default defineComponent({
       professional_house_name: string;
       price: number;
     }) => {
-      console.log(val);
       ctx.emit("add-flats", val);
     };
 

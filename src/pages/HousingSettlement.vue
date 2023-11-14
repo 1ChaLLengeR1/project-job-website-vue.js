@@ -23,7 +23,10 @@
       @notification-values="response_notification"
       @show-confirm-box="show_confirm_box"
     ></the-flats>
-    <rent-user></rent-user>
+    <rent-user
+      @notification-values="response_notification"
+      @show-confirm-box="show_confirm_box"
+    ></rent-user>
   </main>
 </template>
 

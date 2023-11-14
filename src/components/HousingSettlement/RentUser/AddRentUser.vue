@@ -4,28 +4,78 @@
       name="Stwórz wynajmującego"
       @open-panel-list="open_panel_list"
     ></open-edit-panel>
-    <add-form-user></add-form-user>
+    <add-form-user
+      v-show="show_panel"
+      @add-user="add_user"
+      :array_flats="load_flats"
+    ></add-form-user>
+    <list-rent v-show="show_panel" @confirm-box="confirm_box"></list-rent>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref, provide, computed } from "vue";
 
 //componets
 import OpenEditPanel from "../../../components/MoneySettlement/OpenPanelList.vue";
 import AddFormRenUserVue from "../RentUser/AddFormRenUser.vue";
+import ListRentVue from "../RentUser/List/ListRent.vue";
 
 export default defineComponent({
+  emits: ["add-user", "confirm-box"],
+  props: {
+    load_flats: {
+      required: true,
+      type: Array<{
+        id: String;
+        house_name: String;
+        price: Number;
+        professional_house_name: String;
+      }>,
+    },
+    load_rent_users: {
+      required: true,
+      type: Array<{
+        id: String;
+        name: String;
+        quantity_users: Number;
+        name_flats: String;
+        id_flats: String;
+      }>,
+    },
+  },
   components: {
     "open-edit-panel": OpenEditPanel,
     "add-form-user": AddFormRenUserVue,
+    "list-rent": ListRentVue,
   },
-  setup() {
+  setup(props, ctx) {
+    //values
+    const show_panel = ref<boolean>(false);
+
     //functions
     const open_panel_list = (val: boolean) => {
-      console.log(val);
+      show_panel.value = val;
     };
-    return { open_panel_list };
+    const add_user = (val: {
+      name: string;
+      quantity_users: string | number;
+      id_flats: string;
+    }) => {
+      ctx.emit("add-user", val);
+    };
+
+    const confirm_box = (val: string) => {
+      ctx.emit("confirm-box", val);
+    };
+
+    const load_rent_users = computed(() => {
+      return props.load_rent_users;
+    });
+
+    provide("load_rent_users", load_rent_users);
+
+    return { open_panel_list, show_panel, add_user, confirm_box };
   },
 });
 </script>
