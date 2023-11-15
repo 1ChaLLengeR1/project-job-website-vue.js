@@ -9,7 +9,11 @@
       @add-user="add_user"
       :array_flats="load_flats"
     ></add-form-user>
-    <list-rent v-show="show_panel" @confirm-box="confirm_box"></list-rent>
+    <list-rent
+      v-show="show_panel"
+      @confirm-box="confirm_box"
+      @edit-user="edit_user"
+    ></list-rent>
   </div>
 </template>
 
@@ -22,7 +26,7 @@ import AddFormRenUserVue from "../RentUser/AddFormRenUser.vue";
 import ListRentVue from "../RentUser/List/ListRent.vue";
 
 export default defineComponent({
-  emits: ["add-user", "confirm-box"],
+  emits: ["add-user", "confirm-box", "edit-user"],
   props: {
     load_flats: {
       required: true,
@@ -65,6 +69,15 @@ export default defineComponent({
       ctx.emit("add-user", val);
     };
 
+    const edit_user = (val: {
+      id: String;
+      name: String;
+      quantity_users: Number;
+      id_flats: String;
+    }) => {
+      ctx.emit("edit-user", val);
+    };
+
     const confirm_box = (val: string) => {
       ctx.emit("confirm-box", val);
     };
@@ -73,9 +86,14 @@ export default defineComponent({
       return props.load_rent_users;
     });
 
-    provide("load_rent_users", load_rent_users);
+    const load_flats = computed(() => {
+      return props.load_flats;
+    });
 
-    return { open_panel_list, show_panel, add_user, confirm_box };
+    provide("load_rent_users", load_rent_users);
+    provide("load_flats", load_flats);
+
+    return { open_panel_list, show_panel, add_user, confirm_box, edit_user };
   },
 });
 </script>

@@ -6,10 +6,20 @@
       :key="item.id"
     >
       <paragraf-item
+        v-if="item.id !== show_edit_input"
         :name="item.name"
         :name_flats="item.name_flats"
         :quantity_users="item.quantity_users"
       ></paragraf-item>
+      <edit-form-panel
+        v-if="item.id === show_edit_input"
+        :id="item.id"
+        :name="item.name"
+        :quantity_users="item.quantity_users"
+        :name_flats="item.name_flats"
+        :id_flats="item.id_flats"
+        @edit_user="edit_user"
+      ></edit-form-panel>
       <button-edits
         :id="item.id"
         @confirm-box="confirm_box"
@@ -25,6 +35,7 @@ import { defineComponent, inject, computed, ref } from "vue";
 //componets
 import ParagrafItemsVue from "../../RentUser/List/ParagrafItem.vue";
 import ButtonsEditVue from "../../Flats/ButtonsEdit.vue";
+import EditFormPanel from "../List/EditFormPanel.vue";
 
 interface RentUser {
   id: string;
@@ -34,10 +45,11 @@ interface RentUser {
   id_flats: string;
 }
 export default defineComponent({
-  emits: ["confirm-box"],
+  emits: ["confirm-box", "edit-user"],
   components: {
     "paragraf-item": ParagrafItemsVue,
     "button-edits": ButtonsEditVue,
+    "edit-form-panel": EditFormPanel,
   },
   setup(_, ctx) {
     //values
@@ -57,11 +69,26 @@ export default defineComponent({
       show_edit_input.value = val;
     };
 
+    const edit_user = (val: {
+      id: String;
+      name: String;
+      quantity_users: Number;
+      id_flats: String;
+    }) => {
+      ctx.emit("edit-user", val);
+    };
+
     //computed
     const load_rent_users = computed(() => {
       return rent_users.value;
     });
-    return { load_rent_users, confirm_box, open_buttons_edit };
+    return {
+      load_rent_users,
+      confirm_box,
+      open_buttons_edit,
+      show_edit_input,
+      edit_user,
+    };
   },
 });
 </script>
