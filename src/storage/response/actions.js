@@ -44,4 +44,18 @@ export default {
     }
     ctx.commit("get_renting_users", response);
   },
+
+  async get_basic_rental_values(ctx) {
+    const url = `${ConfigVue.url_server}/routers/house_settlement_money/basic_rental_values/basic_values/get_values`;
+    const method = "GET";
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await fetchData(url, method, headers, null, null);
+    if (response.error) {
+      ctx.commit("error_response", response);
+      return;
+    }
+    ctx.commit("get_basic_rental_values", response);
+  },
 };

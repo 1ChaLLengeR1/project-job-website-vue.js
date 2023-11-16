@@ -17,6 +17,12 @@ export default {
       state.array_renting_user.push(key);
     }
   },
+  get_basic_rental_values(state, payload) {
+    state.array_basic_rental_values = [];
+    for (const key of payload) {
+      state.array_basic_rental_values.push(key);
+    }
+  },
   error_response(state, payload) {
     state.error = payload;
   },

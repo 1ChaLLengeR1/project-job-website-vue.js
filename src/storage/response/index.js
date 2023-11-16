@@ -9,6 +9,7 @@ export default {
       array_settlement: [],
       array_flats: [],
       array_renting_user: [],
+      array_basic_rental_values: [],
       error: {},
     };
   },

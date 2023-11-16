@@ -27,6 +27,9 @@
       @notification-values="response_notification"
       @show-confirm-box="show_confirm_box"
     ></rent-user>
+    <basic-edit-values
+      @notification-values="response_notification"
+    ></basic-edit-values>
   </main>
 </template>
 
@@ -41,6 +44,7 @@ import Notification from "../components/utils/Notification.vue";
 import ConfirmBox from "../components/utils/ConfirmBox.vue";
 import FlatsVue from "../components/HousingSettlement/Flats.vue";
 import RentUserVue from "../components/HousingSettlement/RentUser.vue";
+import BasicEditValues from "../components/HousingSettlement/BasicEditValues.vue";
 
 export default defineComponent({
   components: {
@@ -48,6 +52,7 @@ export default defineComponent({
     "rent-user": RentUserVue,
     "the-notification": Notification,
     "confirm-box": ConfirmBox,
+    "basic-edit-values": BasicEditValues,
   },
   setup() {
     //values
@@ -151,10 +156,24 @@ export default defineComponent({
       }
     };
 
+    const load_basic_rental_values = async () => {
+      await store.dispatch("response/get_basic_rental_values");
+      if (!store.getters["response/response_error"]) {
+        return store.getters["response/response_error"];
+      } else {
+        notification_values.id = Math.random();
+        notification_values.description =
+          store.getters["response/response_error"].error;
+        notification_values.type = "error";
+        store.commit("response/error_response", {});
+      }
+    };
+
     //hooks
     onMounted(async () => {
       await load_flats();
       await load_renting_users();
+      await load_basic_rental_values();
     });
 
     return {
