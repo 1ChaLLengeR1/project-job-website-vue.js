@@ -1,16 +1,25 @@
 //setup to TailwindCSS
-import './assets/tailwind.css'
-
+import "./assets/tailwind.css";
 
 //setup to Vue.js
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './storage/index'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import { createI18n } from "vue-i18n";
 
-const app = createApp(App)
+import App from "./App.vue";
+import router from "./router";
+import store from "./storage/index";
 
-app.use(router)
-app.use(store)
+const app = createApp(App);
+const pinia = createPinia();
+const i18n = createI18n({
+  locale: "pl",
+  fallbackLocale: "pl",
+});
 
-app.mount('#app')
+app.use(router);
+app.use(store);
+app.use(pinia);
+app.use(i18n);
+
+app.mount("#app");
