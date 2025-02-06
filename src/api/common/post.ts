@@ -5,9 +5,11 @@ import type {
 } from "@/types/global";
 
 import type { Headers } from "@/types/api/common/types";
+import { AuthStore } from "@/stores/auth/auth";
 
-const DEBUG_USER_TOKEN = false;
-const DEBUG_USER_DATA = false;
+const DEBUG_TOKEN = true;
+const DEBUG_REFRESH_TOKEN = true;
+const DEBUG_USER_DATA = true;
 
 export async function apiPost(
   urlPath: string,
@@ -22,10 +24,32 @@ export async function apiPost(
 ): Promise<ResponseApi> {
   const urlApi: string = import.meta.env.VITE_URL_SERVER;
   const url: string = `${urlApi}${urlPath}`;
+  const authStore = AuthStore();
 
   try {
     const header = new Headers();
     header.append("Content-Type", "application/json");
+
+    if (headers.Authorization && authStore.getToken()) {
+      header.append("Authorization", `Bearer ${authStore.getToken()}`);
+      if (DEBUG_TOKEN) {
+        console.info("Token:", authStore.getToken());
+      }
+    }
+
+    if (headers["X-Refresh-Token"] && authStore.getRefreshToken()) {
+      header.append("X-Refresh-Token", `${authStore.getRefreshToken()}`);
+      if (DEBUG_REFRESH_TOKEN) {
+        console.info("Refresh Token:", authStore.getToken());
+      }
+    }
+
+    if (headers.UserData && authStore.getUser()) {
+      header.append("UserData", `${JSON.stringify(authStore.getUser())}`);
+      if (DEBUG_USER_DATA) {
+        console.info("UserData:", authStore.getUser());
+      }
+    }
 
     const response = await fetch(url, {
       headers: header,

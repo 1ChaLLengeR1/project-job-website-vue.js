@@ -3,12 +3,30 @@
     "login": {
       "header": "Zaloguj się do konta",
       "input": {
-        "mail": "E-Mail",
+        "username": "Nazwa użytkownika",
         "password": "Hasło"
       },
       "button": {
         "login": "Zaloguj się"
       }
+    }
+  },
+  "loadingSpinner": {
+    "description": "Ładowanie..."
+  },
+  "navSlider": {
+    "links": {
+      "artek": {
+        "moneySettlement": "Rozliczenia pieniędzy",
+        "fuelCalculator": "Kalkulator Paliw",
+        "log": "Logi"
+      },
+      "patryk": {
+        "calculatorVat": "Kalkulator vat"
+      }
+    },
+    "button": {
+      "logOut": "Wyloguj sie"
     }
   }
 }

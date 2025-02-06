@@ -1,70 +1,74 @@
 <template>
-  <main class="w-full h-full relative flex-col bg-color-bg">
-    <image-dots v-if="show_dots"></image-dots>
-    <navigation-panel
-      v-if="navigation_authentification"
-      @open-sliderbar="openSliderBar"
-    ></navigation-panel>
-    <div class="w-full flex flex-row relative overflow-hidden">
+  <main class="relative h-full w-full flex-col bg-color-bg">
+    <LoadingSpinner v-if="loadingSpinnerStore.isLoading" />
+    <ImageDotsVue v-if="showDots" />
+    <NavigationVue v-if="authStore.auth.id" @open-sliderbar="openSliderBar" />
+    <div class="relative flex w-full flex-row overflow-hidden">
       <Transition name="slide-fade-left">
-        <block-silderbar
+        <BlockSliderBar
           v-if="sildeBars.id === 'patryk' && sildeBars.value === true"
           :site="false"
           :arrayList="arrayLinks.links_patryk"
           @close-silderBar="openSliderBar"
-        ></block-silderbar>
+        />
       </Transition>
+
       <div class="w-full">
         <router-view></router-view>
       </div>
 
       <Transition name="slide-fade-right">
-        <block-silderbar
+        <BlockSliderBar
           v-if="sildeBars.id === 'artek' && sildeBars.value === true"
           :site="true"
           :arrayList="arrayLinks.links_artek"
           @close-silderBar="openSliderBar"
-        ></block-silderbar>
+        />
       </Transition>
     </div>
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, ref } from "vue";
-import { useStore } from "vuex";
-import { AutomaticallyLogin } from "./components/JS/AutomaticallyLogin";
-import { LoadPage } from "./components/JS/LoadPage";
+import { defineComponent, reactive, ref, onMounted } from "vue";
+import { pathsArtek, pathsPatryk } from "./utils/paths";
 // componets
 import NavigationVue from "./components/Header/Navigation.vue";
 import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
-import ArrayListArtek from "./components/JS/ArrayLinksArtek.js";
-import ArrayListPatryk from "./components/JS/ArrayLinksPatryk.js";
 import ImageDotsVue from "./components/App/ImageDots.vue";
+import LoadingSpinner from "@/components/utils/LoadingSpinner.vue";
+
+// stores
+import { LoadingSpinnerStore } from "@/stores/modals/spinner";
+import { AuthStore } from "@/stores/auth/auth";
+
+// types
+import type { Link } from "@/utils/paths";
 
 export default defineComponent({
   name: "App",
   components: {
-    "navigation-panel": NavigationVue,
-    "block-silderbar": BlockSliderBar,
-    "image-dots": ImageDotsVue,
+    LoadingSpinner,
+    NavigationVue,
+    BlockSliderBar,
+    ImageDotsVue,
   },
   setup() {
-    //values
-    const store = useStore();
+    const loadingSpinnerStore = LoadingSpinnerStore();
+    const authStore = AuthStore();
     const sildeBars = reactive<{ id: string; value: boolean }>({
       id: "",
       value: false,
     });
 
-    const show_dots = ref<boolean>(false);
+    const showDots = ref<boolean>(false);
 
     const arrayLinks = reactive<{
-      links_artek: { title: string; name_router: string }[];
-      links_patryk: { title: string; name_router: string }[];
+      links_artek: Link[];
+      links_patryk: Link[];
     }>({
-      links_artek: ArrayListArtek,
-      links_patryk: ArrayListPatryk,
+      links_artek: pathsArtek,
+      links_patryk: pathsPatryk,
     });
 
     //functions
@@ -75,28 +79,27 @@ export default defineComponent({
 
     const check_screen = () => {
       if (window.innerWidth <= 640) {
-        show_dots.value = false;
+        showDots.value = false;
       } else {
-        show_dots.value = true;
+        showDots.value = true;
       }
     };
     window.addEventListener("resize", check_screen);
     check_screen();
 
-    LoadPage();
-    AutomaticallyLogin();
-
-    //computed
-    const navigation_authentification = computed(() => {
-      return store.getters["auth/getUser"].isAuth;
+    onMounted(async () => {
+      loadingSpinnerStore.isLoading = true;
+      await authStore.apiAutomaticallyLogin();
+      loadingSpinnerStore.isLoading = false;
     });
 
     return {
-      openSliderBar,
       sildeBars,
       arrayLinks,
-      navigation_authentification,
-      show_dots,
+      authStore,
+      showDots,
+      loadingSpinnerStore,
+      openSliderBar,
     };
   },
 });

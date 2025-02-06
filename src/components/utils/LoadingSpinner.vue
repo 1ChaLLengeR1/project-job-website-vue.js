@@ -24,7 +24,7 @@
           fill="currentColor"
         />
       </svg>
-      ładowanie...
+      {{ $t("loadingSpinner.description") }}
     </button>
   </div>
 </template>

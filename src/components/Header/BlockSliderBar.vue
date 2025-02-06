@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-0 flex h-full w-52 flex-col gap-2 p-1"
+    class="fixed top-0 z-40 flex h-full w-52 flex-col gap-2 p-1"
     :class="{ 'right-0': site }"
   >
     <div
@@ -30,8 +30,8 @@
       >
         <router-link
           class="flex w-full items-center justify-center border border-black bg-color-bg py-3 text-lg text-color-yellow duration-300 hover:border-white hover:text-white"
-          :to="{ name: `${link.name_router}` }"
-          >{{ link.title }}</router-link
+          :to="{ path: `${link.path}` }"
+          >{{ $t(`${link.title}`) }}</router-link
         >
       </li>
       <li
@@ -45,8 +45,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { useStore } from "vuex";
-import { LoadPage } from "../JS/LoadPage";
+import { AuthStore } from "@/stores/auth/auth";
+
+// types
+import type { Link } from "@/utils/paths";
 
 export default defineComponent({
   name: "BlockSliderBar",
@@ -57,31 +59,20 @@ export default defineComponent({
     },
     arrayList: {
       required: true,
-      type: Array,
+      type: Array<Link>,
     },
   },
   emits: ["close-silderBar"],
   setup(_, ctx) {
-    //values
-    const store = useStore();
-    //functions
+    const authStore = AuthStore();
+
     const closeSliderBar = () => {
       ctx.emit("close-silderBar", { id: "", value: false });
     };
 
     const logout = () => {
-      localStorage.removeItem("user");
-      localStorage.removeItem("tokens");
-      localStorage.removeItem("page");
-      store.commit("auth/login", {
-        id: "",
-        username: "",
-        isAuth: false,
-        access_token: "",
-        refresh_token: "",
-      });
-      ctx.emit("close-silderBar", { id: "", value: false });
-      LoadPage("loginpanel");
+      authStore.logOut();
+      closeSliderBar();
     };
     return { closeSliderBar, logout };
   },

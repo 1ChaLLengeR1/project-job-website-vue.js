@@ -2,21 +2,21 @@
   <main
     class="flex min-h-[calc(100vh-64px)] w-full items-center justify-center p-1"
   >
-    <the-notification
+    <NotificationVue
       :id="notification_value.id"
       :description="notification_value.description"
       :type="notification_value.type"
-    ></the-notification>
+    />
     <div class="flex w-full flex-wrap-reverse justify-center gap-4 p-1">
-      <the-result
-        :brutto="results_value.brutto"
-        :netto="results_value.netto"
-        :precent="results_value.precent"
-      ></the-result>
-      <the-options
+      <ResultVue
+        :brutto="results.brutto"
+        :netto="results.netto"
+        :precent="results.precent"
+      />
+      <OptionsVue
         @calculator-options="submit"
         @response-message="response_message"
-      ></the-options>
+      />
     </div>
   </main>
 </template>
@@ -24,24 +24,27 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from "vue";
 import { useStore } from "vuex";
-import { SavePage } from "../components/JS/SavePage";
-import { AddLog } from "../components/JS/AddLog";
 import { fetchData } from "../components/JS/fetchData";
 import ConfigVue from "../components/JS/ConfigVue";
+import { savePage } from "@/composable/navigation";
 
 //componets
-import Notification from "@/components/utils/Notification.vue";
-import Result from "../components/CalculatorVat/Results.vue";
-import Options from "../components/CalculatorVat/Options.vue";
+import NotificationVue from "@/components/utils/Notification.vue";
+import ResultVue from "../components/CalculatorVat/Results.vue";
+import OptionsVue from "../components/CalculatorVat/Options.vue";
+import { paths } from "@/utils/paths";
+
+// stores
+import { LogStore } from "@/stores/log/log";
 
 export default defineComponent({
   components: {
-    "the-notification": Notification,
-    "the-result": Result,
-    "the-options": Options,
+    NotificationVue,
+    ResultVue,
+    OptionsVue,
   },
   setup() {
-    //values
+    const logStore = LogStore();
     const store = useStore();
     const notification_value = reactive<{
       id: number;
@@ -53,7 +56,7 @@ export default defineComponent({
       type: "",
     });
 
-    const results_value = reactive<{
+    const results = reactive<{
       brutto: number;
       netto: number;
       precent: number;
@@ -64,16 +67,6 @@ export default defineComponent({
     });
 
     const config_vue = ref<{ url_server: string }>(ConfigVue);
-
-    //functions
-
-    const add_log = async () => {
-      const response_log = await AddLog("Kalkulator Patryka");
-      if (response_log.error) {
-        notification_value.description = response_log.error;
-        notification_value.type = "error";
-      }
-    };
 
     const response_message = (val: {
       id: number;
@@ -115,14 +108,17 @@ export default defineComponent({
         return;
       }
 
-      results_value.brutto = response.brutto;
-      results_value.netto = response.na_czysto;
-      results_value.precent = response.zysk_procentowy;
+      results.brutto = response.brutto;
+      results.netto = response.na_czysto;
+      results.precent = response.zysk_procentowy;
     };
 
-    add_log();
-    SavePage("calculatorvat");
-    return { notification_value, results_value, submit, response_message };
+    (async () => {
+      await logStore.apiCreateLog("Kalkulator_Patryka");
+      savePage(paths.calculatorVat);
+    })();
+
+    return { notification_value, results, submit, response_message };
   },
 });
 </script>

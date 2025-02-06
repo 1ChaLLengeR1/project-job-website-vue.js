@@ -1,18 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Authentication } from "../components/JS/Authentication";
-
 import { paths } from "@/utils/paths";
+import { AuthStore } from "@/stores/auth/auth";
 
-//pages
+// Pages
 import LoginPanel from "../pages/LoginPanel.vue";
-
-//pages Patryk
 import CalculatorVat from "../pages/CalculatorVat.vue";
-
-//pages Artur
-import HousingSettlement from "../pages/HousingSettlement.vue";
 import MoneySettlement from "../pages/MoneySettlement.vue";
-import ShoppingList from "../pages/ShoppingList.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
 
@@ -25,65 +18,49 @@ const router = createRouter({
     },
     {
       path: paths.login,
-      name: "loginpanel",
+      name: "loginPanel",
       component: LoginPanel,
     },
     {
-      path: "/calculator-vat",
-      name: "calculatorvat",
+      path: paths.calculatorVat,
+      name: "calculatorVat",
       component: CalculatorVat,
       meta: {
         isAuth: true,
       },
     },
     {
-      path: "/housing-settlement",
-      name: "housingsettlement",
-      component: HousingSettlement,
-      meta: {
-        isAuth: true,
-      },
-    },
-    {
-      path: "/money-settlement",
-      name: "moneysettlement",
+      path: paths.moneySettlement,
+      name: "moneySettlement",
       component: MoneySettlement,
       meta: {
         isAuth: true,
       },
     },
     {
-      path: "/shopping-list",
-      name: "shoppinglist",
-      component: ShoppingList,
-      meta: {
-        isAuth: true,
-      },
-    },
-    {
-      path: "/fuel-calculator",
-      name: "fuelcalculator",
+      path: paths.fuelcalculator,
+      name: "fuelCalculator",
       component: FuelCalculator,
       meta: {
         isAuth: true,
       },
     },
     {
-      path: "/logs",
+      path: paths.logs,
       name: "logs",
       component: Logs,
       meta: {
         isAuth: true,
       },
     },
-    { path: "/:pathMatch(.*)*", component: Logs },
+    { path: paths.notFound, component: Logs },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  const authentification = Authentication();
-  if (to.meta.isAuth && !authentification) {
-    next("/login-panel");
+  const authStore = AuthStore();
+  if (to.meta.isAuth && !authStore.auth.access_token) {
+    next(paths.login);
   } else {
     next();
   }

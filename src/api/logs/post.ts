@@ -1,12 +1,12 @@
 import { apiPost } from "@/api/common/post";
 import type { ResponseData, ErrorResponseData } from "@/types/global";
 import type { Log } from "@/types/api/logs/types";
-import type { LogBody } from "@/types/logs/types";
 
-export async function login(body: LogBody): Promise<ResponseData> {
-  const urlPath = "/logs/create/kalkulator_patryka";
-  const response = await apiPost(urlPath, body, "POST", 0, {
+export async function createLog(description: string): Promise<ResponseData> {
+  const urlPath = `/logs/create/${description}`;
+  const response = await apiPost(urlPath, {}, "POST", 0, {
     Authorization: true,
+    UserData: true,
   });
 
   if (

@@ -2,7 +2,6 @@
   <main
     class="flex h-screen w-full items-center justify-center bg-[url('../images/loginPanel/background.webp')] px-1"
   >
-    <LoadingSpinnerVue v-if="loadingSpinner" />
     <div
       class="flex w-96 flex-col items-center gap-5 rounded-[8px_0_8px_0] bg-color-bg px-2 py-5 sm:shadow-[21px_21px_4px_0_rgba(0,0,0,0.25)]"
     >
@@ -16,7 +15,7 @@
           <SvgUserVue />
           <input
             type="text"
-            :placeholder="$t('pages.login.input.mail')"
+            :placeholder="$t('pages.login.input.username')"
             class="w-full rounded-lg bg-color-yellow py-3 pl-14 pr-1 text-xl outline-none"
             v-model="inputData.username"
           />
@@ -62,6 +61,10 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { navigationPage } from "@/composable/navigation";
+
+// stores
+import { LoadingSpinnerStore } from "@/stores/modals/spinner";
 import { AuthStore } from "@/stores/auth/auth";
 
 // componets
@@ -79,14 +82,13 @@ export default defineComponent({
     SvgUserVue,
   },
   setup() {
-    //values
     const authStore = AuthStore();
+    const loadingSpinnerStore = LoadingSpinnerStore();
     const router = useRouter();
     const inputData = reactive<{ username: string; password: string }>({
       username: "",
       password: "",
     });
-    const loadingSpinner = ref<boolean>(false);
     const errorInformation = reactive<{
       status: string;
       description: string;
@@ -98,15 +100,17 @@ export default defineComponent({
     });
     const input_type = ref<string>("password");
 
-    //functions
     const handlerLogin = async () => {
       const body = {
         username: inputData.username,
         password: inputData.password,
       };
-      loadingSpinner.value = true;
-      await authStore.apiLogin(body);
-      loadingSpinner.value = false;
+      loadingSpinnerStore.isLoading = true;
+      const response = await authStore.apiLogin(body);
+      if (response) {
+        navigationPage();
+      }
+      loadingSpinnerStore.isLoading = false;
     };
 
     const changePassword = (value: string) => {
@@ -115,7 +119,6 @@ export default defineComponent({
 
     return {
       inputData,
-      loadingSpinner,
       errorInformation,
       input_type,
       handlerLogin,
