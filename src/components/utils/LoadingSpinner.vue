@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 top-0 flex h-full w-full items-center justify-center bg-white p-2 opacity-90"
+    class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-white p-2 opacity-90"
   >
     <button
       disabled

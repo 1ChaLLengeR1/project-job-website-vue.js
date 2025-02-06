@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { Authentication } from "../components/JS/Authentication";
 
+import { paths } from "@/utils/paths";
+
 //pages
 import LoginPanel from "../pages/LoginPanel.vue";
 
@@ -18,11 +20,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: paths.default,
       component: LoginPanel,
     },
     {
-      path: "/login-panel",
+      path: paths.login,
       name: "loginpanel",
       component: LoginPanel,
     },
@@ -67,19 +69,19 @@ const router = createRouter({
       },
     },
     {
-      path:'/logs',
-      name:'logs',
+      path: "/logs",
+      name: "logs",
       component: Logs,
-      meta:{
-        isAuth: true
-      }
+      meta: {
+        isAuth: true,
+      },
     },
-    { path: '/:pathMatch(.*)*', component: Logs }, 
+    { path: "/:pathMatch(.*)*", component: Logs },
   ],
 });
 
 router.beforeEach((to, from, next) => {
-  const authentification = Authentication()
+  const authentification = Authentication();
   if (to.meta.isAuth && !authentification) {
     next("/login-panel");
   } else {

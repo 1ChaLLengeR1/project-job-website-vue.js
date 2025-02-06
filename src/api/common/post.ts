@@ -25,6 +25,7 @@ export async function apiPost(
 
   try {
     const header = new Headers();
+    header.append("Content-Type", "application/json");
 
     const response = await fetch(url, {
       headers: header,

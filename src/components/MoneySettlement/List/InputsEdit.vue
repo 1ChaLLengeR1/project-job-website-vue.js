@@ -28,7 +28,7 @@
 import { defineComponent, reactive } from "vue";
 import ConfigVue from "../../JS/ConfigVue";
 import { fetchData } from "../../JS/fetchData";
-import { useStore } from "vuex";
+// import { useStore } from "vuex";
 //componets
 import BaseInput from "./BaseInput.vue";
 

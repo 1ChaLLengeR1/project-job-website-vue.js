@@ -1,5 +1,6 @@
 //setup to TailwindCSS
 import "./assets/tailwind.css";
+import pl from "@/lang/pl.json";
 
 //setup to Vue.js
 import { createApp } from "vue";
@@ -15,6 +16,9 @@ const pinia = createPinia();
 const i18n = createI18n({
   locale: "pl",
   fallbackLocale: "pl",
+  messages: {
+    pl,
+  },
 });
 
 app.use(router);

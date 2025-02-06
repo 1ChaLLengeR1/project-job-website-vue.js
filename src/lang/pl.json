@@ -1,0 +1,14 @@
+{
+  "pages": {
+    "login": {
+      "header": "Zaloguj się do konta",
+      "input": {
+        "mail": "E-Mail",
+        "password": "Hasło"
+      },
+      "button": {
+        "login": "Zaloguj się"
+      }
+    }
+  }
+}

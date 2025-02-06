@@ -10,16 +10,16 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
-    "chart.js": "^4.4.0",
+    "js-cookie": "^3.0.5",
     "pinia": "^2.3.1",
     "vue": "^3.3.4",
-    "vue-chartjs": "^5.2.0",
     "vue-i18n": "^10.0.5",
     "vue-router": "^4.2.4",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^18.17.5",
     "@vitejs/plugin-vue": "^4.3.1",
     "@vue/tsconfig": "^0.4.0",
