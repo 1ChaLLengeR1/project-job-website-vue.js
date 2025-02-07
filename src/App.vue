@@ -3,6 +3,7 @@
     <LoadingSpinner v-if="loadingSpinnerStore.isLoading" />
     <ImageDotsVue v-if="showDots" />
     <NavigationVue v-if="authStore.auth.id" @open-sliderbar="openSliderBar" />
+    <Notification />
     <div class="relative flex w-full flex-row overflow-hidden">
       <Transition name="slide-fade-left">
         <BlockSliderBar
@@ -33,10 +34,11 @@
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { pathsArtek, pathsPatryk } from "./utils/paths";
 // componets
-import NavigationVue from "./components/Header/Navigation.vue";
-import BlockSliderBar from "./components/Header/BlockSliderBar.vue";
-import ImageDotsVue from "./components/App/ImageDots.vue";
+import NavigationVue from "@/components/Header/Navigation.vue";
+import BlockSliderBar from "@/components/Header/BlockSliderBar.vue";
+import ImageDotsVue from "@/components/App/ImageDots.vue";
 import LoadingSpinner from "@/components/utils/LoadingSpinner.vue";
+import Notification from "@/components/utils/Notification.vue";
 
 // stores
 import { LoadingSpinnerStore } from "@/stores/modals/spinner";
@@ -52,6 +54,7 @@ export default defineComponent({
     NavigationVue,
     BlockSliderBar,
     ImageDotsVue,
+    Notification,
   },
   setup() {
     const loadingSpinnerStore = LoadingSpinnerStore();

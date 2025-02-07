@@ -38,6 +38,7 @@
         <div
           class="flex w-full flex-col items-start justify-center border-r border-gray-600 sm:w-80"
         >
+          <h1>{{ new Date(item.id).toLocaleString() }}</h1>
           <h1 class="font-bold" v-if="item.type === 'success'">
             {{ $t("notification.success") }}
           </h1>
@@ -86,24 +87,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from "vue";
+import { NotificationStore } from "@/stores/notification/notification";
 
 export default defineComponent({
   name: "Notification",
-  props: {
-    id: {
-      type: Number,
-      required: true,
-    },
-    type: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-  },
-  setup(props) {
+  setup() {
+    const notificationStore = NotificationStore();
     const array_notifications = ref<
       { id: number; type: string; description: string }[]
     >([]);
@@ -118,12 +107,16 @@ export default defineComponent({
     };
 
     watchEffect(() => {
-      if (!props.id || !props.type || !props.description) return;
+      if (
+        !notificationStore.data_to_notification.type ||
+        !notificationStore.data_to_notification.description
+      )
+        return;
 
       const newNotification = {
         id: Date.now(),
-        type: props.type,
-        description: props.description,
+        type: notificationStore.data_to_notification.type,
+        description: notificationStore.data_to_notification.description,
       };
 
       array_notifications.value.push(newNotification);

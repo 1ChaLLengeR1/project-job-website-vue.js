@@ -9,6 +9,40 @@
       "button": {
         "login": "Zaloguj się"
       }
+    },
+    "calculatorVat": {
+      "title": "Kalkulator Prowizji",
+      "result": {
+        "brutto": "Brutto",
+        "netto": "Na czysto",
+        "procent": "Zwrot Procentowy"
+      },
+      "placeholder": {
+        "brutto": "Cena sprzedaży (zł)",
+        "netto": "Cena zakupu (zł)",
+        "commission": "Prowizja (%)",
+        "distinction": "Wyróżnienie (%)",
+        "vat": "vat",
+        "income_tax": "podatek dochodowy",
+        "inpost_parcel_locker": "paczkomat",
+        "inpost_courier": "kurier",
+        "dpd": "dpd",
+        "allegro_matt": "allegro matt",
+        "without_smart": "bez smarta"
+      },
+      "select": {
+        "title": "Wybierz",
+        "inpost_parcel_locker": "Inpost_Paczkomat",
+        "inpost_courier": "Inpost_Kurier",
+        "inpost_cash_of_delivery_courier": "Inpost_Kurier_Pobranie",
+        "dpd": "DPD",
+        "allegro_matt": "Allegro_Matt",
+        "without_smart": "Bez_Smarta"
+      },
+      "button": {
+        "save": "Zapisz",
+        "calculate": "Oblicz"
+      }
     }
   },
   "loadingSpinner": {

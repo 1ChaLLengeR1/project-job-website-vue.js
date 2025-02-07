@@ -18,67 +18,69 @@
     </div>
     <div class="flex w-full flex-wrap justify-center gap-3">
       <edit-input
-        name="vat"
-        :number="keys_calculator.vat"
+        :name="t('pages.calculatorVat.placeholder.vat')"
+        :number="calculatorVatStore.calculation.vat"
         type="vat"
-        @update:number="update_number"
-      ></edit-input>
+        @update:number="updateNumber"
+      />
       <edit-input
-        name="podatek dochodwy"
-        :number="keys_calculator.income_tax"
+        :name="t('pages.calculatorVat.placeholder.income_tax')"
+        :number="calculatorVatStore.calculation.income_tax"
         type="income_tax"
-        @update:number="update_number"
-      ></edit-input>
+        @update:number="updateNumber"
+      />
       <edit-input
-        name="paczkomat"
-        :number="keys_calculator.inpost_parcel_locker"
+        :name="t('pages.calculatorVat.placeholder.inpost_parcel_locker')"
+        :number="calculatorVatStore.calculation.inpost_parcel_locker"
         type="inpost_parcel_locker"
-        @update:number="update_number"
+        @update:number="updateNumber"
       ></edit-input>
       <edit-input
-        name="kurier"
-        :number="keys_calculator.inpost_courier"
+        :name="t('pages.calculatorVat.placeholder.inpost_courier')"
+        :number="calculatorVatStore.calculation.inpost_courier"
         type="inpost_courier"
-        @update:number="update_number"
+        @update:number="updateNumber"
       ></edit-input>
       <edit-input
-        name="dpd"
-        :number="keys_calculator.dpd"
+        :name="t('pages.calculatorVat.placeholder.dpd')"
+        :number="calculatorVatStore.calculation.dpd"
         type="dpd"
-        @update:number="update_number"
+        @update:number="updateNumber"
       ></edit-input>
       <edit-input
-        name="allegro matt"
-        :number="keys_calculator.allegro_matt"
+        :name="t('pages.calculatorVat.placeholder.allegro_matt')"
+        :number="calculatorVatStore.calculation.allegro_matt"
         type="allegro_matt"
-        @update:number="update_number"
+        @update:number="updateNumber"
       ></edit-input>
       <edit-input
-        name="bez samrta"
-        :number="keys_calculator.without_smart"
+        :name="t('pages.calculatorVat.placeholder.without_smart')"
+        :number="calculatorVatStore.calculation.without_smart"
         type="without_smart"
-        @update:number="update_number"
+        @update:number="updateNumber"
       ></edit-input>
     </div>
     <div class="w-full">
       <button
         class="w-full rounded-b-3xl bg-color-bg p-3 text-lg text-white"
-        @click.prevent="submit"
+        @click.prevent="handlerSubmit"
       >
-        Zapisz
+        {{ t("pages.calculatorVat.button.save") }}
       </button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, reactive } from "vue";
-import { fetchData } from "../JS/fetchData";
-import { useStore } from "vuex";
-import ConfigVue from "../JS/ConfigVue";
+import { defineComponent } from "vue";
+import { useI18n } from "vue-i18n";
 
 //componets
 import InputEdit from "./InputEdit.vue";
+
+// stores
+import { CalculatorVatStore } from "@/stores/patryk/calculatorVat";
+import { Calculations } from "@/types/patryk/calculatorWork/types";
 
 export default defineComponent({
   emits: ["close-edit-panel", "response-message"],
@@ -86,107 +88,35 @@ export default defineComponent({
     "edit-input": InputEdit,
   },
   setup(_, ctx) {
-    //values
-    const config_vue = ref<{ url_server: string }>(ConfigVue);
-    const store = useStore();
-    const keys_calculator = reactive({
-      id: "",
-      income_tax: 0,
-      inpost_courier: 0,
-      vat: 0,
-      dpd: 0,
-      without_smart: 0,
-      inpost_parcel_locker: 0,
-      inpost_cash_of_delivery_courier: 0,
-      allegro_matt: 0,
-    });
+    const { t } = useI18n();
+    const calculatorVatStore = CalculatorVatStore();
 
-    //functions
-
-    const load_keys_calculator = async () => {
-      const url = `${config_vue.value.url_server}/routes/patryk_routers/calculator_work/calculator_earning/keys_calculator_values`;
-
-      const method = "GET";
-      const headers = {
-        "Content-Type": "application/json",
-      };
-
-      const response = await fetchData(url, method, headers, null, null);
-      if (response.error) {
-        ctx.emit("response-message", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
-      }
-
-      keys_calculator.income_tax = response.income_tax;
-      keys_calculator.inpost_courier = response.inpost_courier;
-      keys_calculator.vat = response.vat;
-      keys_calculator.dpd = response.dpd;
-      keys_calculator.without_smart = response.without_smart;
-      keys_calculator.inpost_parcel_locker = response.inpost_parcel_locker;
-      keys_calculator.id = response.id;
-      keys_calculator.inpost_cash_of_delivery_courier =
-        response.inpost_cash_of_delivery_courier;
-      keys_calculator.allegro_matt = response.allegro_matt;
-    };
-    load_keys_calculator();
-
-    const submit = async () => {
-      const url = `${config_vue.value.url_server}/routes/patryk_routers/calculator_work/calculator_earning/keys_calculator_edit`;
-      const method = "PUT";
-      const headers = {
-        "Content-Type": "application/json",
-      };
-      const body = {
-        id_user: store.getters["auth/getUser"].id,
-        username: store.getters["auth/getUser"].username,
-        id: keys_calculator.id,
-        income_tax: keys_calculator.income_tax,
-        vat: keys_calculator.vat,
-        inpost_parcel_locker: keys_calculator.inpost_parcel_locker,
-        inpost_courier: keys_calculator.inpost_courier,
-        inpost_cash_of_delivery_courier:
-          keys_calculator.inpost_cash_of_delivery_courier,
-        dpd: keys_calculator.dpd,
-        allegro_matt: keys_calculator.allegro_matt,
-        without_smart: keys_calculator.without_smart,
-      };
-
-      const response = await fetchData(url, method, headers, body, "body");
-      if (response.error) {
-        ctx.emit("response-message", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
-      }
-      ctx.emit("response-message", {
-        id: Math.random(),
-        description: response.detail,
-        type: "success",
-      });
-      load_keys_calculator();
-    };
-
-    const update_number = (val: { number: number; type: string }) => {
-      keys_calculator[`${val.type}`] = val.number;
+    const handlerSubmit = async () => {
+      console.log("aa");
     };
 
     const close_edit_panel = () => {
       ctx.emit("close-edit-panel", false);
     };
+
+    (async () => {
+      await calculatorVatStore.apiFetch();
+    })();
+
+    const updateNumber = (
+      num: number,
+      type: keyof Omit<Calculations, "id">,
+    ) => {
+      calculatorVatStore.calculation[type] = num;
+    };
+
     return {
+      calculatorVatStore,
       close_edit_panel,
-      keys_calculator,
-      submit,
-      update_number,
+      handlerSubmit,
+      updateNumber,
+      t,
     };
   },
 });
 </script>
-
-<style scoped></style>

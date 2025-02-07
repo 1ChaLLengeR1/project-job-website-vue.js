@@ -30,12 +30,12 @@ export default defineComponent({
     },
   },
   setup(props, ctx) {
-    //functions
     const update_number = (e: Event) => {
-      ctx.emit("update:number", {
-        type: props.type,
-        number: parseFloat((e.target as HTMLInputElement).value) || 0,
-      });
+      ctx.emit(
+        "update:number",
+        props.type,
+        parseFloat((e.target as HTMLInputElement).value),
+      );
     };
     return { update_number };
   },

@@ -6,6 +6,10 @@ export type CalculationsBody = {
   distinction: number;
 };
 
+export type Calculations = {
+  id: string;
+} & { [key in Exclude<keyof CalculationsUpdateBody, "id">]: number };
+
 export type CalculationsUpdateBody = {
   id: string;
   income_tax: number;

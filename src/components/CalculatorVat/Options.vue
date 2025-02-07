@@ -4,39 +4,35 @@
       <div
         class="relative flex w-full justify-end rounded-t-3xl bg-color-yellow px-2 py-5"
       >
-        <ellipsis-svg
-          @open-edit-panel="open_panel"
+        <EllipsisSvgVue
+          @open-edit-panel="openPanel"
           color="black"
           height="30px"
-        ></ellipsis-svg>
-        <edit-options
-          @close-edit-panel="open_panel"
-          @response-message="response_message"
-          v-show="panel_edit"
-        ></edit-options>
+        />
+        <EditOptionsVue @close-edit-panel="openPanel" v-if="panelEdit" />
       </div>
       <div class="flex w-full flex-wrap gap-3 sm:flex-nowrap">
         <input
           type="number"
-          placeholder="Cena sprzedaży (zł)"
+          :placeholder="t('pages.calculatorVat.placeholder.brutto')"
           class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.gross_sales"
         />
         <input
           type="number"
-          placeholder="Cena zakupu (zł)"
+          :placeholder="t('pages.calculatorVat.placeholder.netto')"
           class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.gross_purchase"
         />
         <input
           type="number"
-          placeholder="Prowizja (%)"
+          :placeholder="t('pages.calculatorVat.placeholder.commission')"
           class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.provision"
         />
         <input
           type="number"
-          placeholder="Wyróżnienie (%)"
+          :placeholder="t('pages.calculatorVat.placeholder.distinction')"
           class="w-full bg-color-bg p-4 text-color-grey placeholder-white outline-none"
           v-model="input_values.distinction"
         />
@@ -60,7 +56,7 @@
           class="me-auto w-full rounded-b-3xl bg-color-yellow py-3 text-3xl font-bold"
           @click="submit"
         >
-          Oblicz
+          {{ t("pages.calculatorVat.button.calculate") }}
         </button>
       </div>
     </div>
@@ -69,23 +65,29 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
 //componets
 import EllipsisSvgVue from "../CalculatorVat/EllipsisSvg.vue";
 import EditOptionsVue from "./EditOptions.vue";
 
+// stores
+import { CalculatorVatStore } from "@/stores/patryk/calculatorVat";
+import { CalculationsBody } from "@/types/patryk/calculatorWork/types";
+
 export default defineComponent({
-  emits: ["calculator-options", "response-message"],
   components: {
-    "ellipsis-svg": EllipsisSvgVue,
-    "edit-options": EditOptionsVue,
+    EllipsisSvgVue,
+    EditOptionsVue,
   },
-  setup(_, ctx) {
-    //values
+  setup() {
+    const { t } = useI18n();
+    const calculatorVatStore = CalculatorVatStore();
     const input_values = reactive<{
-      gross_sales: number | null | string;
-      gross_purchase: number | null | string;
-      provision: number | null | string;
-      distinction: number | null | string;
+      gross_sales: number | null;
+      gross_purchase: number | null;
+      provision: number | null;
+      distinction: number | null;
       referrer: string;
     }>({
       gross_sales: null,
@@ -94,86 +96,75 @@ export default defineComponent({
       distinction: null,
       referrer: "nothing",
     });
-
-    const panel_edit = ref<boolean>(false);
-
+    const panelEdit = ref<boolean>(false);
     const select_value = ref<{ text: string; value: string }[]>([
-      { text: "Wybierz", value: "nothing" },
-      { text: "Inpost-Paczkomat", value: "inpost_parcel_locker" },
+      { text: t("pages.calculatorVat.select.title"), value: "nothing" },
       {
-        text: "Inpost-Kurier",
+        text: t("pages.calculatorVat.select.inpost_parcel_locker"),
+        value: "inpost_parcel_locker",
+      },
+      {
+        text: t("pages.calculatorVat.select.inpost_courier"),
         value: "inpost_courier",
       },
       {
-        text: "Inpost-Kurier-Pobranie",
+        text: t("pages.calculatorVat.select.inpost_cash_of_delivery_courier"),
         value: "inpost_cash_of_delivery_courier",
       },
       {
-        text: "DPD",
+        text: t("pages.calculatorVat.select.dpd"),
         value: "dpd",
       },
       {
-        text: "Allegro-Matt",
+        text: t("pages.calculatorVat.select.allegro_matt"),
         value: "allegro_matt",
       },
       {
-        text: "Bez-Smarta",
+        text: t("pages.calculatorVat.select.without_smart"),
         value: "without_smart",
       },
     ]);
 
-    //functions
-    const open_panel = (val: boolean) => {
-      panel_edit.value = val;
+    const openPanel = (val: boolean) => {
+      panelEdit.value = val;
     };
 
-    const response_message = (val: {
-      id: number;
-      description: string;
-      type: string;
-    }) => {
-      ctx.emit("response-message", val);
-    };
-
-    const submit = () => {
-      const obj = {
+    const submit = async () => {
+      const obj: CalculationsBody = {
         referrer: input_values.referrer,
-        gross_sales: input_values.gross_sales,
-        gross_purchase: input_values.gross_purchase,
-        provision: input_values.provision,
-        distinction: input_values.distinction,
+        gross_sales: input_values.gross_sales || 0,
+        gross_purchase: input_values.gross_purchase || 0,
+        provision: input_values.provision || 0,
+        distinction: input_values.distinction || 0,
       };
 
-      if (obj.gross_sales === null || obj.gross_sales === "") {
+      if (obj.gross_sales === null) {
         obj.gross_sales = 0;
       }
 
-      if (obj.gross_purchase === null || obj.gross_purchase === "") {
+      if (obj.gross_purchase === null) {
         obj.gross_purchase = 0;
       }
 
-      if (obj.provision === null || obj.provision === "") {
+      if (obj.provision === null) {
         obj.provision = 0;
       }
 
-      if (obj.distinction === null || obj.distinction === "") {
+      if (obj.distinction === null) {
         obj.distinction = 0;
       }
 
-      // console.log(obj);
-
-      ctx.emit("calculator-options", obj);
+      await calculatorVatStore.apiCalculations(obj);
     };
+
     return {
       input_values,
       select_value,
-      panel_edit,
+      panelEdit,
       submit,
-      open_panel,
-      response_message,
+      openPanel,
+      t,
     };
   },
 });
 </script>
-
-<style scoped></style>
