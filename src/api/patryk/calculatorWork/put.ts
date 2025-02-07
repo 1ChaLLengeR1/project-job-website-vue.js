@@ -3,7 +3,7 @@ import type { ResponseData, ErrorResponseData } from "@/types/global";
 import type { ApiCalculatorKeys } from "@/types/api/patryk/calculatorWork/types";
 import type { CalculationsUpdateBody } from "@/types/patryk/calculatorWork/types";
 
-export async function calculations(
+export async function calculationUpdate(
   body: CalculationsUpdateBody,
 ): Promise<ResponseData> {
   const urlPath = "/calculator_work/calculator_keys/update";
