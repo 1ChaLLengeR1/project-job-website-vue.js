@@ -6,6 +6,7 @@ import { navigationPage } from "@/composable/navigation";
 // types
 import type { AuthBody, Auth } from "@/types/auth/types";
 import type { ApiAuth } from "@/types/api/auth/types";
+import type { Error, ErrorResponseData } from "@/types/global";
 
 // api
 import { automaticallyLogin } from "@/api/auth/fetch";
@@ -20,9 +21,9 @@ export const AuthStore = defineStore("authStore", () => {
     refresh_token: "",
   });
 
-  const apiLogin = async (userData: AuthBody): Promise<boolean> => {
+  const apiLogin = async (userData: AuthBody): Promise<Auth | Error> => {
     if (auth.value.id) {
-      return true;
+      return auth.value;
     }
     const response = await login(userData);
     if (response && response.isValid) {
@@ -36,9 +37,12 @@ export const AuthStore = defineStore("authStore", () => {
       Cookies.set("__job_auth", JSON.stringify(auth.value), {
         expires: 10 / 24,
       });
-      return true;
+      return auth.value;
+    } else {
+      return {
+        error: response.data as string,
+      };
     }
-    return false;
   };
 
   const apiAutomaticallyLogin = async (): Promise<boolean> => {

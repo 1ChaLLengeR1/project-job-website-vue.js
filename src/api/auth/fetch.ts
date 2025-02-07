@@ -18,7 +18,7 @@ export async function automaticallyLogin(
     console.error("API response does not return the automatically login!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

@@ -19,7 +19,7 @@ export async function calculations(
     console.error("API response does not return calculator keys calculations!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

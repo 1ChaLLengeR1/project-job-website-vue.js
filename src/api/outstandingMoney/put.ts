@@ -26,7 +26,7 @@ export async function outStandingMoneyEditNameList(
     console.error("API response does not return edit name list!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }
@@ -55,7 +55,7 @@ export async function outStandingMoneyEditItem(
     console.error("API response does not return edit item!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

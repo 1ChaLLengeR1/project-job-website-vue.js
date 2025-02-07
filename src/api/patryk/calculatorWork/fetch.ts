@@ -16,7 +16,7 @@ export async function calculatorKeys(): Promise<ResponseData> {
     console.error("API response does not return the calculator keys!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

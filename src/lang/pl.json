@@ -28,5 +28,9 @@
     "button": {
       "logOut": "Wyloguj sie"
     }
+  },
+  "notification": {
+    "success": "Sukces",
+    "error": "Błąd"
   }
 }

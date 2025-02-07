@@ -16,14 +16,14 @@ import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 
 export interface ResponseData {
   isValid: boolean;
-  data: ResponseApiData | ErrorResponseData;
+  data: ResponseApiData | string;
   additional: ResponseApiAdditional;
 }
 
 export interface ResponseApi {
   status: string;
   status_code: number;
-  data: ResponseApiData | ErrorResponseData;
+  data: ResponseApiData | string;
   additional: ResponseApiAdditional;
 }
 
@@ -33,6 +33,8 @@ export interface ErrorResponseData {
   data: string;
   additional: string;
 }
+
+export type Error = { error: string };
 
 export type ResponseApiData =
   | ApiAuth

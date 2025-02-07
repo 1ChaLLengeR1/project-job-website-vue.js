@@ -39,9 +39,9 @@
           class="flex w-full flex-col items-start justify-center border-r border-gray-600 sm:w-80"
         >
           <h1 class="font-bold" v-if="item.type === 'success'">
-            Success Title Goes Here
+            {{ $t("notification.success") }}
           </h1>
-          <h1 class="font-bold" v-else>Error Title Goes Here</h1>
+          <h1 class="font-bold" v-else>{{ $t("notification.error") }}</h1>
           <h2>{{ item.description }}</h2>
         </div>
         <div
@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 
 export default defineComponent({
   name: "Notification",
@@ -104,29 +104,32 @@ export default defineComponent({
     },
   },
   setup(props) {
-    //values
     const array_notifications = ref<
       { id: number; type: string; description: string }[]
     >([]);
 
-    //functions
-
     const removeItem = (number_id: number) => {
-      const findId = array_notifications.value.findIndex((obj) => {
-        obj.id === number_id;
-      });
-      array_notifications.value.splice(findId, 1);
+      const findId = array_notifications.value.findIndex(
+        (obj) => obj.id === number_id,
+      );
+      if (findId !== -1) {
+        array_notifications.value.splice(findId, 1);
+      }
     };
 
-    // watchers
-    watch(props, (newVal) => {
-      array_notifications.value.push({
-        id: newVal.id,
-        type: newVal.type,
-        description: newVal.description,
-      });
+    watchEffect(() => {
+      if (!props.id || !props.type || !props.description) return;
+
+      const newNotification = {
+        id: Date.now(),
+        type: props.type,
+        description: props.description,
+      };
+
+      array_notifications.value.push(newNotification);
+
       setTimeout(() => {
-        removeItem(newVal.id);
+        removeItem(newNotification.id);
       }, 4000);
     });
 
@@ -134,5 +137,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped></style>

@@ -18,7 +18,7 @@ export async function outStandingMoneyCollection(): Promise<ResponseData> {
     );
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

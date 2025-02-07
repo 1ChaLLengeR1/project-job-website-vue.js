@@ -73,6 +73,9 @@ import SvgEyeVue from "../components/LoginPanel/SvgEye.vue";
 import SvgPasswordVue from "../components/LoginPanel/SvgPassword.vue";
 import SvgUserVue from "../components/LoginPanel/SvgUser.vue";
 
+// types
+import type { Auth } from "@/types/auth/types";
+
 export default defineComponent({
   name: "LoginPanel",
   components: {
@@ -107,8 +110,19 @@ export default defineComponent({
       };
       loadingSpinnerStore.isLoading = true;
       const response = await authStore.apiLogin(body);
-      if (response) {
+      if ("id" in response) {
         navigationPage();
+      } else {
+        console.log(response);
+        errorInformation.status = "Error";
+        errorInformation.description = response.error;
+        errorInformation.show = true;
+
+        setTimeout(() => {
+          errorInformation.status = "";
+          errorInformation.description = "";
+          errorInformation.show = false;
+        }, 4000);
       }
       loadingSpinnerStore.isLoading = false;
     };

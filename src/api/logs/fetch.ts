@@ -16,7 +16,7 @@ export async function collectionLogs(num: number): Promise<ResponseData> {
     console.error("API response does not return the collection logs!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

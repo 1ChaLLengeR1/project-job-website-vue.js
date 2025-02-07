@@ -26,7 +26,7 @@ export async function outStandingMoneyCreateList(
     console.error("API response does not return create list!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }
@@ -55,7 +55,7 @@ export async function outStandingMoneyAddItem(
     console.error("API response does not return create list!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

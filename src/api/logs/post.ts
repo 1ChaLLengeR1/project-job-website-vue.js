@@ -17,7 +17,7 @@ export async function createLog(description: string): Promise<ResponseData> {
     console.error("API response does not return create log!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }

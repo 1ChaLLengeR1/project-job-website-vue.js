@@ -20,7 +20,7 @@ export async function fuelCalculations(
     console.error("API response does not return the fuel calculations!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data as string,
       additional: response.additional,
     };
   }

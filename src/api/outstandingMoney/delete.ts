@@ -22,7 +22,7 @@ export async function outStandingMoneyDeleteList(
     console.error("API response does not return delete list!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }
@@ -51,7 +51,7 @@ export async function outStandingMoneyDeleteItem(
     console.error("API response does not return delete item!");
     return {
       isValid: false,
-      data: response.data as ErrorResponseData,
+      data: response.data,
       additional: response.additional,
     };
   }
