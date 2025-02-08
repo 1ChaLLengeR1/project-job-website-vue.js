@@ -34,6 +34,13 @@ export const CalculatorVatStore = defineStore("calculatorVatStore", () => {
     without_smart: 0,
   });
 
+  const setCalculation = (key: keyof Calculations, num: number) => {
+    if (key === "id") {
+      return;
+    }
+    calculation.value[key] = num;
+  };
+
   const result = ref<ApiCalculations>({
     brutto: 0,
     na_czysto: 0,
@@ -70,12 +77,16 @@ export const CalculatorVatStore = defineStore("calculatorVatStore", () => {
   const apiCalculationUpdate = async (body: CalculationsUpdateBody) => {
     const response = await calculationUpdate(body);
     if (response && response.isValid) {
-      const responseData = response.data as ApiCalculatorKeys;
-      console.log(responseData);
+      notificationStore.data_to_notification = {
+        type: "success",
+        description: "Poprawnie zaktualizowano klucze kalkulatora!",
+      };
     } else {
       const responseError = response.data as string;
-      console.log(responseError);
-      console.error("error for fetch ApiCalculationUpdate, check nettworks!");
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError,
+      };
     }
   };
 
@@ -85,5 +96,6 @@ export const CalculatorVatStore = defineStore("calculatorVatStore", () => {
     apiFetch,
     apiCalculations,
     apiCalculationUpdate,
+    setCalculation,
   };
 });

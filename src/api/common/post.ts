@@ -53,7 +53,7 @@ export async function apiPost(
 
     const response = await fetch(url, {
       headers: header,
-      method: "POST",
+      method: method,
       body: JSON.stringify(body),
     });
 

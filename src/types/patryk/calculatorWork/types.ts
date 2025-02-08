@@ -8,7 +8,15 @@ export type CalculationsBody = {
 
 export type Calculations = {
   id: string;
-} & { [key in Exclude<keyof CalculationsUpdateBody, "id">]: number };
+  income_tax: number;
+  vat: number;
+  inpost_parcel_locker: number;
+  inpost_courier: number;
+  inpost_cash_of_delivery_courier: number;
+  dpd: number;
+  allegro_matt: number;
+  without_smart: number;
+};
 
 export type CalculationsUpdateBody = {
   id: string;
