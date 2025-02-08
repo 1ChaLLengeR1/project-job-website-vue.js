@@ -25,9 +25,9 @@ export const LogStore = defineStore("logStore", () => {
   const apiCreateLog = async (description: string) => {
     const response = await createLog(description);
     if (response && response.isValid) {
-      console.log("create log success");
+      return;
     }
   };
 
-  return { apiFetchCollection, apiCreateLog };
+  return { collection, apiFetchCollection, apiCreateLog };
 });

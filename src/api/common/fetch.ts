@@ -7,8 +7,8 @@ import type {
 import type { Headers } from "@/types/api/common/types";
 import { AuthStore } from "@/stores/auth/auth";
 
-const DEBUG_TOKEN = true;
-const DEBUG_REFRESH_TOKEN = true;
+const DEBUG_TOKEN = false;
+const DEBUG_REFRESH_TOKEN = false;
 const DEBUG_USER_DATA = false;
 
 export async function apiGet(

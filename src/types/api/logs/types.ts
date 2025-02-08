@@ -4,5 +4,5 @@ export type Log = {
   id: string;
   username: string;
   description: string;
-  data: string;
+  date: string;
 };

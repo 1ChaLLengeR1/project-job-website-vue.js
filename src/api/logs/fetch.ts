@@ -3,7 +3,7 @@ import type { ResponseData, ErrorResponseData } from "@/types/global";
 import type { ApiCollectionLogs } from "@/types/api/logs/types";
 
 export async function collectionLogs(num: number): Promise<ResponseData> {
-  const urlPath = `logs/collection/${num}`;
+  const urlPath = `/logs/collection/${num}`;
   const response = await apiGet(urlPath, 0, {
     Authorization: true,
   });
