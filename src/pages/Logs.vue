@@ -6,11 +6,13 @@
       </h1>
       <ButtonsNumberLogsVue @number-logs="getLogs" />
       <table class="flex w-full flex-col items-center gap-3">
-        <tr class="flex gap-3">
-          <ItemNameVue :name="names_table.id" rounded="left" />
-          <ItemNameVue :name="names_table.description" rounded="none" />
-          <ItemNameVue :name="names_table.date" rounded="right" />
-        </tr>
+        <thead>
+          <tr class="flex gap-3">
+            <ItemNameVue :name="names_table.id" rounded="left" />
+            <ItemNameVue :name="names_table.description" rounded="none" />
+            <ItemNameVue :name="names_table.date" rounded="right" />
+          </tr>
+        </thead>
         <tr
           v-for="item in logStore.collection"
           :key="item.id"
