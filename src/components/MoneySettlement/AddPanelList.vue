@@ -87,11 +87,11 @@ export default defineComponent({
     const item = reactive<{
       name_list: string;
       name: string;
-      amount: number;
+      amount: number | null;
     }>({
       name_list: "",
       name: "",
-      amount: 0,
+      amount: null,
     });
 
     const submit = async () => {
@@ -121,12 +121,12 @@ export default defineComponent({
       const obj = {
         id: Math.random(),
         name: item.name,
-        amount: item.amount,
+        amount: item.amount ?? 0,
       };
 
       array_settlement.value.push(obj);
       item.name = "";
-      item.amount = 0;
+      item.amount = null;
     };
 
     const deleteItem = (id: number) => {

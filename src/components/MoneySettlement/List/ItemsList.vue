@@ -18,7 +18,7 @@
         v-else
         :name="item.name"
         :amount="item.amount"
-        :date="item.data"
+        :date="item.date"
       />
     </li>
   </ul>

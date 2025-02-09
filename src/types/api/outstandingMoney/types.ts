@@ -11,7 +11,7 @@ export type ArrayItem = {
   id: string;
   amount: number;
   name: string;
-  data: string;
+  date: string;
 };
 
 export type ApiOutStandingMoneyCreateList = {

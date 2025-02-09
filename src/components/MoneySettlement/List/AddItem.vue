@@ -1,24 +1,25 @@
 <template>
   <div class="w-full">
     <form class="flex w-full flex-wrap justify-center gap-3">
-      <base-input
+      <BaseInput
         type_input="text"
-        :value="input_value.name"
+        :value="inputValue.name"
         type="name"
-        placeholder="nazwa produktu"
-        @input-update="input_update"
-      ></base-input>
-      <base-input
+        :placeholder="t('pages.moneySettlement.placeholder.name')"
+        @input-update="inputUpdate"
+      />
+      <BaseInput
         type_input="number"
-        :value="input_value.amount"
+        :value="inputValue.amount"
         type="amount"
-        @input-update="input_update"
-      ></base-input>
+        :placeholder="t('pages.moneySettlement.placeholder.amount')"
+        @input-update="inputUpdate"
+      />
       <button
         class="w-full bg-color-yellow p-1 font-syne font-bold sm:w-64 sm:p-3"
-        @click.prevent="add_submit"
+        @click.prevent="submitAdd"
       >
-        Dodaj do listy
+        {{ $t("pages.moneySettlement.button.addItem") }}
       </button>
     </form>
   </div>
@@ -26,12 +27,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import ConfigVue from "../../JS/ConfigVue";
-import { fetchData } from "../../JS/fetchData";
-import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 
 //componets
 import BaseInput from "./BaseInput.vue";
+
+// stores
+import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
 
 export default defineComponent({
   props: {
@@ -40,59 +42,41 @@ export default defineComponent({
       type: String,
     },
   },
-  emits: ["response-error"],
   components: {
-    "base-input": BaseInput,
+    BaseInput,
   },
-  setup(props, ctx) {
-    //values
-    const store = useStore();
-    const input_value = reactive<{ name: string; amount: number }>({
+  setup(props) {
+    const { t } = useI18n();
+    const moneySettlementStore = MoneySettlementStore();
+    const inputValue = reactive<{
+      name: string;
+      amount: number | string | null;
+    }>({
       name: "",
-      amount: 0,
+      amount: null,
     });
 
-    //functions
-    const input_update = (val: { value: number; type: string }) => {
-      input_value[`${val.type}`] = val.value;
-    };
-
-    const add_submit = async () => {
-      const url = `${ConfigVue.url_server}/routers/outstanding_money/outstandingmoney/add_item`;
-      const method = "POST";
-      const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-      };
-      const body = {
-        id_user: store.getters["auth/getUser"].id,
-        username: store.getters["auth/getUser"].username,
-        id_name: props.id_name,
-        amount: input_value.amount,
-        name: input_value.name,
-      };
-
-      const response = await fetchData(url, method, headers, body, "body");
-      if (response.error) {
-        ctx.emit("response-error", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
+    const inputUpdate = (
+      type: keyof typeof inputValue,
+      value: string | number,
+    ) => {
+      if (type === "name") {
+        inputValue[type] = value as string;
+      } else if (type === "amount") {
+        inputValue[type] = value;
       }
-
-      ctx.emit("response-error", {
-        id: Math.random(),
-        description: response.detail,
-        type: "success",
-      });
-      input_value.name = "";
-      input_value.amount = 0;
-      await store.dispatch("response/get_list_settlement");
     };
 
-    return { input_update, add_submit, input_value };
+    const submitAdd = async () => {
+      const body = {
+        id_name: props.id_name,
+        amount: inputValue.amount as number,
+        name: inputValue.name as string,
+      };
+      await moneySettlementStore.apiAddItem(body);
+    };
+
+    return { inputValue, inputUpdate, submitAdd, t };
   },
 });
 </script>

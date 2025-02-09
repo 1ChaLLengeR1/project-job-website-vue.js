@@ -4,6 +4,7 @@
     <ImageDotsVue v-if="showDots" />
     <NavigationVue v-if="authStore.auth.id" @open-sliderbar="openSliderBar" />
     <Notification />
+    <ConfirmBox v-if="confirmBoxStore.isActice" />
     <div class="relative flex w-full flex-row overflow-hidden">
       <Transition name="slide-fade-left">
         <BlockSliderBar
@@ -39,10 +40,12 @@ import BlockSliderBar from "@/components/Header/BlockSliderBar.vue";
 import ImageDotsVue from "@/components/App/ImageDots.vue";
 import LoadingSpinner from "@/components/utils/LoadingSpinner.vue";
 import Notification from "@/components/utils/Notification.vue";
+import ConfirmBox from "@/components/utils/ConfirmBox.vue";
 
 // stores
 import { LoadingSpinnerStore } from "@/stores/modals/spinner";
 import { AuthStore } from "@/stores/auth/auth";
+import { ConfirmBoxStore } from "@/stores/modals/confirmBox";
 
 // types
 import type { Link } from "@/utils/paths";
@@ -55,10 +58,12 @@ export default defineComponent({
     BlockSliderBar,
     ImageDotsVue,
     Notification,
+    ConfirmBox,
   },
   setup() {
     const loadingSpinnerStore = LoadingSpinnerStore();
     const authStore = AuthStore();
+    const confirmBoxStore = ConfirmBoxStore();
     const sildeBars = reactive<{ id: string; value: boolean }>({
       id: "",
       value: false,
@@ -102,6 +107,7 @@ export default defineComponent({
       authStore,
       showDots,
       loadingSpinnerStore,
+      confirmBoxStore,
       openSliderBar,
     };
   },

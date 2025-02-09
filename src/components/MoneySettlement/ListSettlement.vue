@@ -24,7 +24,6 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive } from "vue";
-import { useStore } from "vuex";
 
 // stores
 import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
@@ -40,7 +39,6 @@ export default defineComponent({
   },
   setup() {
     const moneySettlementStore = MoneySettlementStore();
-    const store = useStore();
     const show_list = reactive<{ id: string }>({
       id: "",
     });

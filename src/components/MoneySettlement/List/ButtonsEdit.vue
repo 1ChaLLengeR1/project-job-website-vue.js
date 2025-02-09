@@ -1,29 +1,32 @@
 <template>
   <div class="flex w-full justify-end gap-3">
-    <svg-ellipsi
-      :height="svg_values"
+    <EllipsisSvg
+      :height="svgValues"
       bg="#FCA311"
       padding="6px"
       color="blue"
-      @open-edit-panel="open_edit_panel"
-    ></svg-ellipsi>
-    <svg-xmark
-      :height="svg_values"
+      @open-edit-panel="openEditPanel"
+    />
+    <SvgXmark
+      :height="svgValues"
       bg="#FCA311"
       padding="6px"
       color="red"
-      @click="delete_item"
-    ></svg-xmark>
+      @click="deleteItem"
+    />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { useStore } from "vuex";
 
 //componets
 import SvgXmark from "./SvgXmark.vue";
 import EllipsisSvg from "@/components/CalculatorVat/EllipsisSvg.vue";
+
+// stores
+import { ConfirmBoxStore } from "@/stores/modals/confirmBox";
+import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
 
 export default defineComponent({
   props: {
@@ -34,51 +37,35 @@ export default defineComponent({
   },
   emits: ["open-buttons-edit", "confirm-box"],
   components: {
-    "svg-xmark": SvgXmark,
-    "svg-ellipsi": EllipsisSvg,
+    SvgXmark,
+    EllipsisSvg,
   },
   setup(props, ctx) {
-    //values
-    const store = useStore();
-    const svg_values = ref<string>("40px");
+    const confirmBoxStore = ConfirmBoxStore();
+    const moneySettlementStore = MoneySettlementStore();
+    const svgValues = ref<string>("40px");
 
-    //functions
-    const open_edit_panel = (val: boolean) => {
+    const openEditPanel = (val: boolean) => {
       ctx.emit("open-buttons-edit", props.id);
     };
 
-    const delete_item = () => {
-      ctx.emit("confirm-box", {
-        info: "Czy na pewno chcesz usunąć tą pozycję?",
-        url: "/routers/outstanding_money/outstandingmoney/delete_item",
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-        },
-        body: {
-          id_user: store.getters["auth/getUser"].id,
-          username: store.getters["auth/getUser"].username,
-          id: props.id,
-        },
-        method_fetch: "body",
-        store_paramms: {
-          url: "response/get_list_settlement",
-          type: true,
-        },
+    const deleteItem = async () => {
+      confirmBoxStore.isActice = true;
+      confirmBoxStore.setCallback(async () => {
+        await moneySettlementStore.apiDeleteItem(props.id);
       });
     };
 
-    const response_svg = () => {
+    const responseSvg = () => {
       if (window.innerWidth >= 640) {
-        svg_values.value = "40px";
+        svgValues.value = "40px";
       } else {
-        svg_values.value = "20px";
+        svgValues.value = "20px";
       }
     };
-    window.addEventListener("resize", response_svg);
-    response_svg();
-    return { svg_values, open_edit_panel, delete_item };
+    window.addEventListener("resize", responseSvg);
+    responseSvg();
+    return { svgValues, openEditPanel, deleteItem };
   },
 });
 </script>

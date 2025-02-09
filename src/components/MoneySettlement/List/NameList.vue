@@ -1,15 +1,15 @@
 <template>
   <div class="flex w-full gap-3 bg-color-bg-dark">
-    <svg-arrow-down
+    <ArrowDownVue
       :color="svg.arrow.color"
       :height="svg.arrow.height"
       padding="8px"
       bg="#FCA311"
-      @click="show_items_list"
-    ></svg-arrow-down>
+      @click="showItemsList"
+    />
     <form class="flex w-full items-center justify-center p-1">
       <p
-        v-if="!input_values.change"
+        v-if="!inputValues.change"
         class="font-syne text-sm font-bold text-white sm:text-3xl"
       >
         {{ title }}
@@ -18,45 +18,46 @@
         v-else
         class="flex w-full flex-col items-center justify-center gap-3 lg:flex-row"
       >
-        <base-input
-          :value="input_values.title"
+        <BaseInputVue
+          :value="inputValues.title"
           type_input="text"
           type="title"
-          @input-update="input_update"
-        ></base-input>
+          @input-update="inputUpdate"
+        />
         <button
           class="w-full bg-color-yellow p-1 font-syne text-white sm:w-64 sm:p-3"
-          @click.prevent="submit_edit"
+          @click.prevent="submitEdit(id)"
         >
           Zapisz
         </button>
       </div>
     </form>
     <div class="flex justify-center gap-3">
-      <svg-ellipsis
+      <EllipsisSvgVue
         :color="svg.ellipsi.color"
         :height="svg.ellipsi.height"
         padding="8px"
         bg="#FCA311"
-        @click="open_edit"
-      ></svg-ellipsis>
+        @click="openEdit"
+      />
 
-      <svg-xmark
+      <SvgXmark
         :color="svg.xmark.color"
         :height="svg.xmark.height"
         padding="8px"
         bg="#FCA311"
-        @click.prevent="submit_delete"
-      ></svg-xmark>
+        @click.prevent="submitDelete(id)"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import ConfigVue from "../../JS/ConfigVue";
-import { fetchData } from "../../JS/fetchData";
-import { useStore } from "vuex";
+
+// stores
+import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
+import { ConfirmBoxStore } from "@/stores/modals/confirmBox";
 
 //componets
 import SvgXmark from "./SvgXmark.vue";
@@ -66,10 +67,10 @@ import BaseInputVue from "./BaseInput.vue";
 
 export default defineComponent({
   components: {
-    "svg-xmark": SvgXmark,
-    "svg-ellipsis": EllipsisSvgVue,
-    "svg-arrow-down": ArrowDownVue,
-    "base-input": BaseInputVue,
+    SvgXmark,
+    EllipsisSvgVue,
+    ArrowDownVue,
+    BaseInputVue,
   },
   props: {
     title: {
@@ -81,15 +82,15 @@ export default defineComponent({
       type: String,
     },
   },
-  emits: ["response-error", "open-list", "confirm-box"],
   setup(props, ctx) {
-    //values
-    const store = useStore();
-    const input_values = reactive({
+    const moneySettlementStore = MoneySettlementStore();
+    const confirmBoxStore = ConfirmBoxStore();
+    const inputValues = reactive({
       title: props.title,
       id: props.id,
       change: false,
     });
+
     const svg = reactive({
       xmark: {
         color: "red",
@@ -105,8 +106,7 @@ export default defineComponent({
       },
     });
 
-    //functions
-    const response_svg = () => {
+    const responseSvg = () => {
       if (window.innerWidth <= 640) {
         svg.xmark.height = `20px`;
         svg.ellipsi.height = `20px`;
@@ -118,84 +118,49 @@ export default defineComponent({
       }
     };
 
-    const submit_edit = async () => {
-      const url = `${ConfigVue.url_server}/routers/outstanding_money/names_overdue/edit_name_list`;
-      const method = "PUT";
-      const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-      };
+    const submitEdit = async (id: string) => {
       const body = {
-        id_user: store.getters["auth/getUser"].id,
-        username: store.getters["auth/getUser"].username,
-        id: input_values.id,
-        name: input_values.title,
+        id: id,
+        name: inputValues.title,
       };
-      const response = await fetchData(url, method, headers, body, "body");
-      if (response.error) {
-        ctx.emit("response-error", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
-      }
-      ctx.emit("response-error", {
-        id: Math.random(),
-        description: response.detail,
-        type: "success",
-      });
-      input_values.change = false;
-      store.dispatch("response/get_list_settlement");
+      await moneySettlementStore.apiEditNameList(body);
     };
 
-    const submit_delete = async () => {
-      ctx.emit("confirm-box", {
-        info: "Czy na pewno chcesz usunąć liste?",
-        url: "/routers/outstanding_money/names_overdue/delete_list",
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-        },
-        body: {
-          id_user: store.getters["auth/getUser"].id,
-          username: store.getters["auth/getUser"].username,
-          id: input_values.id,
-        },
-        method_fetch: "body",
-        store_paramms: {
-          url: "response/get_list_settlement",
-          type: true,
-        },
+    const submitDelete = async (id: string) => {
+      confirmBoxStore.isActice = true;
+      confirmBoxStore.setCallback(async () => {
+        await moneySettlementStore.apiDeleteList(id);
       });
     };
 
-    const open_edit = () => {
-      input_values.change = !input_values.change;
+    const openEdit = () => {
+      inputValues.change = !inputValues.change;
     };
 
-    const show_items_list = () => {
+    const showItemsList = () => {
       ctx.emit("open-list", props.id);
     };
 
-    const input_update = (val: { type: string; value: string }) => {
-      input_values[`${val.type}`] = val.value;
+    const inputUpdate = (
+      type: keyof typeof inputValues,
+      value: string | number,
+    ) => {
+      if (type === "title") {
+        inputValues[type] = value as string;
+      }
     };
 
-    window.addEventListener("resize", response_svg);
-    response_svg();
+    window.addEventListener("resize", responseSvg);
+    responseSvg();
     return {
       svg,
-      input_values,
-      input_update,
-      submit_edit,
-      open_edit,
-      submit_delete,
-      show_items_list,
+      inputValues,
+      inputUpdate,
+      submitEdit,
+      openEdit,
+      submitDelete,
+      showItemsList,
     };
   },
 });
 </script>
-
-<style scoped></style>

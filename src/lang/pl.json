@@ -69,7 +69,8 @@
       },
       "button": {
         "addList": "Dodaj produkt do listy",
-        "sendList": "Wyślij Liste"
+        "sendList": "Wyślij Liste",
+        "addItem": "Dodaj do listy"
       }
     }
   },

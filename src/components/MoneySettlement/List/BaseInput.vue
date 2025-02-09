@@ -18,7 +18,7 @@ export default defineComponent({
   props: {
     value: {
       required: true,
-      type: [String, Number],
+      type: [String, Number, null],
     },
     type_input: {
       required: true,
@@ -39,10 +39,11 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const base_input = (e: Event) => {
-      ctx.emit("input-update", {
-        type: props.type,
-        value: (e.target as HTMLInputElement).value,
-      });
+      ctx.emit(
+        "input-update",
+        props.type,
+        (e.target as HTMLInputElement).value,
+      );
     };
     return { base_input };
   },

@@ -13,13 +13,14 @@
     <p
       class="w-64 bg-color-bg text-center font-syne text-sm font-bold text-color-yellow sm:p-3 sm:text-lg"
     >
-      {{ date }}
+      {{ formatDate(date) }}
     </p>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { formatDate } from "@/utils/formats";
 
 export default defineComponent({
   props: {
@@ -37,7 +38,7 @@ export default defineComponent({
     },
   },
   setup() {
-    return {};
+    return { formatDate };
   },
 });
 </script>

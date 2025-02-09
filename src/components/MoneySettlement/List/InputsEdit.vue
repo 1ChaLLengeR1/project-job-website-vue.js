@@ -6,13 +6,13 @@
         type="name"
         :value="name"
         width="sm:w-52"
-        @input-update="input_update"
+        @input-update="inputUpdate"
       ></base-input>
       <base-input
         type_input="number"
         type="amount"
         :value="amount"
-        @input-update="input_update"
+        @input-update="inputUpdate"
       ></base-input>
       <button
         class="w-full bg-color-yellow p-1 font-syne font-bold sm:w-64 sm:p-3"
@@ -26,11 +26,12 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
-import ConfigVue from "../../JS/ConfigVue";
-import { fetchData } from "../../JS/fetchData";
-// import { useStore } from "vuex";
+
 //componets
 import BaseInput from "./BaseInput.vue";
+
+// stores
+import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
 
 export default defineComponent({
   components: {
@@ -50,55 +51,37 @@ export default defineComponent({
       type: Number,
     },
   },
-  emits: ["response-error"],
-  setup(props, ctx) {
-    //values
-    const store = useStore();
-    const inputs_value = reactive<{
+  setup(props) {
+    const moneySettlementStore = MoneySettlementStore();
+    const inputsValue = reactive<{
       name: string;
-      amount: number;
+      amount: number | string;
     }>({
       name: props.name,
       amount: props.amount,
     });
 
-    //functions
-    const input_update = (val: { type: string; value: number }) => {
-      inputs_value[`${val.type}`] = val.value;
+    const inputUpdate = (
+      type: keyof typeof inputsValue,
+      value: string | number,
+    ) => {
+      if (type === "name") {
+        inputsValue[type] = value as string;
+      } else if (type === "amount") {
+        inputsValue[type] = value;
+      }
     };
 
     const submit = async () => {
-      const url = `${ConfigVue.url_server}/routers/outstanding_money/outstandingmoney/edit_item`;
-      const method = "PUT";
-      const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-      };
       const body = {
-        id_user: store.getters["auth/getUser"].id,
-        username: store.getters["auth/getUser"].username,
         id: props.id,
-        amount: inputs_value.amount,
-        name: inputs_value.name,
+        name: inputsValue.name as string,
+        amount: (inputsValue.amount as number) ?? 0,
       };
-      const response = await fetchData(url, method, headers, body, "body");
-      if (response.error) {
-        ctx.emit("response-error", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
-      }
-      ctx.emit("response-error", {
-        id: Math.random(),
-        description: response.detail,
-        type: "success",
-      });
-      await store.dispatch("response/get_list_settlement");
+      await moneySettlementStore.apiEditItem(body);
     };
 
-    return { inputs_value, input_update, submit };
+    return { inputUpdate, submit };
   },
 });
 </script>
