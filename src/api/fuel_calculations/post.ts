@@ -6,7 +6,7 @@ import type { fuelCalculationBody } from "@/types/fuelCalculation/types";
 export async function fuelCalculations(
   body: fuelCalculationBody,
 ): Promise<ResponseData> {
-  const urlPath = "/authentication/login";
+  const urlPath = "/fuel/fuel_calculations";
   const response = await apiPost(urlPath, body, "POST", 0, {
     Authorization: true,
     UserData: true,

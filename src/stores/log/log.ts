@@ -1,14 +1,11 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import Cookies from "js-cookie";
-import { navigationPage } from "@/composable/navigation";
 
 // api
 import { createLog } from "@/api/logs/post";
 import { collectionLogs } from "@/api/logs/fetch";
 
 // types
-
 import type { Log, ApiCollectionLogs } from "@/types/api/logs/types";
 
 export const LogStore = defineStore("logStore", () => {

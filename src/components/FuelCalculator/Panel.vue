@@ -9,34 +9,34 @@
       class="to-#121D35 flex w-full flex-col items-center gap-3 rounded-3xl bg-gradient-to-b from-yellow-600 from-10% to-90% p-2"
     >
       <h1 class="py-4 font-syne text-xl font-bold sm:text-3xl">
-        Koszt Przjechania Trasy
+        {{ $t("pages.fuelCalculator.description") }}
       </h1>
       <form class="flex w-full flex-col gap-9">
-        <input-fuel
+        <InputFuelVue
           type_input="number"
-          name_label="Średnia spalania"
+          :name_label="t('pages.fuelCalculator.placeholder.combustion')"
           type="combustion"
-          @update-number="update_number"
-        ></input-fuel>
-        <input-fuel
+          @update-number="updateNumber"
+        />
+        <InputFuelVue
           type_input="number"
-          name_label="Cena paliwa"
+          :name_label="t('pages.fuelCalculator.placeholder.fuel')"
           type="fuel"
-          @update-number="update_number"
-        ></input-fuel>
-        <input-fuel
+          @update-number="updateNumber"
+        />
+        <InputFuelVue
           type_input="number"
-          name_label="Długość trasy"
+          :name_label="t('pages.fuelCalculator.placeholder.way')"
           type="way"
-          @update-number="update_number"
-        ></input-fuel>
-        <input-fuel
+          @update-number="updateNumber"
+        />
+        <InputFuelVue
           type_input="number"
-          name_label="Dodatkowy koszt"
+          :name_label="t('pages.fuelCalculator.placeholder.remaining_values')"
           type="remaining_values"
-          @update-number="update_number"
-        ></input-fuel>
-        <button-fuel @click.prevent="submit"></button-fuel>
+          @update-number="updateNumber"
+        />
+        <ButtonFuelVue @click.prevent="submit" />
       </form>
     </div>
   </div>
@@ -44,6 +44,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
+import { useI18n } from "vue-i18n";
 
 //commponets
 import InputFuelVue from "./InputFuel.vue";
@@ -52,11 +53,11 @@ import ButtonFuelVue from "./ButtonFuel.vue";
 export default defineComponent({
   emits: ["calculator-values"],
   components: {
-    "input-fuel": InputFuelVue,
-    "button-fuel": ButtonFuelVue,
+    InputFuelVue,
+    ButtonFuelVue,
   },
   setup(_, ctx) {
-    //values
+    const { t } = useI18n();
     const input_values = reactive<{
       way: number;
       fuel: number;
@@ -69,17 +70,17 @@ export default defineComponent({
       remaining_values: 0,
     });
 
-    //functions
-    const update_number = (val: { type: string; number: number }) => {
+    const updateNumber = (val: {
+      type: keyof typeof input_values;
+      number: number;
+    }) => {
       input_values[`${val.type}`] = val.number;
     };
 
     const submit = () => {
       ctx.emit("calculator-values", input_values);
     };
-    return { input_values, update_number, submit };
+    return { input_values, updateNumber, submit, t };
   },
 });
 </script>
-
-<style scoped></style>

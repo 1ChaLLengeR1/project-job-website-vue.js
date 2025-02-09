@@ -43,6 +43,19 @@
         "save": "Zapisz",
         "calculate": "Oblicz"
       }
+    },
+    "logs": {
+      "header": "Logi"
+    },
+    "fuelCalculator": {
+      "header": "Kalkulator Paliw",
+      "description": "Koszt Przejechania Trasy",
+      "placeholder": {
+        "fuel": "Cena paliwa",
+        "way": "Długość trasy",
+        "combustion": "Średnia spalania",
+        "remaining_values": "Dodatkowy koszt"
+      }
     }
   },
   "loadingSpinner": {

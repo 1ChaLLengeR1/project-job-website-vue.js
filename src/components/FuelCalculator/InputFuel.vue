@@ -30,7 +30,6 @@ export default {
     },
   },
   setup(props, ctx) {
-    //functions
     const update_number = (e: Event) => {
       ctx.emit("update-number", {
         type: props.type,

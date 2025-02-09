@@ -1,4 +1,4 @@
 export type ApiFuelCalculation = {
-  price: string;
+  price: number;
   pattern: string;
 };

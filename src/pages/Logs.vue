@@ -2,7 +2,7 @@
   <main class="min-h-[calc(100vh-64px)] w-full">
     <div class="flex w-full flex-col items-center gap-3 py-3">
       <h1 class="font-syne text-3xl text-color-grey sm:pb-3 sm:text-[70px]">
-        Server Logs
+        {{ $t("pages.logs.header") }}
       </h1>
       <ButtonsNumberLogsVue @number-logs="getLogs" />
       <table class="flex w-full flex-col items-center gap-3">
