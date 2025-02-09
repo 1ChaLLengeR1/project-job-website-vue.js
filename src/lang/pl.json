@@ -56,6 +56,21 @@
         "combustion": "Średnia spalania",
         "remaining_values": "Dodatkowy koszt"
       }
+    },
+    "moneySettlement": {
+      "header": "Lista Zaległych",
+      "description": {
+        "create": "Stwórz Liste zalełgych"
+      },
+      "placeholder": {
+        "name_list": "Nazwa Listy",
+        "name": "Nazwa produktu",
+        "amount": "Cena produktu"
+      },
+      "button": {
+        "addList": "Dodaj produkt do listy",
+        "sendList": "Wyślij Liste"
+      }
     }
   },
   "loadingSpinner": {

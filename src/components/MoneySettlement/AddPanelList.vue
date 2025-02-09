@@ -5,7 +5,7 @@
         <div>
           <input
             type="text"
-            placeholder="Nazwa Listy"
+            :placeholder="t('pages.moneySettlement.placeholder.name_list')"
             v-model="item.name_list"
             class="w-full rounded-t-3xl bg-color-bg p-3 text-white outline-none sm:rounded-[16px_0_0_0]"
           />
@@ -16,7 +16,7 @@
           <div class="w-full bg-color-bg p-1">
             <input
               type="text"
-              placeholder="Nazwa produktu"
+              :placeholder="t('pages.moneySettlement.placeholder.name')"
               v-model="item.name"
               class="w-full bg-color-bg-dark p-3 text-white outline-none"
             />
@@ -24,7 +24,7 @@
           <div class="w-full bg-color-bg p-1">
             <input
               type="number"
-              placeholder="Cena produktu"
+              :placeholder="t('pages.moneySettlement.placeholder.amount')"
               v-model="item.amount"
               class="w-full bg-color-bg-dark p-3 text-white outline-none"
             />
@@ -32,9 +32,9 @@
           <div class="w-full p-1">
             <button
               class="h-full w-full bg-color-yellow p-3 font-syne font-bold sm:rounded-tr-3xl"
-              @click.prevent="add_item"
+              @click.prevent="addItem"
             >
-              Dodaj produkt do listy
+              {{ $t("pages.moneySettlement.button.addList") }}
             </button>
           </div>
         </div>
@@ -48,7 +48,7 @@
             class="flex w-40 cursor-pointer flex-col items-center justify-center gap-3 bg-color-bg-dark p-1 text-white"
             v-for="item in array_settlement"
             :key="item.id"
-            @click="delete_item(item.id)"
+            @click="deleteItem(item.id)"
           >
             <p class="w-full bg-color-bg text-center">{{ item.name }}</p>
             <p class="w-full bg-color-bg text-center">{{ item.amount }}zł</p>
@@ -62,7 +62,7 @@
           :disabled="check_value_form"
           @click.prevent="submit"
         >
-          Wyślij Liste
+          {{ $t("pages.moneySettlement.button.sendList") }}
         </button>
       </div>
     </form>
@@ -71,21 +71,18 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, computed } from "vue";
-import { useStore } from "vuex";
-import { fetchData } from "../JS/fetchData";
-import ConfigVue from "../JS/ConfigVue";
+import { useI18n } from "vue-i18n";
 
-//componets
+// stores
+import { MoneySettlementStore } from "@/stores/moneySettlement/moneySettlement";
 
 export default defineComponent({
-  emits: ["response-notification"],
-  setup(_, ctx) {
-    //values
-    const store = useStore();
+  setup() {
+    const { t } = useI18n();
+    const moneySettlementStore = MoneySettlementStore();
     const array_settlement = ref<
       { id: number; name: string; amount: number }[]
     >([]);
-    const url_server = ref<{ url_server: string }>(ConfigVue);
 
     const item = reactive<{
       name_list: string;
@@ -97,48 +94,30 @@ export default defineComponent({
       amount: 0,
     });
 
-    //functions
-
     const submit = async () => {
-      const url = `${url_server.value.url_server}/routers/outstanding_money/names_overdue/create_list`;
-      const method = "POST";
-      const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${store.getters["auth/getTokens"].access_token}`,
-      };
+      const array_object = [];
+      for (const item of array_settlement.value) {
+        array_object.push({
+          name: item.name,
+          amount: item.amount,
+        });
+      }
+
       const body = {
-        id_user: store.getters["auth/getUser"].id,
-        username: store.getters["auth/getUser"].username,
         name: item.name_list,
-        array_object: array_settlement.value,
+        array_object: array_object,
       };
 
-      const response = await fetchData(url, method, headers, body, "body");
-      if (response.error) {
+      const is_valid = await moneySettlementStore.apiCreateList(body);
+      if (is_valid) {
         item.name_list = "";
         item.name = "";
         item.amount = 0;
         array_settlement.value = [];
-        ctx.emit("response-notification", {
-          id: Math.random(),
-          description: response.error,
-          type: "error",
-        });
-        return;
       }
-      item.name_list = "";
-      item.name = "";
-      item.amount = 0;
-      array_settlement.value = [];
-      ctx.emit("response-notification", {
-        id: Math.random(),
-        description: response.detail,
-        type: "success",
-      });
-      await store.dispatch("response/get_list_settlement");
     };
 
-    const add_item = () => {
+    const addItem = () => {
       const obj = {
         id: Math.random(),
         name: item.name,
@@ -150,7 +129,7 @@ export default defineComponent({
       item.amount = 0;
     };
 
-    const delete_item = (id: number) => {
+    const deleteItem = (id: number) => {
       const find_id = array_settlement.value.findIndex(
         (element) => element.id === id,
       );
@@ -173,13 +152,14 @@ export default defineComponent({
     });
 
     return {
-      add_item,
       item,
       array_settlement,
       show_list,
-      delete_item,
       check_value_form,
+      addItem,
+      deleteItem,
       submit,
+      t,
     };
   },
 });

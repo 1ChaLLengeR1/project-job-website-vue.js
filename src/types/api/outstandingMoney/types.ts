@@ -4,6 +4,7 @@ export type OutStandingMoneyOne = {
   id_name: string;
   name_overdue: string;
   array_items: Array<ArrayItem>;
+  full_price: number;
 };
 
 export type ArrayItem = {

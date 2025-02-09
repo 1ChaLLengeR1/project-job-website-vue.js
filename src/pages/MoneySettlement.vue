@@ -12,46 +12,38 @@
       :method_fetch="values_confirm_box.method_fetch"
       :store_paramms="values_confirm_box.store_paramms"
       @show-confirm-box="show_confirm_box"
-      @response-error="response_notification"
     ></confirm-box>
-    <new-notification
-      :id="notification.id"
-      :description="notification.description"
-      :type="notification.type"
-    ></new-notification>
-    <the-title name="List Zaległych"></the-title>
-    <create-list @response-notification="response_notification"></create-list>
-    <list-settlement
-      @response-error="response_notification"
-      @confirm-box="confirm_box"
-    ></list-settlement>
+    <Title :name="t('pages.moneySettlement.header')" />
+    <CreateListVue />
+    <ListSettlementVue @confirm-box="confirm_box" />
   </main>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, onMounted, ref } from "vue";
-import { SavePage } from "../components/JS/SavePage";
-import { AddLog } from "@/components/JS/AddLog";
-import { useStore } from "vuex";
+import { defineComponent, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
+import { savePage } from "@/composable/navigation";
+
+// stores
+import { LogStore } from "@/stores/log/log";
 
 //componets
 import Title from "../components/MoneySettlement/Title.vue";
 import CreateListVue from "../components/MoneySettlement/CreateList.vue";
-import Notification from "@/components/utils/Notification.vue";
 import ListSettlementVue from "../components/MoneySettlement/ListSettlement.vue";
 import ConfirmBox from "@/components/utils/ConfirmBox.vue";
+import { paths } from "@/utils/paths";
 
 export default defineComponent({
   components: {
-    "the-title": Title,
-    "create-list": CreateListVue,
-    "new-notification": Notification,
-    "list-settlement": ListSettlementVue,
-    "confirm-box": ConfirmBox,
+    Title,
+    CreateListVue,
+    ListSettlementVue,
+    ConfirmBox,
   },
   setup() {
-    //values
-    const store = useStore();
+    const { t } = useI18n();
+    const logStore = LogStore();
     const notification = reactive<{
       id: number;
       description: string;
@@ -72,7 +64,6 @@ export default defineComponent({
       store_paramms: {},
     });
 
-    //functions
     const show_confirm_box = (val: boolean) => {
       show_confirm.value = val;
       values_confirm_box.info = "";
@@ -103,48 +94,18 @@ export default defineComponent({
       values_confirm_box.store_paramms = val.store_paramms;
     };
 
-    const add_log = async () => {
-      const response_log = await AddLog("Lista Zaległych");
-      if (response_log.error) {
-        notification.id = Math.random();
-        notification.description = response_log.error;
-        notification.type = "error";
-      }
-    };
-
-    const response_notification = (val: {
-      id: number;
-      description: string;
-      type: string;
-    }) => {
-      notification.id = val.id;
-      notification.description = val.description;
-      notification.type = val.type;
-    };
-
-    SavePage("moneysettlement");
-    add_log();
-
-    //hoks
-    onMounted(async () => {
-      await store.dispatch("response/get_list_settlement");
-      if (!store.getters["response/response_error"]) {
-        return store.getters["response/response_error"];
-      } else {
-        notification.id = Math.random();
-        notification.description =
-          store.getters["response/response_error"].error;
-        notification.type = "error";
-      }
-    });
+    (async () => {
+      await logStore.apiCreateLog("Lista_Zaległych");
+    })();
+    savePage(paths.moneySettlement);
 
     return {
-      response_notification,
       notification,
       show_confirm,
+      values_confirm_box,
       show_confirm_box,
       confirm_box,
-      values_confirm_box,
+      t,
     };
   },
 });
