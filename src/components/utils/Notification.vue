@@ -40,9 +40,9 @@
         >
           <h1>{{ new Date(item.id).toLocaleString() }}</h1>
           <h1 class="font-bold" v-if="item.type === 'success'">
-            {{ $t("notification.success") }}
+            {{ t("notification.success") }}
           </h1>
-          <h1 class="font-bold" v-else>{{ $t("notification.error") }}</h1>
+          <h1 class="font-bold" v-else>{{ t("notification.error") }}</h1>
           <h2>{{ item.description }}</h2>
         </div>
         <div
@@ -87,11 +87,13 @@
 
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from "vue";
+import { useI18n } from "vue-i18n";
 import { NotificationStore } from "@/stores/notification/notification";
 
 export default defineComponent({
   name: "Notification",
   setup() {
+    const { t } = useI18n();
     const notificationStore = NotificationStore();
     const array_notifications = ref<
       { id: number; type: string; description: string }[]
@@ -126,7 +128,7 @@ export default defineComponent({
       }, 4000);
     });
 
-    return { array_notifications, removeItem };
+    return { array_notifications, removeItem, t };
   },
 });
 </script>

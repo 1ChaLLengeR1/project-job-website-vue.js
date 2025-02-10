@@ -73,7 +73,7 @@ import EditOptionsVue from "./EditOptions.vue";
 
 // stores
 import { CalculatorVatStore } from "@/stores/patryk/calculatorVat";
-import { CalculationsBody } from "@/types/patryk/calculatorWork/types";
+import type { CalculationsBody } from "@/types/patryk/calculatorWork/types";
 
 export default defineComponent({
   components: {

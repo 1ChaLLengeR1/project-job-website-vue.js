@@ -34,7 +34,7 @@
               class="h-full w-full bg-color-yellow p-3 font-syne font-bold sm:rounded-tr-3xl"
               @click.prevent="addItem"
             >
-              {{ $t("pages.moneySettlement.button.addList") }}
+              {{ t("pages.moneySettlement.button.addList") }}
             </button>
           </div>
         </div>
@@ -62,7 +62,7 @@
           :disabled="check_value_form"
           @click.prevent="submit"
         >
-          {{ $t("pages.moneySettlement.button.sendList") }}
+          {{ t("pages.moneySettlement.button.sendList") }}
         </button>
       </div>
     </form>

@@ -19,7 +19,7 @@
         class="w-full bg-color-yellow p-1 font-syne font-bold sm:w-64 sm:p-3"
         @click.prevent="submitAdd"
       >
-        {{ $t("pages.moneySettlement.button.addItem") }}
+        {{ t("pages.moneySettlement.button.addItem") }}
       </button>
     </form>
   </div>

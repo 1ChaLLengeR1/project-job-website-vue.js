@@ -9,7 +9,7 @@
       class="to-#121D35 flex w-full flex-col items-center gap-3 rounded-3xl bg-gradient-to-b from-yellow-600 from-10% to-90% p-2"
     >
       <h1 class="py-4 font-syne text-xl font-bold sm:text-3xl">
-        {{ $t("pages.fuelCalculator.description") }}
+        {{ t("pages.fuelCalculator.description") }}
       </h1>
       <form class="flex w-full flex-col gap-9">
         <InputFuelVue

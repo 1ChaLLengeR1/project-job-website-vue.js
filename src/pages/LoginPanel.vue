@@ -7,7 +7,7 @@
     >
       <div class="w-full py-10 text-center">
         <h2 class="font-syne text-2xl text-white">
-          {{ $t("pages.login.header") }}
+          {{ t("pages.login.header") }}
         </h2>
       </div>
       <form class="flex w-64 flex-col items-center justify-center gap-2">
@@ -15,7 +15,7 @@
           <SvgUserVue />
           <input
             type="text"
-            :placeholder="$t('pages.login.input.username')"
+            :placeholder="t('pages.login.input.username')"
             class="w-full rounded-lg bg-color-yellow py-3 pl-14 pr-1 text-xl outline-none"
             v-model="inputData.username"
           />
@@ -24,7 +24,7 @@
           <SvgPasswordVue />
           <input
             :type="input_type"
-            :placeholder="$t('pages.login.input.password')"
+            :placeholder="t('pages.login.input.password')"
             class="w-full rounded-lg bg-color-yellow py-3 pl-14 pr-9 text-xl outline-none"
             v-model="inputData.password"
           />
@@ -50,7 +50,7 @@
             @click.prevent="handlerLogin"
             class="mb-14 mt-20 w-full rounded-xl bg-color-yellow p-3 font-syne text-3xl font-bold"
           >
-            {{ $t("pages.login.button.login") }}
+            {{ t("pages.login.button.login") }}
           </button>
         </div>
       </form>
@@ -60,7 +60,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 import { navigationPage } from "@/composable/navigation";
 
 // stores
@@ -85,9 +85,9 @@ export default defineComponent({
     SvgUserVue,
   },
   setup() {
+    const { t } = useI18n();
     const authStore = AuthStore();
     const loadingSpinnerStore = LoadingSpinnerStore();
-    const router = useRouter();
     const inputData = reactive<{ username: string; password: string }>({
       username: "",
       password: "",
@@ -137,6 +137,7 @@ export default defineComponent({
       input_type,
       handlerLogin,
       changePassword,
+      t,
     };
   },
 });

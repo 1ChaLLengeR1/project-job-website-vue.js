@@ -31,7 +31,7 @@
         <router-link
           class="flex w-full items-center justify-center border border-black bg-color-bg py-3 text-lg text-color-yellow duration-300 hover:border-white hover:text-white"
           :to="{ path: `${link.path}` }"
-          >{{ $t(`${link.title}`) }}</router-link
+          >{{ t(`${link.title}`) }}</router-link
         >
       </li>
       <li
@@ -46,6 +46,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { AuthStore } from "@/stores/auth/auth";
+import { useI18n } from "vue-i18n";
 
 // types
 import type { Link } from "@/utils/paths";
@@ -64,6 +65,7 @@ export default defineComponent({
   },
   emits: ["close-silderBar"],
   setup(_, ctx) {
+    const { t } = useI18n();
     const authStore = AuthStore();
 
     const closeSliderBar = () => {
@@ -74,7 +76,7 @@ export default defineComponent({
       authStore.logOut();
       closeSliderBar();
     };
-    return { closeSliderBar, logout };
+    return { closeSliderBar, logout, t };
   },
 });
 </script>

@@ -2,7 +2,7 @@
   <main class="min-h-[calc(100vh-64px)] w-full">
     <div class="flex w-full flex-col items-center gap-3 py-3">
       <h1 class="font-syne text-3xl text-color-grey sm:pb-3 sm:text-[70px]">
-        {{ $t("pages.logs.header") }}
+        {{ t("pages.logs.header") }}
       </h1>
       <ButtonsNumberLogsVue @number-logs="getLogs" />
       <table class="flex w-full flex-col items-center gap-3">
@@ -29,6 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 //components
 import ItemNameVue from "../components/Logs/ItemName.vue";
@@ -49,6 +50,7 @@ export default defineComponent({
     ButtonsNumberLogsVue,
   },
   setup() {
+    const { t } = useI18n();
     const logStore = LogStore();
 
     const numberLogs = ref<number>(10);
@@ -88,6 +90,7 @@ export default defineComponent({
       logStore,
       getLogs,
       formatDate,
+      t,
     };
   },
 });

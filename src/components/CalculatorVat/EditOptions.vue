@@ -85,7 +85,7 @@ import InputEdit from "./InputEdit.vue";
 
 // stores
 import { CalculatorVatStore } from "@/stores/patryk/calculatorVat";
-import { Calculations } from "@/types/patryk/calculatorWork/types";
+import type { Calculations } from "@/types/patryk/calculatorWork/types";
 
 export default defineComponent({
   emits: ["close-edit-panel", "response-message"],
