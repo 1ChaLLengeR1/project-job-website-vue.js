@@ -16,7 +16,7 @@ import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 
 export interface ResponseData {
   isValid: boolean;
-  data: ResponseApiData | string;
+  data: ResponseApiData | string | null;
   additional: ResponseApiAdditional;
 }
 

@@ -13,7 +13,7 @@ const DEBUG_USER_DATA = false;
 
 export async function apiPost(
   urlPath: string,
-  body: object,
+  body: object | FormData,
   method: "POST" | "PATCH" | "PUT" | "DELETE" = "POST",
   lvl: number = 0,
   headers: Headers = {
@@ -29,6 +29,8 @@ export async function apiPost(
   try {
     const header = new Headers();
     header.append("Content-Type", "application/json");
+    header.append("Content-Type", "multipart/form-data");
+    // header.append("Content-Type", "application/x-www-form-urlencoded");
 
     if (headers.Authorization && authStore.getToken()) {
       header.append("Authorization", `Bearer ${authStore.getToken()}`);

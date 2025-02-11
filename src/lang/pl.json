@@ -44,6 +44,15 @@
         "calculate": "Oblicz"
       }
     },
+    "pdfFilter": {
+      "description": "Przeciągnij i upuść plik .xlsx tutaj lub",
+      "button": {
+        "open": "Otwórz Plik"
+      },
+      "error": {
+        "invalidFile": "Nie poprawny typ pliku. Tylko .xlsx"
+      }
+    },
     "logs": {
       "header": "Logi"
     },
@@ -85,7 +94,8 @@
         "log": "Logi"
       },
       "patryk": {
-        "calculatorVat": "Kalkulator vat"
+        "calculatorVat": "Kalkulator vat",
+        "pdfFilter": "Program do filtrowania"
       }
     },
     "button": {

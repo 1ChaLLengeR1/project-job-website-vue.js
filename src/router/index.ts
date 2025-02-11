@@ -5,6 +5,7 @@ import { AuthStore } from "@/stores/auth/auth";
 // Pages
 import LoginPanel from "../pages/LoginPanel.vue";
 import CalculatorVat from "../pages/CalculatorVat.vue";
+import PdfFilter from "@/pages/PdfFilter.vue";
 import MoneySettlement from "../pages/MoneySettlement.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
@@ -25,6 +26,14 @@ const router = createRouter({
       path: paths.calculatorVat,
       name: "calculatorVat",
       component: CalculatorVat,
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
+      path: paths.pdfFilter,
+      name: "pdfFIlter",
+      component: PdfFilter,
       meta: {
         isAuth: true,
       },
