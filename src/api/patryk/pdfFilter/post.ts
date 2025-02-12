@@ -1,9 +1,9 @@
-import { apiPost } from "@/api/common/post";
+import { apiDownloadFile } from "@/api/common/post";
 import type { ResponseData } from "@/types/global";
 
-export async function pdfFilter(body: FormData): Promise<ResponseData> {
+export async function pdfFilterDownload(body: FormData): Promise<ResponseData> {
   const urlPath = "/pdf_filter/create";
-  const response = await apiPost(urlPath, body, "POST", 0, {
+  const response = await apiDownloadFile(urlPath, body, "POST", 0, {
     Authorization: true,
     UserData: true,
   });
@@ -23,7 +23,7 @@ export async function pdfFilter(body: FormData): Promise<ResponseData> {
 
   return {
     isValid: true,
-    data: null,
+    data: response.data,
     additional: response.additional,
   };
 }

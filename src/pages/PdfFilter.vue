@@ -62,7 +62,7 @@ export default defineComponent({
     };
 
     const handleFileUpload = async (event) => {
-      const file = event.target.files[0];
+      let file = event.target.files[0];
       validateFile(file);
 
       if (!file) return;
@@ -73,6 +73,8 @@ export default defineComponent({
       loadingSpinnerStore.isLoading = true;
       await pdfFilterStore.apiCreatePdfFilter(formData);
       loadingSpinnerStore.isLoading = false;
+
+      file = null;
     };
 
     const handleDrop = (event) => {

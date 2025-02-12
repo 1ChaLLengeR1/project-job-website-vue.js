@@ -5,12 +5,12 @@ import { ref } from "vue";
 import { NotificationStore } from "@/stores/notification/notification";
 
 // api
-import { pdfFilter } from "@/api/patryk/pdfFilter/post";
+import { pdfFilterDownload } from "@/api/patryk/pdfFilter/post";
 
 export const PdfFilterStore = defineStore("pdfFilterStore", () => {
   const notificationStore = NotificationStore();
   const apiCreatePdfFilter = async (body: FormData) => {
-    const response = await pdfFilter(body);
+    const response = await pdfFilterDownload(body);
     if (response && response.isValid) {
       notificationStore.data_to_notification = {
         type: "success",
