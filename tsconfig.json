@@ -4,8 +4,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["vite/client"],
-    "target": "ES5",
+    "types": ["cypress"],
+    "target": "ESNext",
     "lib": ["ES2015", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -13,8 +13,14 @@
     "allowJs": true,
     "checkJs": false,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.vue",
+    "__tests__/**/*.ts",
+    "__tests__/**/*.cy.ts"
+  ]
 }
