@@ -165,8 +165,11 @@ export async function apiDownloadFile(
       body: body,
     });
 
+    let error: string = "";
     if (!response.ok) {
-      throw new Error(`Błąd pobierania pliku: ${response.statusText}`);
+      const responseData = await response.json();
+      error = responseData.data?.error;
+      throw new Error(error);
     }
 
     const contentDisposition = response.headers.get("Content-Disposition");

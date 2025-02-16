@@ -34,7 +34,7 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { paths } from "@/utils/paths";
@@ -52,17 +52,25 @@ export default defineComponent({
     const pdfFilterStore = PdfFilterStore();
     const loadingSpinnerStore = LoadingSpinnerStore();
     const logStore = LogStore();
-    const fileInput = ref(null);
+    const fileInput = ref<HTMLInputElement | null>(null);
     const fileName = ref("");
     const errorMessage = ref("");
     const dragging = ref(false);
 
     const selectFile = () => {
-      fileInput.value.click();
+      if (fileInput.value) {
+        fileInput.value.click();
+      }
     };
 
-    const handleFileUpload = async (event) => {
-      let file = event.target.files[0];
+    const handleFileUpload = async (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files?.[0];
+
+      if (!file) {
+        return;
+      }
+
       validateFile(file);
 
       if (!file) return;
@@ -74,19 +82,24 @@ export default defineComponent({
       await pdfFilterStore.apiCreatePdfFilter(formData);
       loadingSpinnerStore.isLoading = false;
 
-      file = null;
+      target.value = "";
     };
 
-    const handleDrop = (event) => {
-      const file = event.dataTransfer.files[0];
+    const handleDrop = (event: DragEvent) => {
+      const file = event.dataTransfer?.files[0];
+
+      if (!file) {
+        return;
+      }
+
       validateFile(file);
       dragging.value = false;
     };
 
-    const validateFile = (file) => {
+    const validateFile = (file: File) => {
       if (!file) return;
 
-      const fileExtension = file.name.split(".").pop().toLowerCase();
+      const fileExtension = file.name.split(".").pop()?.toLowerCase();
 
       if (fileExtension !== "xlsx") {
         errorMessage.value = t("pages.pdfFilter.error.invalidFile");
