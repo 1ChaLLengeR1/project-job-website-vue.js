@@ -6,21 +6,27 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v4
+
       - name: Install node
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - name: Install dependencies
         run: yarn install
-      - name: 🚀 Uruchom serwer deweloperski w tle
-        run: nohup yarn dev > /dev/null 2>&1 &
-      - name: ⏳ Poczekaj, aż serwer się uruchomi
-        run: npx wait-on http://localhost:5173 --timeout 60000
+
       - name: Run test
         uses: cypress-io/github-action@v6
+        timeout-minutes: 10
         with:
+          browser: chrome
+          record: true
+          build: yarn build
+          start: yarn preview
+          wait-on: "http://localhost:4173"
           install: false
           component: false
+
       - name: 📂 Prześlij zrzuty ekranu (jeśli testy się nie powiodą)
         if: failure()
         uses: actions/upload-artifact@v4
