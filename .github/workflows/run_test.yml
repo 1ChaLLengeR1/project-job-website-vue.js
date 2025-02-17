@@ -15,15 +15,6 @@ jobs:
           node-version: 20
           cache: "yarn"
 
-      - name: 📦 Zainstaluj zależności
-        run: yarn install
-
-      - name: 🚀 Uruchom serwer deweloperski w tle
-        run: yarn dev
-
-      - name: ⏳ Poczekaj, aż serwer się uruchomi
-        run: npx wait-on http://localhost:5173 --timeout 60000
-
       - name: 🧪 Uruchom testy Cypress
         uses: cypress-io/github-action@v6
         with:
