@@ -22,7 +22,7 @@ jobs:
           browser: chrome
           record: true
           build: yarn build
-          start: yarn preview
+          start: yarn preview &
           wait-on: "http://localhost:4173"
           install: false
           component: false
