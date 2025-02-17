@@ -12,7 +12,7 @@ jobs:
           node-version: 20
       - name: Install dependencies
         run: yarn install
-      - name: Run dev
-        run: yarn dev
+      # - name: Run dev
+      #   run: yarn dev
       - name: Run test
         uses: cypress-io/github-action@v6
