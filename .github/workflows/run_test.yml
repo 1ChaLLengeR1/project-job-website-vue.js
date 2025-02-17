@@ -21,6 +21,9 @@ jobs:
       - name: Start server
         run: yarn preview
 
+      - name: Poczekaj na uruchomienie serwera
+        run: npx wait-on http://localhost:5173 --timeout 120000
+
       - name: Run test
-        timeout-minutes: 10
+        timeout-minutes: 1
         run: yarn test:cypress
