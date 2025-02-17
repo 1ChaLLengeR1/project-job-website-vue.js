@@ -15,5 +15,5 @@ jobs:
           project: ./site
           browser: chrome
           build: yarn build
-          start: yarn start
+          start: yarn preview
           wait-on: "http://localhost:5173"
