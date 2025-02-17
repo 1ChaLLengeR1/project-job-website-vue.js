@@ -1,0 +1,45 @@
+name: Run Cypress Tests
+
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Pobierz kod
+        uses: actions/checkout@v4
+
+      - name: 🏗️ Skonfiguruj Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      - name: 📦 Zainstaluj zależności
+        run: yarn install --frozen-lockfile
+
+      - name: 🚀 Uruchom serwer deweloperski w tle
+        run: yarn dev &
+
+      - name: ⏳ Poczekaj, aż serwer się uruchomi
+        run: npx wait-on http://localhost:5173 --timeout 60000
+
+      - name: 🧪 Uruchom testy Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          install: false
+          command: yarn test:cypress
+
+      - name: 📂 Prześlij zrzuty ekranu (jeśli testy się nie powiodą)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: __tests__/report/screenshots
+
+      - name: 📂 Prześlij nagrania testów (jeśli są włączone)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: cypress/videos
