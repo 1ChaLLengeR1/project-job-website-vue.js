@@ -18,9 +18,9 @@ jobs:
       - name: Build
         run: yarn build
 
-       - name: Start server
+      - name: Start server
         run: yarn preview
-      
+
       - name: Run test
         timeout-minutes: 10
         run: yarn test:cypress
