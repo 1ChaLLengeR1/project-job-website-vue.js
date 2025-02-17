@@ -1,19 +1,26 @@
-name: E2E on Chrome
-
-on: [push]
-
+name: Component tests
+on: push
 jobs:
-  install:
-    runs-on: ubuntu-latest
+  cypress-run:
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
+      - name: Get code
         uses: actions/checkout@v4
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
+      - name: Install node
+        uses: actions/setup-node@v4
         with:
-          project: ./site
-          browser: chrome
-          build: yarn build
-          start: yarn preview
-          wait-on: "http://localhost:5173"
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
+
+       - name: Start server
+        run: yarn preview
+      
+      - name: Run test
+        timeout-minutes: 10
+        run: yarn test:cypress
