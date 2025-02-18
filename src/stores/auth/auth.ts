@@ -81,8 +81,8 @@ export const AuthStore = defineStore("authStore", () => {
   const getUser = (): { id: string; username: string } | null => {
     if (auth.value.id && auth.value.username) {
       return {
-        id: auth.value.id,
-        username: auth.value.username,
+        id: auth.value.id.toString(),
+        username: auth.value.username.toString(),
       };
     }
     return null;
