@@ -1,4 +1,4 @@
-name: Component tests
+name: Run Tests
 on: push
 jobs:
   cypress-run:
@@ -21,7 +21,7 @@ jobs:
       - name: Start server
         run: yarn preview &
 
-      - name: Poczekaj na uruchomienie serwera
+      - name: Waiting for server
         run: npx wait-on http://localhost:5173 --timeout 120000
 
       - name: Run test
