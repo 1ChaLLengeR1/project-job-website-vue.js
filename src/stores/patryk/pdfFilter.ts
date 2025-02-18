@@ -34,8 +34,11 @@ export const PdfFilterStore = defineStore("pdfFilterStore", () => {
   const apiCreatePdfFilter = async (body: FormData) => {
     downloadProgress.value = 0;
     progressMessage.value = "Łączenie z serwerem...";
-    const userId: string = authStore.getUser()?.id.toString();
-    connectWebSocket(userId);
+
+    const user = authStore.getUser();
+    if (user?.id) {
+      connectWebSocket(user?.id);
+    }
 
     const response = await pdfFilterDownload(body);
     if (response && response.isValid) {
