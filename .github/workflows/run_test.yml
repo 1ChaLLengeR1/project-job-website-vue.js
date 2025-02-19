@@ -2,7 +2,7 @@ name: Run Tests
 on: push
 jobs:
   cypress-run:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v4
@@ -27,3 +27,21 @@ jobs:
       - name: Run test
         timeout-minutes: 1
         run: yarn test:cypress
+
+  deploy:
+    needs: cypress-run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build
+        run: yarn build
