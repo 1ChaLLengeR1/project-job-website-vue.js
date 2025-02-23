@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 // stores
 import { NotificationStore } from "@/stores/notification/notification";
@@ -8,36 +9,24 @@ import { AuthStore } from "@/stores/auth/auth";
 // api
 import { pdfFilterDownload } from "@/api/patryk/pdfFilter/post";
 
+// composables
+import { useWebSocket } from "@/composable/websockets/pdfFilter";
+
 export const PdfFilterStore = defineStore("pdfFilterStore", () => {
+  const { t } = useI18n();
   const authStore = AuthStore();
   const notificationStore = NotificationStore();
-  const downloadProgress = ref(0);
-  const progressMessage = ref("Rozpoczynam...");
-  let ws: WebSocket | null = null;
-
-  const connectWebSocket = (userId: string) => {
-    console.log("Połączenie Start");
-    ws = new WebSocket(`ws://127.0.0.1:3000/ws/progress/${userId}`);
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      console.log(`📡 Postęp: ${data.progress}% - ${data.message}`);
-      downloadProgress.value = data.progress;
-      progressMessage.value = data.message;
-    };
-
-    ws.onclose = () => {
-      console.log("❌ Połączenie WebSocket zamknięte");
-    };
-  };
 
   const apiCreatePdfFilter = async (body: FormData) => {
-    downloadProgress.value = 0;
-    progressMessage.value = "Łączenie z serwerem...";
-
     const user = authStore.getUser();
+    const { progressMessage, connectWebSocket, closeWebSocket } = useWebSocket(
+      user?.id!,
+      t,
+    );
+
+    progressMessage.value = "Łączenie z serwerem...";
     if (user?.id) {
-      connectWebSocket(user?.id);
+      connectWebSocket();
     }
 
     const response = await pdfFilterDownload(body);
@@ -53,9 +42,7 @@ export const PdfFilterStore = defineStore("pdfFilterStore", () => {
         description: responseError,
       };
     }
-
-    ws?.close();
-    downloadProgress.value = 100;
+    closeWebSocket();
   };
 
   return { apiCreatePdfFilter };

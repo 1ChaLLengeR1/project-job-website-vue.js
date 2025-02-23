@@ -105,5 +105,13 @@
   "notification": {
     "success": "Sukces",
     "error": "Błąd"
+  },
+  "websocket": {
+    "pdfFilter": {
+      "start": "🔌 Połączenie WebSocket Start",
+      "end": "🚪 Zamykam WebSocket...",
+      "close": "❌ Połączenie WebSocket zamknięte",
+      "message": "📡 Postęp: {process}% - {message}"
+    }
   }
 }

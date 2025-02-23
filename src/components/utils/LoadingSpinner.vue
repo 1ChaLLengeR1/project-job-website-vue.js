@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-white p-2 opacity-90"
+    class="fixed left-0 top-0 z-50 flex h-full w-full flex-col items-center justify-center gap-12 bg-white p-2 opacity-90"
   >
     <button
       disabled
@@ -26,6 +26,22 @@
       </svg>
       {{ t("loadingSpinner.description") }}
     </button>
+    <div
+      v-if="loadingSpinnerStore.progressBarPdfFilterCollection.length > 0"
+      class="w-full"
+    >
+      <ul class="flex h-96 w-full flex-col items-center gap-3 overflow-auto">
+        <li
+          v-for="(
+            item, index
+          ) in loadingSpinnerStore.progressBarPdfFilterCollection"
+          :key="index"
+          class="flex w-fit justify-center rounded-md bg-color-yellow p-1 font-bold"
+        >
+          {{ item }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -33,10 +49,15 @@
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n";
 
+// stores
+import { LoadingSpinnerStore } from "@/stores/modals/spinner";
+
 export default defineComponent({
   setup() {
     const { t } = useI18n();
-    return { t };
+    const loadingSpinnerStore = LoadingSpinnerStore();
+
+    return { loadingSpinnerStore, t };
   },
 });
 </script>

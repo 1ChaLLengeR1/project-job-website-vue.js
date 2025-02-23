@@ -34,6 +34,7 @@
 <script lang="ts">
 import { defineComponent, reactive, ref, onMounted } from "vue";
 import { pathsArtek, pathsPatryk } from "./utils/paths";
+
 // componets
 import NavigationVue from "@/components/Header/Navigation.vue";
 import BlockSliderBar from "@/components/Header/BlockSliderBar.vue";

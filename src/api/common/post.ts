@@ -188,11 +188,6 @@ export async function apiDownloadFile(
       }
       chunks.push(value);
       receivedSize += value.length;
-
-      // tu mogę pinie wsadzić z progres barem
-      // console.log(
-      //   `📥 Pobieranie: ${receivedSize} / ${totalSize} bajtów (${Math.round((receivedSize / totalSize) * 100)}%)`,
-      // );
     }
 
     const blob = new Blob(chunks, { type: "application/pdf" });
