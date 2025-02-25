@@ -1,12 +1,11 @@
 name: Run Tests
 on:
   pull_request:
-    types:
-      - opened
+    branches:
+      - main
   workflow_dispatch:
   push:
     branches:
-      - main
       - developer
 jobs:
   cypress-run:
@@ -36,7 +35,7 @@ jobs:
         timeout-minutes: 1
         run: yarn test:cypress
 
-  deploy:
+  build:
     needs: cypress-run
     runs-on: ubuntu-latest
     steps:
@@ -53,3 +52,29 @@ jobs:
 
       - name: Build
         run: yarn build
+
+      - name: Upload artifacts
+        run: actions/upload-artifact@v4
+        with:
+          name: dist-files
+          path: dist
+
+  deploy:
+    needs: cypress-run
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deploying..."
+      # - name: Get code
+      #   uses: actions/checkout@v4
+
+      # - name: Install node
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+
+      # - name: Install dependencies
+      #   run: yarn install
+
+      # - name: Build
+      #   run: yarn build
