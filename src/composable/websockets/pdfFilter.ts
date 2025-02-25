@@ -12,8 +12,8 @@ export function useWebSocket(
   let ws: WebSocket | null = null;
 
   const connectWebSocket = () => {
-    const urlApi: string = import.meta.env.VITE_URL_SERVER_WEBSOCKET;
-    ws = new WebSocket(`ws://${urlApi}/ws/progress/${userId}`);
+    const urlApi = import.meta.env.VITE_URL_SERVER_WEBSOCKET;
+    ws = new WebSocket(`${urlApi}/${userId}`); // Teraz poprawnie łączy się z WebSocket
 
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -35,10 +35,6 @@ export function useWebSocket(
       loadingSpinnerStore.progressBarPdfFilterCollection = [];
     }
   };
-
-  onUnmounted(() => {
-    closeWebSocket();
-  });
 
   return { progressMessage, connectWebSocket, closeWebSocket };
 }

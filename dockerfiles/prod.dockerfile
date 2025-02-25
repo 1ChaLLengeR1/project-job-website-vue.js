@@ -2,17 +2,15 @@ FROM node:20-alpine AS build-stage
 
 WORKDIR /app
 
-COPY package.json package-lock.json /app/
+COPY package.json yarn.lock ./
 
-RUN npm install
+RUN yarn install --frozen-lockfile
 
-COPY . /app
+COPY . .
 
-RUN rm -rf dist
+RUN rm -rf dist node_modules/.vite
 
-RUN rm -rf node_modules/.vite
-
-RUN npm run build
+RUN yarn build
 
 FROM nginx:stable-alpine AS production-stage
 
