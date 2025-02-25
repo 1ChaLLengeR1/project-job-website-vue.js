@@ -172,6 +172,26 @@ export async function apiDownloadFile(
       throw new Error(error);
     }
 
+    const contentLength = response.headers.get("Content-Length");
+    const totalSize = contentLength ? parseInt(contentLength, 10) : 0;
+    let receivedSize = 0;
+
+    const reader = response.body?.getReader();
+    const chunks = [];
+
+    while (true) {
+      const { done, value } = await reader!.read();
+
+      if (done) {
+        console.log("Koniec");
+        break;
+      }
+      chunks.push(value);
+      receivedSize += value.length;
+    }
+
+    const blob = new Blob(chunks, { type: "application/pdf" });
+
     const contentDisposition = response.headers.get("Content-Disposition");
     let fileName = "plik.pdf";
 
@@ -182,14 +202,13 @@ export async function apiDownloadFile(
       }
     }
 
-    const blob = await response.blob();
     const downloadUrl = window.URL.createObjectURL(blob);
-
     const a = document.createElement("a");
     a.href = downloadUrl;
     a.download = fileName;
     document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
 
     window.URL.revokeObjectURL(downloadUrl);
 

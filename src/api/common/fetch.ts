@@ -79,17 +79,3 @@ export async function apiGet(
     }
   }
 }
-
-// if (headers.Authorization && clerkAuthStore.getToken()) {
-//     header.append("Authorization", `Bearer ${clerkAuthStore.getToken()}`);
-//   if (DEBUG_USER_TOKEN) {
-//     console.info("Token:", clerkAuthStore.getToken());
-//   }
-// }
-
-// if (headers.UserData && userAuthStore.getUserData()) {
-//     header.append("UserData", `${JSON.stringify(userAuthStore.getUserData())}`);
-//     if (DEBUG_USER_DATA) {
-//         console.info("user data:", JSON.stringify(userAuthStore.getUserData()));
-//     }
-// }
