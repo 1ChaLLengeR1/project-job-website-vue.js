@@ -8,11 +8,37 @@ on:
     branches:
       - developer
 jobs:
-  cypress-run:
+  dependencies-cache:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
         uses: actions/checkout@v4
+      - name: Cache depdendencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.yarn
+          key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install dependencies
+        run: yarn install
+      - name: Build
+        run: yarn build
+
+  cypress-run:
+    needs: ependencies-cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v4
+
+      - name: Cache depdendencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.yarn
+          key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install node
         uses: actions/setup-node@v4
@@ -42,6 +68,12 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
 
+      - name: Cache depdendencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.yarn
+          key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install node
         uses: actions/setup-node@v4
         with:
@@ -60,9 +92,14 @@ jobs:
           path: dist
 
   deploy:
-    needs: cypress-run
+    needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-files
+
       - name: Deploy
         run: echo "Deploying..."
       # - name: Get code
