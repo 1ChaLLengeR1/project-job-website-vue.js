@@ -16,7 +16,7 @@ jobs:
       - name: Cache depdendencies
         uses: actions/cache@v4
         with:
-          path: ~/.yarn
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install node
         uses: actions/setup-node@v4
@@ -37,7 +37,7 @@ jobs:
       - name: Cache depdendencies
         uses: actions/cache@v4
         with:
-          path: ~/.yarn
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install node
@@ -71,7 +71,7 @@ jobs:
       - name: Cache depdendencies
         uses: actions/cache@v4
         with:
-          path: ~/.yarn
+          path: node_modules
           key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install node
