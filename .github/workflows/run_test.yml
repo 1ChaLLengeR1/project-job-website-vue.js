@@ -28,7 +28,7 @@ jobs:
         run: yarn build
 
   cypress-run:
-    needs: ependencies-cache
+    needs: dependencies-cache
     runs-on: ubuntu-latest
     steps:
       - name: Get code
