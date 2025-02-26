@@ -32,11 +32,11 @@ jobs:
       - name: Get code
         uses: actions/checkout@v4
 
-      - name: Cache depdendencies
-        uses: actions/cache@v4
-        with:
-          path: node_modules
-          key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
+      # - name: Cache depdendencies
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: node_modules
+      #     key: deps-node-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Install node
         uses: actions/setup-node@v4
