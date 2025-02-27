@@ -7,6 +7,9 @@ on:
   push:
     branches:
       - developer
+env:
+  VITE_URL_SERVER: ${{ secrets.VITE_URL_SERVER }}
+  VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
 jobs:
   dependencies-cache:
     runs-on: ubuntu-latest
@@ -100,6 +103,11 @@ jobs:
 
       - name: Deploy
         run: echo "Deploying..."
+
+      - name: Output env...
+        run: |
+          echo "VITE_URL_SERVER: ${{ $VITE_URL_SERVER }}"
+          echo "VITE_URL_SERVER_WEBSOCKET: ${{ $VITE_URL_SERVER_WEBSOCKET }}"
       # - name: Get code
       #   uses: actions/checkout@v4
 
