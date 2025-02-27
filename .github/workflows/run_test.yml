@@ -106,8 +106,8 @@ jobs:
 
       - name: Output env...
         run: |
-          echo "VITE_URL_SERVER: ${{ $VITE_URL_SERVER }}"
-          echo "VITE_URL_SERVER_WEBSOCKET: ${{ $VITE_URL_SERVER_WEBSOCKET }}"
+          echo "VITE_URL_SERVER: $VITE_URL_SERVER"
+          echo "VITE_URL_SERVER_WEBSOCKET: $VITE_URL_SERVER_WEBSOCKET"
       # - name: Get code
       #   uses: actions/checkout@v4
 
