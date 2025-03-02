@@ -9,6 +9,7 @@ on:
       - developer
 env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 jobs:
   # dependencies-cache:
   #   uses: ./.github/workflows/dependencies.yml
