@@ -4,7 +4,6 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "noEmit": false,
     "types": ["cypress", "vite/client"],
     "target": "ESNext",
     "lib": ["ES2015", "DOM"],

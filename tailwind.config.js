@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{vue,ts}"],
+  content: ["./index.html", "./src/**/*.{vue, js, ts, jsx, tsx}"],
   theme: {
     extend: {
       colors: {
@@ -14,9 +14,6 @@ module.exports = {
         syne: ["Syne"],
       },
     },
-  },
-  corePlugins: {
-    preflight: false,
   },
   plugins: [],
 };
