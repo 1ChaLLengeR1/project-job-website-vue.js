@@ -12,20 +12,19 @@ env:
   VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
 jobs:
   dependencies-cache:
-    runs-on: ubuntu-latest
-    uses: ./.github/workflows/dependencies.yml
+    workflow: ./.github/workflows/dependencies.yml # Poprawiona linia
 
   cypress-run:
     needs: dependencies-cache
-    uses: ./.github/workflows/test.yml
+    workflow: ./.github/workflows/test.yml # Poprawiona linia
 
   build:
     needs: cypress-run
-    uses: ./.github/workflows/build.yml
+    workflow: ./.github/workflows/build.yml # Poprawiona linia
 
   deploy:
     needs: build
-    uses: ./.github/workflows/deploy.yml
+    workflow: ./.github/workflows/deploy.yml # Poprawiona linia
 
   report:
     needs: deploy
