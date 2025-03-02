@@ -7,10 +7,6 @@ on:
   push:
     branches:
       - developer
-env:
-  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-  VITE_URL_SERVER: ${{ secrets.VITE_URL_SERVER }}
-  VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
 jobs:
   # dependencies-cache:
   #   uses: ./.github/workflows/dependencies.yml
