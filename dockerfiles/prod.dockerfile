@@ -17,7 +17,7 @@ COPY . .
 
 RUN rm -rf dist node_modules/.vite
 
-RUN yarn build --debug
+RUN yarn build
 
 FROM nginx:stable-alpine AS production-stage
 
