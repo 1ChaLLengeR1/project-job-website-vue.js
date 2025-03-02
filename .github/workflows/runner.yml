@@ -13,19 +13,19 @@ env:
 jobs:
   dependencies-cache:
     runs-on: ubuntu-latest
-    uses: ./.github/workflows/dependencies.yaml
+    uses: ./.github/workflows/dependencies.yml
 
   cypress-run:
     needs: dependencies-cache
-    uses: ./.github/workflows/test.yaml
+    uses: ./.github/workflows/test.yml
 
   build:
     needs: cypress-run
-    uses: ./.github/workflows/build.yaml
+    uses: ./.github/workflows/build.yml
 
   deploy:
     needs: build
-    uses: ./.github/workflows/deploy.yaml
+    uses: ./.github/workflows/deploy.yml
 
   report:
     needs: deploy
