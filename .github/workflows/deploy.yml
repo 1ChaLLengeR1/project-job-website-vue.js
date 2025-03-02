@@ -10,13 +10,15 @@ jobs:
       - name: Setup SSH key
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | awk '{print}' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
 
       - name: Debug SSH Key...
         run: |
           ls -lah ~/.ssh
+          wc -c ~/.ssh/id_rsa
           cat ~/.ssh/id_rsa | head -n 5
 
       - name: Deploy repository to server
