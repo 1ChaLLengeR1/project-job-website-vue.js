@@ -7,10 +7,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Debug SSH Secret
+        run: |
+          if [[ -z "${{ secrets.SSH_PRIVATE_KEY }}" ]]; then
+            echo "🔴 SSH_PRIVATE_KEY is EMPTY!"
+            exit 1
+          else
+            echo "✅ SSH_PRIVATE_KEY is set!"
+          fi
+
       - name: Setup SSH agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          ssh-private-key: |
+            ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Debug SSH Connection
         run: ssh -T artur@arturscibor.pl || true
