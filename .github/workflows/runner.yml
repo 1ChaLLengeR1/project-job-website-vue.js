@@ -1,0 +1,38 @@
+name: Runner
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  push:
+    branches:
+      - developer
+env:
+  VITE_URL_SERVER: ${{ secrets.VITE_URL_SERVER }}
+  VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
+jobs:
+  dependencies-cache:
+    runs-on: ubuntu-latest
+    uses: ./.github/workflows/dependencies.yaml
+
+  cypress-run:
+    needs: dependencies-cache
+    uses: ./.github/workflows/test.yaml
+
+  build:
+    needs: cypress-run
+    uses: ./.github/workflows/build.yaml
+
+  deploy:
+    needs: build
+    uses: ./.github/workflows/deploy.yaml
+
+  report:
+    needs: deploy
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output information
+        run: |
+          echo "Something went wrong..."
+          echo "${{toJSON(github)}}"
