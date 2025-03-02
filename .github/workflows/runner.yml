@@ -4,9 +4,9 @@ on:
     branches:
       - main
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - developer
+  push:
+    branches:
+      - developer
 env:
   SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
   SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
