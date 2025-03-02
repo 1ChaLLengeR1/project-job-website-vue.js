@@ -14,6 +14,11 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
 
+      - name: Debug SSH Key
+        run: |
+          ls -lah ~/.ssh
+          cat ~/.ssh/id_rsa | head -n 5
+
       - name: Deploy repository to server
         run: |
           rsync -avz --delete --exclude=".env" ./ artur@arturscibor.pl:/var/www/pracaArturScibor/praca.strona.arturscibor.pl/
