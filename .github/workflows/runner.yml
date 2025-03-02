@@ -12,19 +12,19 @@ env:
   VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
 jobs:
   dependencies-cache:
-    workflow: ./.github/workflows/dependencies.yml # Poprawiona linia
+    uses: ./.github/workflows/dependencies.yml
 
   cypress-run:
     needs: dependencies-cache
-    workflow: ./.github/workflows/test.yml # Poprawiona linia
+    uses: ./.github/workflows/test.yml
 
   build:
     needs: cypress-run
-    workflow: ./.github/workflows/build.yml # Poprawiona linia
+    uses: ./.github/workflows/build.yml
 
   deploy:
     needs: build
-    workflow: ./.github/workflows/deploy.yml # Poprawiona linia
+    uses: ./.github/workflows/deploy.yml
 
   report:
     needs: deploy
