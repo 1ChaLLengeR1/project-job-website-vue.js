@@ -1,5 +1,10 @@
 name: Deploy
-on: workflow_call
+on:
+  workflow_call:
+    secrets:
+      SSH_PRIVATE_KEY:
+        required: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
