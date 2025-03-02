@@ -4,15 +4,24 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: dist-files
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client rsync
 
-      - name: Deploy
-        run: echo "Deploying..."
-
-      - name: Output env...
+      - name: Setup SSH key
         run: |
-          echo "VITE_URL_SERVER: $VITE_URL_SERVER"
-          echo "VITE_URL_SERVER_WEBSOCKET: $VITE_URL_SERVER_WEBSOCKET"
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
+
+      - name: Deploy repository to server
+        run: |
+          rsync -avz --delete --exclude=".env" ./ artur@arturscibor.pl:/var/www/pracaArturScibor/praca.strona.arturscibor.pl/
+
+      - name: Set execute permissions for deploy.sh
+        run: |
+          ssh artur@arturscibor.pl 'chmod +x /var/www/pracaArturScibor/praca.strona.arturscibor.pl/deploy.sh'
+
+      - name: Run deploy script on server
+        run: |
+          ssh artur@arturscibor.pl 'cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl && sudo ./deploy.sh $(date +%Y%m%d%H%M)'
