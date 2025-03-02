@@ -11,16 +11,16 @@ env:
   VITE_URL_SERVER: ${{ secrets.VITE_URL_SERVER }}
   VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
 jobs:
-  dependencies-cache:
-    uses: ./.github/workflows/dependencies.yml
+  # dependencies-cache:
+  #   uses: ./.github/workflows/dependencies.yml
 
-  cypress-run:
-    needs: dependencies-cache
-    uses: ./.github/workflows/test.yml
+  # cypress-run:
+  #   needs: dependencies-cache
+  #   uses: ./.github/workflows/test.yml
 
-  build:
-    needs: cypress-run
-    uses: ./.github/workflows/build.yml
+  # build:
+  #   needs: cypress-run
+  #   uses: ./.github/workflows/build.yml
 
   deploy:
     needs: build
