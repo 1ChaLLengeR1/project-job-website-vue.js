@@ -8,8 +8,8 @@ on:
     branches:
       - developer
 env:
-  VITE_URL_SERVER: ${{ secrets.VITE_URL_SERVER }}
-  VITE_URL_SERVER_WEBSOCKET: ${{ secrets.VITE_URL_SERVER_WEBSOCKET }}
+  SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+  SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 jobs:
   # dependencies-cache:
   #   uses: ./.github/workflows/dependencies.yml
@@ -23,8 +23,11 @@ jobs:
   #   uses: ./.github/workflows/build.yml
 
   deploy:
-    # needs: build
+    #   build: cypress-run
     uses: ./.github/workflows/deploy.yml
+    secrets:
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 
   report:
     needs: deploy
