@@ -21,14 +21,19 @@ jobs:
           wc -c ~/.ssh/id_rsa
           cat ~/.ssh/id_rsa | head -n 5
 
-      - name: Deploy repository to server
+      - name: Go to dictionary...
         run: |
-          rsync -avz --delete --exclude=".env" ./ artur@arturscibor.pl:/var/www/pracaArturScibor/praca.strona.arturscibor.pl/
+          cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/
+          ls
 
-      - name: Set execute permissions for deploy.sh
-        run: |
-          ssh artur@arturscibor.pl 'chmod +x /var/www/pracaArturScibor/praca.strona.arturscibor.pl/deploy.sh'
+      # - name: Deploy repository to server
+      #   run: |
+      #     rsync -avz --delete --exclude=".env" ./ artur@arturscibor.pl:/var/www/pracaArturScibor/praca.strona.arturscibor.pl/
 
-      - name: Run deploy script on server
-        run: |
-          ssh artur@arturscibor.pl 'cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl && sudo ./deploy.sh $(date +%Y%m%d%H%M)'
+      # - name: Set execute permissions for deploy.sh
+      #   run: |
+      #     ssh artur@arturscibor.pl 'chmod +x /var/www/pracaArturScibor/praca.strona.arturscibor.pl/deploy.sh'
+
+      # - name: Run deploy script on server
+      #   run: |
+      #     ssh artur@arturscibor.pl 'cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl && sudo ./deploy.sh $(date +%Y%m%d%H%M)'
