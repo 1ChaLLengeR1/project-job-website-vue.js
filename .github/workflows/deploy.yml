@@ -4,6 +4,8 @@ on:
     secrets:
       SSH_PRIVATE_KEY:
         required: true
+      SUDO_PASSWORD:
+        required: true
 
 jobs:
   deploy:
