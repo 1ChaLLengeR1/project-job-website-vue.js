@@ -26,6 +26,7 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      SUDO_PASSWORD: ${{ secrets.SUDO_PASSWORD }}
 
   report:
     needs: deploy
