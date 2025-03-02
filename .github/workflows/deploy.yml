@@ -14,7 +14,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
 
-      - name: Debug SSH Key
+      - name: Debug SSH Key...
         run: |
           ls -lah ~/.ssh
           cat ~/.ssh/id_rsa | head -n 5
