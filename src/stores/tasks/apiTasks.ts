@@ -1,0 +1,109 @@
+import { defineStore } from "pinia";
+import { ref } from "vue";
+
+//api
+import { apiCollectionTasks } from "@/api/tasks/get";
+import { apiCreateTask } from "@/api/tasks/post";
+import { apiDeleteTask } from "@/api/tasks/delete";
+import { apiUpdateActiveTask, apiUpdateTask } from "@/api/tasks/patch";
+
+// types
+import type { Error } from "@/types/global";
+import type { CollectionTasks } from "@/types/api/tasks/types";
+import type {
+  CreateTaskBody,
+  UpdateActiveTaskBody,
+  UpdateTaskBody,
+} from "@/types/tasks/type";
+
+// stores
+import { NotificationStore } from "@/stores/notification/notification";
+
+export const ApiTaskStore = defineStore("apiTaskStore", () => {
+  const notificationStore = NotificationStore();
+  const collectionTasks = ref<CollectionTasks>([]);
+
+  const apiGetTasks = async (
+    restart: boolean = false,
+    active: boolean = true,
+  ) => {
+    if (restart) {
+      collectionTasks.value = [];
+    }
+
+    if (collectionTasks.value.length > 0) {
+      return;
+    }
+    const response = await apiCollectionTasks(active);
+    if (response && response.isValid) {
+      const responseData = response.data as CollectionTasks;
+      collectionTasks.value = responseData;
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+  };
+
+  const apiCreateTaskF = async (body: CreateTaskBody) => {
+    const response = await apiCreateTask(body);
+    if (response && response.isValid) {
+      await apiGetTasks(true, true);
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+  };
+  const apiDeleteTaskF = async (task_id: string) => {
+    const response = await apiDeleteTask(task_id);
+    if (response && response.isValid) {
+      await apiGetTasks(true, true);
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+  };
+  const apiUpdateTaskF = async (task_id: string, body: UpdateTaskBody) => {
+    const response = await apiUpdateTask(task_id, body);
+    if (response && response.isValid) {
+      await apiGetTasks(true, true);
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+  };
+  const apiUpdateActiveTaskF = async (
+    task_id: string,
+    body: UpdateActiveTaskBody,
+  ) => {
+    const response = await apiUpdateActiveTask(task_id, body);
+    if (response && response.isValid) {
+      await apiGetTasks(true, true);
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+  };
+
+  return {
+    apiGetTasks,
+    apiCreateTaskF,
+    apiDeleteTaskF,
+    apiUpdateTaskF,
+    apiUpdateActiveTaskF,
+  };
+});

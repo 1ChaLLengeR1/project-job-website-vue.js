@@ -14,27 +14,22 @@ import type {
 
 import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 
+import type { CollectionTasks, OneTask } from "@/types/api/tasks/types";
+
+export type Error = { message: string };
+
 export interface ResponseData {
   isValid: boolean;
-  data: ResponseApiData | string | null;
+  data: ResponseApiData;
   additional: ResponseApiAdditional;
 }
 
 export interface ResponseApi {
   status: string;
   status_code: number;
-  data: ResponseApiData | string;
+  data: ResponseApiData;
   additional: ResponseApiAdditional;
 }
-
-export interface ErrorResponseData {
-  status: string;
-  status_code: number;
-  data: string;
-  additional: string;
-}
-
-export type Error = { error: string };
 
 export type ResponseApiData =
   | ApiAuth
@@ -49,5 +44,8 @@ export type ResponseApiData =
   | ApiEditItem
   | ApiFuelCalculation
   | ApiCollectionLogs
-  | Log;
+  | Log
+  | CollectionTasks
+  | OneTask
+  | Error;
 export type ResponseApiAdditional = {};

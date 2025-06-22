@@ -23,7 +23,7 @@ jobs:
   #   uses: ./.github/workflows/build.yml
 
   deploy:
-    #   build: cypress-run
+    # build: cypress-run
     uses: ./.github/workflows/deploy.yml
     secrets:
       SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

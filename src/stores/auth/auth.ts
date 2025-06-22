@@ -6,7 +6,7 @@ import { navigationPage } from "@/composable/navigation";
 // types
 import type { AuthBody, Auth } from "@/types/auth/types";
 import type { ApiAuth } from "@/types/api/auth/types";
-import type { Error, ErrorResponseData } from "@/types/global";
+import type { Error } from "@/types/global";
 
 // api
 import { automaticallyLogin } from "@/api/auth/fetch";

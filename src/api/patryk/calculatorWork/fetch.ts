@@ -1,5 +1,5 @@
 import { apiGet } from "@/api/common/fetch";
-import type { ResponseData, ErrorResponseData } from "@/types/global";
+import type { ResponseData } from "@/types/global";
 import type { ApiCalculatorKeys } from "@/types/api/patryk/calculatorWork/types";
 
 export async function calculatorKeys(): Promise<ResponseData> {
