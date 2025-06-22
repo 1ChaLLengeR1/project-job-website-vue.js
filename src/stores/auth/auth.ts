@@ -39,8 +39,9 @@ export const AuthStore = defineStore("authStore", () => {
       });
       return auth.value;
     } else {
+      const responseError = response.data as Error;
       return {
-        error: response.data as string,
+        message: responseError.message,
       };
     }
   };

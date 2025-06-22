@@ -1,8 +1,4 @@
-import type {
-  ResponseApi,
-  ResponseApiData,
-  ResponseApiAdditional,
-} from "@/types/global";
+import type { ResponseApi } from "@/types/global";
 
 import type { Headers } from "@/types/api/common/types";
 import { AuthStore } from "@/stores/auth/auth";

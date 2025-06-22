@@ -1,5 +1,5 @@
 import { apiGet } from "@/api/common/fetch";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiOutStandingMoneyCollection } from "@/types/api/outstandingMoney/types";
 
 export async function outStandingMoneyCollection(): Promise<ResponseData> {
@@ -18,7 +18,7 @@ export async function outStandingMoneyCollection(): Promise<ResponseData> {
     );
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 import type { fuelCalculationBody } from "@/types/fuelCalculation/types";
 
@@ -20,7 +20,7 @@ export async function fuelCalculations(
     console.error("API response does not return the fuel calculations!");
     return {
       isValid: false,
-      data: response.data as string,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

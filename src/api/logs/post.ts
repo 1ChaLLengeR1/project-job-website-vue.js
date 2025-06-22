@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { Log } from "@/types/api/logs/types";
 
 export async function createLog(description: string): Promise<ResponseData> {
@@ -17,7 +17,7 @@ export async function createLog(description: string): Promise<ResponseData> {
     console.error("API response does not return create log!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

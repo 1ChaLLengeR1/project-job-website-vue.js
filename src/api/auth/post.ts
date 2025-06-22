@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiAuth } from "@/types/api/auth/types";
 import type { AuthBody } from "@/types/auth/types";
 
@@ -18,7 +18,7 @@ export async function login(body: AuthBody): Promise<ResponseData> {
     console.error("API response does not return the login!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

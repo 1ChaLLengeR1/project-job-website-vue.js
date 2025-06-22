@@ -1,8 +1,4 @@
-import type {
-  ResponseApi,
-  ResponseApiData,
-  ResponseApiAdditional,
-} from "@/types/global";
+import type { ResponseApi, Error } from "@/types/global";
 
 import type { Headers } from "@/types/api/common/types";
 import { AuthStore } from "@/stores/auth/auth";
@@ -223,7 +219,7 @@ export async function apiDownloadFile(
     return {
       status: "ERROR",
       status_code: 400,
-      data: error as string,
+      data: error as Error,
       additional: {},
     };
   }
