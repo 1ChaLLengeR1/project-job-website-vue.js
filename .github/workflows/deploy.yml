@@ -43,7 +43,7 @@ jobs:
         run: |
           ssh artur@arturscibor.pl '
           cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
-          chmod +x ./deploy.sh &&
+          chmod +x ./deploy.sh
           '
 
       - name: Run deploy script on server
