@@ -3,7 +3,6 @@
     class="flex min-h-[calc(100vh-64px)] w-full items-center justify-center p-1"
   >
     <div class="mx-auto flex w-full max-w-lg flex-col items-center space-y-4">
-      <!-- Strefa Drag & Drop -->
       <div
         class="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 p-6 text-gray-500 hover:border-blue-400 hover:text-blue-600"
         @dragover.prevent

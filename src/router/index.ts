@@ -9,6 +9,7 @@ import PdfFilter from "@/pages/PdfFilter.vue";
 import MoneySettlement from "../pages/MoneySettlement.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
+import Tasks from "@/pages/Tasks.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,14 @@ const router = createRouter({
       path: paths.logs,
       name: "logs",
       component: Logs,
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
+      path: paths.tasks,
+      name: "Tasks",
+      component: Tasks,
       meta: {
         isAuth: true,
       },

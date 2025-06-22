@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData, ErrorResponseData } from "@/types/global";
+import type { ResponseData } from "@/types/global";
 import type {
   ApiDeleteList,
   ApiDeleteItem,

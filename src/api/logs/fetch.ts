@@ -1,5 +1,5 @@
 import { apiGet } from "@/api/common/fetch";
-import type { ResponseData, ErrorResponseData } from "@/types/global";
+import type { ResponseData } from "@/types/global";
 import type { ApiCollectionLogs } from "@/types/api/logs/types";
 
 export async function collectionLogs(num: number): Promise<ResponseData> {

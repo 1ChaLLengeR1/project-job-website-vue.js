@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData, ErrorResponseData } from "@/types/global";
+import type { ResponseData } from "@/types/global";
 import type { ApiAuth } from "@/types/api/auth/types";
 import type { AuthBody } from "@/types/auth/types";
 

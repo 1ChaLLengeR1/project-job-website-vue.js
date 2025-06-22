@@ -21,7 +21,9 @@ jobs:
             ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Add SSH host to known_hosts...
-        run: ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
+        run: |
+          ssh-keyscan -H arturscibor.pl >> ~/.ssh/known_hosts
+          ssh-keyscan -H 146.59.93.12 >> ~/.ssh/known_hosts
 
       - name: Debug SSH Connection
         run: ssh -T artur@arturscibor.pl || true
@@ -29,15 +31,20 @@ jobs:
       - name: Pull latest changes from Git
         run: |
           ssh artur@arturscibor.pl '
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
+            mkdir -p /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
+            chmod 755 /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
             cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
-            git reset --hard origin/main &&
-            git clean -fd &&
-            git pull origin main
+            git clone --branch main git@github.com:1ChaLLengeR1/project-job-website-vue.js.git . &&
+            cp -r /var/www/envs/projectJob/frontend/env/.env /var/www/pracaArturScibor/praca.strona.arturscibor.pl
           '
 
       - name: Set execute permissions for deploy.sh
         run: |
-          ssh artur@arturscibor.pl 'chmod +x /var/www/pracaArturScibor/praca.strona.arturscibor.pl/deploy.sh'
+          ssh artur@arturscibor.pl '
+          cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl &&
+          chmod +x ./deploy.sh &&
+          '
 
       - name: Run deploy script on server
         run: |
