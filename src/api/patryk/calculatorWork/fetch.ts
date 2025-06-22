@@ -1,5 +1,5 @@
 import { apiGet } from "@/api/common/fetch";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiCalculatorKeys } from "@/types/api/patryk/calculatorWork/types";
 
 export async function calculatorKeys(): Promise<ResponseData> {
@@ -16,7 +16,7 @@ export async function calculatorKeys(): Promise<ResponseData> {
     console.error("API response does not return the calculator keys!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

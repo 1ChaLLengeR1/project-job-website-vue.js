@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiCalculatorKeys } from "@/types/api/patryk/calculatorWork/types";
 import type { CalculationsUpdateBody } from "@/types/patryk/calculatorWork/types";
 
@@ -20,7 +20,7 @@ export async function calculationUpdate(
     console.error("API response does not return calculations update!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

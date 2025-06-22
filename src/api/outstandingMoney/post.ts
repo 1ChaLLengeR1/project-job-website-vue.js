@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type {
   CreateListBody,
   AddItemBody,
@@ -26,7 +26,7 @@ export async function outStandingMoneyCreateList(
     console.error("API response does not return create list!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }
@@ -55,7 +55,7 @@ export async function outStandingMoneyAddItem(
     console.error("API response does not return create list!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

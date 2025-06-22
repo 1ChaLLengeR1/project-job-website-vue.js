@@ -113,9 +113,8 @@ export default defineComponent({
       if ("id" in response) {
         navigationPage();
       } else {
-        console.log(response);
         errorInformation.status = "Error";
-        errorInformation.description = response.error;
+        errorInformation.description = response.message;
         errorInformation.show = true;
 
         setTimeout(() => {

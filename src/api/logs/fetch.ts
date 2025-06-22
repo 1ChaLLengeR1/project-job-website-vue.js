@@ -1,5 +1,5 @@
 import { apiGet } from "@/api/common/fetch";
-import type { ResponseData } from "@/types/global";
+import type { ResponseData, Error } from "@/types/global";
 import type { ApiCollectionLogs } from "@/types/api/logs/types";
 
 export async function collectionLogs(num: number): Promise<ResponseData> {
@@ -16,7 +16,7 @@ export async function collectionLogs(num: number): Promise<ResponseData> {
     console.error("API response does not return the collection logs!");
     return {
       isValid: false,
-      data: response.data,
+      data: response.data as Error,
       additional: response.additional,
     };
   }

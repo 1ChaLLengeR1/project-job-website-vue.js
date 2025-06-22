@@ -20,14 +20,14 @@ export type Error = { message: string };
 
 export interface ResponseData {
   isValid: boolean;
-  data: ResponseApiData;
+  data: ResponseApiData | string;
   additional: ResponseApiAdditional;
 }
 
 export interface ResponseApi {
   status: string;
   status_code: number;
-  data: ResponseApiData;
+  data: ResponseApiData | string;
   additional: ResponseApiAdditional;
 }
 
