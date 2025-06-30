@@ -81,6 +81,20 @@
         "sendList": "Wyślij Liste",
         "addItem": "Dodaj do listy"
       }
+    },
+    "tasks": {
+      "header": "Zadania",
+      "description": {
+        "create": "Stwórz List Zadań"
+      },
+      "placeholder": {
+        "description": "Opis zadania",
+        "time": "Podaj czas w minutach",
+        "active": "Aktywne zadanie?"
+      },
+      "button": {
+        "addTask": "Dodaj zadanie"
+      }
     }
   },
   "loadingSpinner": {

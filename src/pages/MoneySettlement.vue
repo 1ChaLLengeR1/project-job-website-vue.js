@@ -17,9 +17,9 @@ import { savePage } from "@/composable/navigation";
 import { LogStore } from "@/stores/log/log";
 
 //componets
-import Title from "../components/MoneySettlement/Title.vue";
-import CreateListVue from "../components/MoneySettlement/CreateList.vue";
-import ListSettlementVue from "../components/MoneySettlement/ListSettlement.vue";
+import Title from "@/components/MoneySettlement/Title.vue";
+import CreateListVue from "@/components/MoneySettlement/CreateList.vue";
+import ListSettlementVue from "@/components/MoneySettlement/ListSettlement.vue";
 import { paths } from "@/utils/paths";
 
 export default defineComponent({
