@@ -45,7 +45,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, Ref } from "vue";
+import { defineComponent, ref } from "vue";
+import type { Ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 // stores
