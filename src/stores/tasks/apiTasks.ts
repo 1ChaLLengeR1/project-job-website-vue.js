@@ -47,10 +47,15 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
     }
   };
 
-  const apiCreateTaskF = async (body: CreateTaskBody) => {
+  const apiCreateTaskF = async (body: CreateTaskBody): Promise<boolean> => {
     const response = await apiCreateTask(body);
     if (response && response.isValid) {
       await apiGetTasks(true, true);
+      notificationStore.data_to_notification = {
+        type: "success",
+        description: "Dodano poprawnie zadanie.",
+      };
+      return true;
     } else {
       const responseError = response.data as Error;
       notificationStore.data_to_notification = {
@@ -58,6 +63,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
         description: responseError.message,
       };
     }
+    return true;
   };
   const apiDeleteTaskF = async (task_id: string) => {
     const response = await apiDeleteTask(task_id);
