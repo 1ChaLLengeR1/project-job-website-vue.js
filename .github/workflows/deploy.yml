@@ -59,5 +59,6 @@ jobs:
         run: |
           ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=20 artur@arturscibor.pl '
             cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/scripts &&
+            chmod +x ./swarm_deploy.sh &&
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S timeout 900 ./swarm_deploy.sh $(date +%Y%m%d%H%M)
           '
