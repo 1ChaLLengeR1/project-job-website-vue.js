@@ -43,8 +43,8 @@ jobs:
         run: |
           ssh artur@arturscibor.pl '
           cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/scripts &&
-          chmod +x ./upload_compose.sh $(date +%Y%m%d%H%M) && 
-          ./upload_compose.sh
+          chmod +x ./upload_compose.sh && 
+          ./upload_compose.sh $(date +%Y%m%d%H%M)
           '
 
       - name: Push image to DockerHub
