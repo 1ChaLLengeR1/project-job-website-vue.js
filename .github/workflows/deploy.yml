@@ -47,11 +47,12 @@ jobs:
           ./upload_compose.sh
           '
 
-      - name: Set execute permissions for swarm_deploy.sh
+      - name: Push image to DockerHub
         run: |
           ssh artur@arturscibor.pl '
-          cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/scripts &&
-          chmod +x ./swarm_deploy.sh
+            cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/scripts &&
+            chmod +x ./upload_compose.sh &&
+            ./upload_compose.sh $(date +%Y%m%d%H%M)
           '
 
       - name: Run deploy script on server
