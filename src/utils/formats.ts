@@ -9,7 +9,6 @@ export const formatDate = (isoString: string): string => {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    timeZoneName: "short",
   };
 
   return new Intl.DateTimeFormat("pl-PL", options).format(date);

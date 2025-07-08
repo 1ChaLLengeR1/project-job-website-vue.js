@@ -12,12 +12,13 @@
     "test:cypress-dev": "cypress open --e2e"
   },
   "dependencies": {
+    "@primeuix/themes": "^1.2.1",
     "js-cookie": "^3.0.5",
     "pinia": "^2.3.1",
+    "primevue": "^4.3.6",
     "vue": "^3.3.4",
     "vue-i18n": "^10.0.5",
-    "vue-router": "^4.2.4",
-    "vuex": "^4.1.0"
+    "vue-router": "^4.2.4"
   },
   "devDependencies": {
     "@cypress/vue": "^6.0.2",
