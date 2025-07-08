@@ -92,10 +92,11 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
   const apiUpdateActiveTaskF = async (
     task_id: string,
     body: UpdateActiveTaskBody,
+    typeList: boolean = true,
   ) => {
     const response = await apiUpdateActiveTask(task_id, body);
     if (response && response.isValid) {
-      await apiGetTasks(true, true);
+      await apiGetTasks(true, typeList);
     } else {
       const responseError = response.data as Error;
       notificationStore.data_to_notification = {
@@ -106,6 +107,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
   };
 
   return {
+    collectionTasks,
     apiGetTasks,
     apiCreateTaskF,
     apiDeleteTaskF,

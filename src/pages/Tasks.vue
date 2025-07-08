@@ -11,6 +11,9 @@
       <div v-if="showList">
         <AddTaskPanel />
       </div>
+      <div>
+        <ListTask />
+      </div>
     </div>
   </main>
 </template>
@@ -27,6 +30,7 @@ import { savePage } from "@/composable/navigation";
 import Title from "@/components/MoneySettlement/Title.vue";
 import OpenPanelList from "@/components/MoneySettlement/OpenPanelList.vue";
 import AddTaskPanel from "@/components/Tasks/AddTask.vue";
+import ListTask from "@/components/Tasks/ListTasks.vue";
 
 // stores
 import { ApiTaskStore } from "@/stores/tasks/apiTasks";
@@ -37,14 +41,13 @@ export default defineComponent({
     Title,
     OpenPanelList,
     AddTaskPanel,
+    ListTask,
   },
   setup() {
     const { t } = useI18n();
     const logStore = LogStore();
-    const apiTaskStore = ApiTaskStore();
 
     (async () => {
-      await apiTaskStore.apiGetTasks();
       await logStore.apiCreateLog("Zadania");
     })();
 

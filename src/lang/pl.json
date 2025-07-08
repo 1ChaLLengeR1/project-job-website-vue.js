@@ -93,7 +93,22 @@
         "active": "Aktywne zadanie?"
       },
       "button": {
-        "addTask": "Dodaj zadanie"
+        "addTask": "Dodaj zadanie",
+        "deactive": "Dezaktywuj",
+        "active": "Aktywuj",
+        "showActive": "Pokaż liste aktywnych zadań",
+        "showNotActive": "Pokaż liste nieaktywnych zadań"
+      },
+      "table": {
+        "quantity": "Zadania, Liczba: {quantity}",
+        "description": "Opis",
+        "time": "Czas wykonania w minutach",
+        "timeValue": "{time} minut",
+        "options": "Opcje",
+        "status": "Status zadania",
+        "datetime": "Data zadania",
+        "createdAt": "Utworzono: {created_at}",
+        "updatedAt": "Zaktualizowano: {updated_at}"
       }
     }
   },

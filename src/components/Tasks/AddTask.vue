@@ -89,7 +89,6 @@ export default defineComponent({
 
     const handlerSubmit = async () => {
       errorMessage.value = null;
-      console.log(inputDescription.value);
       if (!inputDescription.value || inputDescription.value.trim() === "") {
         errorMessage.value = "Description cannot be empty!";
         setTimeout(() => {
