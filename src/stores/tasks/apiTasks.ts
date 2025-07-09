@@ -46,7 +46,6 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
       };
     }
   };
-
   const apiCreateTaskF = async (body: CreateTaskBody): Promise<boolean> => {
     const response = await apiCreateTask(body);
     if (response && response.isValid) {

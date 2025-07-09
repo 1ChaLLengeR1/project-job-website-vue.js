@@ -1,5 +1,11 @@
 <template>
   <main class="flex w-full justify-center">
+    <EditBoxVue v-if="editBoxStore.isActice">
+      <div class="flex w-full justify-center gap-3">
+        <InputText placeholder="Description" v-model="descriptionValue" />
+        <InputNumber placeholder="Time" type="number" v-model="timeValue" />
+      </div>
+    </EditBoxVue>
     <DataTable :value="apiTaskStore.collectionTasks" showGridlines>
       <template #header>
         <div class="flex w-full justify-between">
@@ -52,7 +58,7 @@
       </Column>
       <Column field="options" :header="t('pages.tasks.table.options')">
         <template #body="slotProps">
-          <div class="flex w-fit gap-3">
+          <div class="w-m flex w-fit flex-wrap gap-3 sm:w-full">
             <Button
               :label="
                 slotProps.data.active
@@ -63,6 +69,24 @@
               text
               @click="
                 handlerActiveTask(slotProps.data.id, slotProps.data.active)
+              "
+            />
+            <Button
+              label="Delete"
+              severity="danger"
+              text
+              @click="handlerDeleteTask(slotProps.data.id)"
+            />
+            <Button
+              label="Edit"
+              severity="info"
+              text
+              @click="
+                handlerTaskEdit(
+                  slotProps.data.id,
+                  slotProps.data.description,
+                  slotProps.data.time,
+                )
               "
             />
           </div>
@@ -101,6 +125,8 @@ import { formatDate } from "@/utils/formats";
 // stores
 import { ApiTaskStore } from "@/stores/tasks/apiTasks";
 import { LoadingSpinnerStore } from "@/stores/modals/spinner";
+import { ConfirmBoxStore } from "@/stores/modals/confirmBox";
+import { EditBoxStore } from "@/stores/modals/editbox";
 
 // components
 import DataTable from "primevue/datatable";
@@ -109,6 +135,9 @@ import ColumnGroup from "primevue/columngroup";
 import Row from "primevue/row";
 import Button from "primevue/button";
 import Tag from "primevue/tag";
+import EditBoxVue from "@/components/utils/EditBox.vue";
+import InputText from "primevue/inputtext";
+import InputNumber from "primevue/inputnumber";
 
 export default defineComponent({
   components: {
@@ -118,14 +147,21 @@ export default defineComponent({
     Row,
     Button,
     Tag,
+    EditBoxVue,
+    InputText,
+    InputNumber,
   },
   setup() {
     const { t } = useI18n();
     const apiTaskStore = ApiTaskStore();
     const loadingSpinnerStore = LoadingSpinnerStore();
+    const confirmBoxStore = ConfirmBoxStore();
+    const editBoxStore = EditBoxStore();
     const urlShowList = ref<boolean>(true);
     const router = useRouter();
     const route = useRoute();
+    const timeValue = ref<number | null>(null);
+    const descriptionValue = ref<string | null>(null);
 
     const getStatus = (status: boolean): "success" | "danger" | undefined => {
       switch (status) {
@@ -147,6 +183,34 @@ export default defineComponent({
       loadingSpinnerStore.isLoading = true;
       await apiTaskStore.apiUpdateActiveTaskF(taskId, body, urlShowList.value);
       loadingSpinnerStore.isLoading = false;
+    };
+
+    const handlerDeleteTask = async (taskId: string) => {
+      confirmBoxStore.isActice = true;
+      confirmBoxStore.setCallback(async () => {
+        loadingSpinnerStore.isLoading = true;
+        await apiTaskStore.apiDeleteTaskF(taskId);
+        loadingSpinnerStore.isLoading = false;
+      });
+    };
+
+    const handlerTaskEdit = async (
+      taskId: string,
+      description: string,
+      time: number,
+    ) => {
+      editBoxStore.isActice = true;
+      descriptionValue.value = description;
+      timeValue.value = time;
+
+      editBoxStore.setCallback(async () => {
+        loadingSpinnerStore.isLoading = true;
+        await apiTaskStore.apiUpdateTaskF(taskId, {
+          description: descriptionValue.value!,
+          time: timeValue.value!,
+        });
+        loadingSpinnerStore.isLoading = false;
+      });
     };
 
     const handlerNotActiveCollection = async () => {
@@ -178,11 +242,16 @@ export default defineComponent({
     return {
       urlShowList,
       apiTaskStore,
+      editBoxStore,
+      timeValue,
+      descriptionValue,
       t,
       formatDate,
       getStatus,
       handlerActiveTask,
       handlerNotActiveCollection,
+      handlerDeleteTask,
+      handlerTaskEdit,
     };
   },
 });

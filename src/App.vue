@@ -42,6 +42,7 @@ import ImageDotsVue from "@/components/App/ImageDots.vue";
 import LoadingSpinner from "@/components/utils/LoadingSpinner.vue";
 import Notification from "@/components/utils/Notification.vue";
 import ConfirmBox from "@/components/utils/ConfirmBox.vue";
+import EditBoxVue from "@/components/utils/EditBox.vue";
 
 // stores
 import { LoadingSpinnerStore } from "@/stores/modals/spinner";
@@ -60,6 +61,7 @@ export default defineComponent({
     ImageDotsVue,
     Notification,
     ConfirmBox,
+    EditBoxVue,
   },
   setup() {
     const loadingSpinnerStore = LoadingSpinnerStore();
