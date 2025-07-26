@@ -14,7 +14,11 @@ import type {
 
 import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 
-import type { CollectionTasks, OneTask } from "@/types/api/tasks/types";
+import type {
+  CollectionTasks,
+  OneTask,
+  StatisticsTask,
+} from "@/types/api/tasks/types";
 
 export type Error = { message: string };
 
@@ -47,5 +51,6 @@ export type ResponseApiData =
   | Log
   | CollectionTasks
   | OneTask
+  | StatisticsTask
   | Error;
 export type ResponseApiAdditional = {};

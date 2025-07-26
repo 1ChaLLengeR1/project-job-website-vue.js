@@ -2,14 +2,17 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 //api
-import { apiCollectionTasks } from "@/api/tasks/get";
+import {
+  apiCollectionTasks,
+  apiCollectionStatisticsTask,
+} from "@/api/tasks/get";
 import { apiCreateTask } from "@/api/tasks/post";
 import { apiDeleteTask } from "@/api/tasks/delete";
 import { apiUpdateActiveTask, apiUpdateTask } from "@/api/tasks/patch";
 
 // types
 import type { Error } from "@/types/global";
-import type { CollectionTasks } from "@/types/api/tasks/types";
+import type { CollectionTasks, StatisticsTask } from "@/types/api/tasks/types";
 import type {
   CreateTaskBody,
   UpdateActiveTaskBody,
@@ -22,6 +25,7 @@ import { NotificationStore } from "@/stores/notification/notification";
 export const ApiTaskStore = defineStore("apiTaskStore", () => {
   const notificationStore = NotificationStore();
   const collectionTasks = ref<CollectionTasks>([]);
+  const collectionStatisticsTask = ref<StatisticsTask | null>(null);
 
   const apiGetTasks = async (
     restart: boolean = false,
@@ -46,6 +50,25 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
       };
     }
   };
+  const apiGetStatisticsTaskF = async (
+    startDate: string,
+    endDate: string,
+  ): Promise<boolean> => {
+    const response = await apiCollectionStatisticsTask(startDate, endDate);
+    if (response && response.isValid) {
+      const responseData = response.data as StatisticsTask;
+      collectionStatisticsTask.value = responseData;
+      return true;
+    } else {
+      const responseError = response.data as Error;
+      notificationStore.data_to_notification = {
+        type: "error",
+        description: responseError.message,
+      };
+    }
+    return false;
+  };
+
   const apiCreateTaskF = async (body: CreateTaskBody): Promise<boolean> => {
     const response = await apiCreateTask(body);
     if (response && response.isValid) {
@@ -107,7 +130,9 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
 
   return {
     collectionTasks,
+    collectionStatisticsTask,
     apiGetTasks,
+    apiGetStatisticsTaskF,
     apiCreateTaskF,
     apiDeleteTaskF,
     apiUpdateTaskF,

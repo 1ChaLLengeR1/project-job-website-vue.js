@@ -8,12 +8,9 @@
         :name="t('pages.tasks.description.create')"
         @open-panel-list="openPanelList"
       />
-      <div v-if="showList">
-        <AddTaskPanel />
-      </div>
-      <div>
-        <ListTask />
-      </div>
+      <AddTaskPanel v-if="showList" />
+      <ListTask />
+      <Statistics />
     </div>
   </main>
 </template>
@@ -31,6 +28,7 @@ import Title from "@/components/MoneySettlement/Title.vue";
 import OpenPanelList from "@/components/MoneySettlement/OpenPanelList.vue";
 import AddTaskPanel from "@/components/Tasks/AddTask.vue";
 import ListTask from "@/components/Tasks/ListTasks.vue";
+import Statistics from "@/components/Tasks/Statistics.vue";
 
 // stores
 import { ApiTaskStore } from "@/stores/tasks/apiTasks";
@@ -42,6 +40,7 @@ export default defineComponent({
     OpenPanelList,
     AddTaskPanel,
     ListTask,
+    Statistics,
   },
   setup() {
     const { t } = useI18n();
