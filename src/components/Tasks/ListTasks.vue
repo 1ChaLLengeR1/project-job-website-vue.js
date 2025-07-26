@@ -25,7 +25,7 @@
                   ? t('pages.tasks.button.showNotActive')
                   : t('pages.tasks.button.showActive')
               "
-              severity="success"
+              :severity="urlShowList ? 'danger' : 'success'"
               text
               @click="handlerNotActiveCollection"
             />
