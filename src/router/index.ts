@@ -10,6 +10,7 @@ import MoneySettlement from "../pages/MoneySettlement.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
 import Tasks from "@/pages/Tasks.vue";
+import CalendarSettlement from "@/pages/CalendarSettlement.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +44,14 @@ const router = createRouter({
       path: paths.moneySettlement,
       name: "moneySettlement",
       component: MoneySettlement,
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
+      path: paths.calendarSettlement,
+      name: "calendarSettlement",
+      component: CalendarSettlement,
       meta: {
         isAuth: true,
       },

@@ -14,6 +14,12 @@ import type {
 
 import type { ApiFuelCalculation } from "@/types/api/fuelCalculation/types";
 
+import type { ApiCollectionCalendaryCondition } from "@/types/api/calendar/condition/types";
+import type {
+  ApiCalendaryStatistics,
+  ApiCollectionCalendary,
+} from "@/types/api/calendar/types";
+
 import type {
   CollectionTasks,
   OneTask,
@@ -25,7 +31,7 @@ export type Error = { message: string };
 export interface ResponseData {
   isValid: boolean;
   data: ResponseApiData | string;
-  additional: ResponseApiAdditional;
+  additional: ResponseApiAdditional | null;
 }
 
 export interface ResponseApi {
@@ -52,5 +58,8 @@ export type ResponseApiData =
   | CollectionTasks
   | OneTask
   | StatisticsTask
+  | ApiCollectionCalendaryCondition
+  | ApiCalendaryStatistics
+  | ApiCollectionCalendary
   | Error;
 export type ResponseApiAdditional = {};
