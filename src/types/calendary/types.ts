@@ -19,6 +19,6 @@ export type PayloadBodyUpdateDaysMany = {
 };
 
 export type PayloadBodyCreateCondition = {
-  norm_hours: string;
-  hours_worked: string;
+  norm_hours: number | null;
+  hourly_rate: number | null;
 };
