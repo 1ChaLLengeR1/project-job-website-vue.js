@@ -2,6 +2,7 @@ import { apiPost } from "@/api/common/post";
 import {
   PayloadBodyUpdateByIdCalendaryDay,
   PayloadBodyUpdateDaysMany,
+  PayloadBodyUpdateDaysManySalary,
 } from "@/types/calendary/types";
 import type { ResponseData, Error } from "@/types/global";
 
@@ -60,6 +61,37 @@ export async function apiUpdateCalendaryDaysMany(
   return {
     isValid: true,
     data: "Update success calendary many",
+    additional: null,
+  };
+}
+
+export async function apiUpdateCalendaryDaysManySalary(
+  payload: PayloadBodyUpdateDaysManySalary,
+): Promise<ResponseData> {
+  const urlPath = `/calendar/days/work/update/salary`;
+  const response = await apiPost(urlPath, payload, "PATCH", 0, {
+    Authorization: true,
+    UserData: true,
+  });
+
+  if (
+    !response ||
+    response.status !== "SUCCESS" ||
+    response.status_code >= 400
+  ) {
+    console.error(
+      "API response does not return update calendary many day for salary!",
+    );
+    return {
+      isValid: false,
+      data: response.data as Error,
+      additional: response.additional,
+    };
+  }
+
+  return {
+    isValid: true,
+    data: "Update success calendary many for salary",
     additional: null,
   };
 }

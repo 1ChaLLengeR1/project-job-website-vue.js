@@ -1,30 +1,30 @@
 export type ApiCalendaryStatistics = {
-  year: number;
-  total_hours_worked: number;
-  total_earnings: number;
-  working_days_count: number;
-  total_norm_hours: number;
-  hours_difference: number;
-  total_holidays: number;
-  total_days_in_year: number;
-  average_hours_per_working_day: number;
-  average_daily_earnings: number;
-  work_efficiency_percentage: number;
+  year: number | null;
+  total_hours_worked: number | null;
+  total_earnings: number | null;
+  working_days_count: number | null;
+  total_norm_hours: number | null;
+  hours_difference: number | null;
+  total_holidays: number | null;
+  total_days_in_year: number | null;
+  average_hours_per_working_day: number | null;
+  average_daily_earnings: number | null;
+  work_efficiency_percentage: number | null;
 };
 
 export type ApiCollectionCalendary = {
-  year: number;
-  month: number;
-  month_name: string;
-  days: Array<OneCalendaryDay>;
-  statistics: OneCalendaryStatistics;
+  year: number | null;
+  month: number | null;
+  month_name: string | null;
+  days: Array<OneCalendaryDay> | [];
+  statistics: OneCalendaryStatistics | null;
 };
 
 export type OneCalendaryStatistics = {
   total_hours_worked: number;
   total_norm_hours: number;
   total_salary: number;
-  weeks: OneCalendaryWeek;
+  weeks: Array<OneCalendaryWeek>;
 };
 
 export type OneCalendaryDay = {

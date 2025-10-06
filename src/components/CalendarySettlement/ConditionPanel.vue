@@ -1,18 +1,19 @@
 <template>
   <div class="w-full p-4">
-    <!-- Przycisk toggle -->
-    <button
-      @click="isVisible = !isVisible"
-      class="mb-4 rounded-lg border border-color-yellow bg-color-bg px-6 py-2 font-semibold text-white shadow-sm hover:bg-opacity-90"
-    >
-      {{
-        isVisible ? "Ukryj warunki kalendarzowe" : "Pokaż warunki kalendarzowe"
-      }}
-    </button>
+    <div class="flex w-full justify-center">
+      <button
+        @click="isVisible = !isVisible"
+        class="mb-4 rounded-lg border border-color-yellow bg-color-bg px-6 py-2 font-semibold text-white shadow-sm hover:bg-opacity-90"
+      >
+        {{
+          isVisible
+            ? "Ukryj warunki kalendarzowe"
+            : "Pokaż warunki kalendarzowe"
+        }}
+      </button>
+    </div>
 
-    <!-- Zawartość (formularz + lista) -->
     <div v-if="isVisible" class="space-y-6">
-      <!-- Formularz dodawania -->
       <div
         class="rounded-lg border border-color-yellow bg-color-bg p-4 shadow-sm"
       >

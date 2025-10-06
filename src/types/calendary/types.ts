@@ -18,6 +18,12 @@ export type PayloadBodyUpdateDaysMany = {
   hourly_rate: string;
 };
 
+export type PayloadBodyUpdateDaysManySalary = {
+  year: string;
+  month: string;
+  salary: string;
+};
+
 export type PayloadBodyCreateCondition = {
   norm_hours: number | null;
   hourly_rate: number | null;
