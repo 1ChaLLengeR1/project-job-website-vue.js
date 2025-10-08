@@ -48,10 +48,10 @@ export const ApiCalendaryStore = defineStore("apiCalendaryStore", () => {
       const responseData = response.data as ApiCollectionCalendary;
       collection.value = responseData;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data as Error;
       notificationStore.data_to_notification = {
         type: "error",
-        description: responseError,
+        description: responseError.message,
       };
     }
   };
@@ -62,10 +62,10 @@ export const ApiCalendaryStore = defineStore("apiCalendaryStore", () => {
       const responseData = response.data as ApiCalendaryStatistics;
       statistics.value = responseData;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data as Error;
       notificationStore.data_to_notification = {
         type: "error",
-        description: responseError,
+        description: responseError.message,
       };
     }
   };
@@ -76,16 +76,17 @@ export const ApiCalendaryStore = defineStore("apiCalendaryStore", () => {
       const responseData = response.data as ApiCalendaryStatistics;
       statistics.value = responseData;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data as Error;
       notificationStore.data_to_notification = {
         type: "error",
-        description: responseError,
+        description: responseError.message,
       };
     }
   };
 
   return {
     collection,
+    statistics,
     fetchCallendaryCollection,
     fetchCallendaryCollectionStatistics,
     postCalendaryCreated,

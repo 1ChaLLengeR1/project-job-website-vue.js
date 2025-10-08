@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-4">
+  <div class="mx-auto max-w-7xl p-4">
     <div class="flex w-full justify-center">
       <button
         @click="isVisible = !isVisible"
