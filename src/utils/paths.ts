@@ -7,6 +7,7 @@ export const paths = {
   fuelcalculator: "/fuel_calculator",
   logs: "/logs",
   tasks: "/tasks",
+  calendarSettlement: "/calendar_settlement",
   notFound: "/:pathMatch(.*)*",
 };
 
@@ -23,6 +24,10 @@ export const pathsArtek: Link[] = [
   {
     title: "navSlider.links.artek.tasks",
     path: paths.tasks,
+  },
+  {
+    title: "navSlider.links.artek.calendarSettlement",
+    path: paths.calendarSettlement,
   },
   {
     title: "navSlider.links.artek.fuelCalculator",

@@ -121,7 +121,8 @@
         "moneySettlement": "Rozliczenia pieniędzy",
         "fuelCalculator": "Kalkulator Paliw",
         "tasks": "Zadania",
-        "log": "Logi"
+        "log": "Logi",
+        "calendarSettlement": "Kalendarz Rozliczeń"
       },
       "patryk": {
         "calculatorVat": "Kalkulator vat",
