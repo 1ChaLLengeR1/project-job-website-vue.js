@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install --frozen-lockfile
+RUN yarn install
 
 FROM node:20-alpine AS build-stage
 
