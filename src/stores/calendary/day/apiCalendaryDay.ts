@@ -12,7 +12,7 @@ import {
 } from "@/api/calendar/days/patch";
 
 // types
-import {
+import type {
   PayloadBodyUpdateByIdCalendaryDay,
   PayloadBodyUpdateDaysMany,
   PayloadBodyUpdateDaysManySalary,

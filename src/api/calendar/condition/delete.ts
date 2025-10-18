@@ -1,5 +1,4 @@
 import { apiPost } from "@/api/common/post";
-import { PayloadBodyCreateCondition } from "@/types/calendary/types";
 import type { ResponseData, Error } from "@/types/global";
 
 export async function apiDeleteCalendaryConditionById(
