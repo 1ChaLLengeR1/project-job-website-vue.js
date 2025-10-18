@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
-RUN yarn install
+RUN yarn install --frozen-lockfile --prefer-offline
 
 FROM node:20-alpine AS build-stage
 
