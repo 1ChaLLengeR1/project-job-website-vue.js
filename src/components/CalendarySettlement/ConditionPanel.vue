@@ -178,7 +178,7 @@ import { ApiCalendaryCinditionStore } from "@/stores/calendary/condition/apiCale
 import { LoadingSpinnerStore } from "@/stores/modals/spinner";
 
 // types
-import { PayloadBodyCreateCondition } from "@/types/calendary/types";
+import type { PayloadBodyCreateCondition } from "@/types/calendary/types";
 
 export default defineComponent({
   setup() {

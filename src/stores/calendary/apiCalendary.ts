@@ -15,7 +15,7 @@ import type {
   ApiCollectionCalendary,
   ApiCalendaryStatistics,
 } from "@/types/api/calendar/types";
-import { PayloadBodyCreateCalendary } from "@/types/calendary/types";
+import type { PayloadBodyCreateCalendary } from "@/types/calendary/types";
 
 export const ApiCalendaryStore = defineStore("apiCalendaryStore", () => {
   const collection = ref<ApiCollectionCalendary>({

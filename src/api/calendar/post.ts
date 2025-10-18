@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import { PayloadBodyCreateCalendary } from "@/types/calendary/types";
+import type { PayloadBodyCreateCalendary } from "@/types/calendary/types";
 import type { ResponseData, Error } from "@/types/global";
 
 export async function apiCreateCalendary(

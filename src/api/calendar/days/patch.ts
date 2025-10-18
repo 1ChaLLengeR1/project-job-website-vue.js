@@ -1,5 +1,5 @@
 import { apiPost } from "@/api/common/post";
-import {
+import type {
   PayloadBodyUpdateByIdCalendaryDay,
   PayloadBodyUpdateDaysMany,
   PayloadBodyUpdateDaysManySalary,

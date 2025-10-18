@@ -11,8 +11,8 @@ import { apiUpdateCalendaryConditionById } from "@/api/calendar/condition/patch"
 import { apiDeleteCalendaryConditionById } from "@/api/calendar/condition/delete";
 
 // types
-import { ApiCollectionCalendaryCondition } from "@/types/api/calendar/condition/types";
-import { PayloadBodyCreateCondition } from "@/types/calendary/types";
+import type { ApiCollectionCalendaryCondition } from "@/types/api/calendar/condition/types";
+import type { PayloadBodyCreateCondition } from "@/types/calendary/types";
 
 export const ApiCalendaryCinditionStore = defineStore(
   "apiCalendaryCinditionStore",
