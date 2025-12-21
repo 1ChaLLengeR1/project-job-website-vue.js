@@ -47,14 +47,6 @@ jobs:
           ./upload_compose.sh $(date +%Y%m%d%H%M)
           '
 
-      - name: Push image to DockerHub
-        run: |
-          ssh artur@arturscibor.pl '
-            cd /var/www/pracaArturScibor/praca.strona.arturscibor.pl/scripts &&
-            chmod +x ./upload_compose.sh &&
-            ./upload_compose.sh $(date +%Y%m%d%H%M)
-          '
-
       - name: Run deploy script on server
         run: |
           ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=20 artur@arturscibor.pl '
