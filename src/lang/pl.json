@@ -44,15 +44,6 @@
         "calculate": "Oblicz"
       }
     },
-    "pdfFilter": {
-      "description": "Przeciągnij i upuść plik .xlsx tutaj lub",
-      "button": {
-        "open": "Otwórz Plik"
-      },
-      "error": {
-        "invalidFile": "Nie poprawny typ pliku. Tylko .xlsx"
-      }
-    },
     "logs": {
       "header": "Logi"
     },
@@ -125,8 +116,7 @@
         "calendarSettlement": "Kalendarz Rozliczeń"
       },
       "patryk": {
-        "calculatorVat": "Kalkulator vat",
-        "pdfFilter": "Program do filtrowania"
+        "calculatorVat": "Kalkulator vat"
       }
     },
     "button": {
@@ -136,13 +126,5 @@
   "notification": {
     "success": "Sukces",
     "error": "Błąd"
-  },
-  "websocket": {
-    "pdfFilter": {
-      "start": "🔌 Połączenie WebSocket Start",
-      "end": "🚪 Zamykam WebSocket...",
-      "close": "❌ Połączenie WebSocket zamknięte",
-      "message": "📡 Postęp: {process}% - {message}"
-    }
   }
 }

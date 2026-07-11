@@ -1,62 +1,20 @@
-import { apiGet } from "@/api/common/fetch";
-import type { ResponseData, Error } from "@/types/global";
+import { apiGet } from "@/api/common/request";
+import type { ResponseData } from "@/types/global";
 import type { CollectionTasks, StatisticsTask } from "@/types/api/tasks/types";
 
-export async function apiCollectionTasks(
+export function apiCollectionTasks(
   active: boolean,
-): Promise<ResponseData> {
-  const urlPath = `/tasks/collection?active=${active}`;
-  const response = await apiGet(urlPath, 0, {
-    Authorization: true,
+): Promise<ResponseData<CollectionTasks>> {
+  return apiGet<CollectionTasks>("/tasks/collection", {
+    query: { active },
   });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return the collections tasks!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as CollectionTasks,
-    additional: response.additional,
-  };
 }
 
-export async function apiCollectionStatisticsTask(
+export function apiCollectionStatisticsTask(
   startDate: string,
   endDate: string,
-): Promise<ResponseData> {
-  const urlPath = `/tasks/statistics?start_date=${startDate}&end_date=${endDate}`;
-  const response = await apiGet(urlPath, 0, {
-    Authorization: true,
+): Promise<ResponseData<StatisticsTask>> {
+  return apiGet<StatisticsTask>("/tasks/statistics", {
+    query: { start_date: startDate, end_date: endDate },
   });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error(
-      "API response does not return the collections statistics tasks!",
-    );
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as StatisticsTask,
-    additional: response.additional,
-  };
 }

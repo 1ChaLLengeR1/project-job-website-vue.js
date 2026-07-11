@@ -1,63 +1,23 @@
-import { apiGet } from "@/api/common/fetch";
-import type { ResponseData, Error } from "@/types/global";
+import { apiGet } from "@/api/common/request";
+import type { ResponseData } from "@/types/global";
 import type {
   ApiCollectionCalendary,
   ApiCalendaryStatistics,
 } from "@/types/api/calendar/types";
 
-export async function apiCollectionCalendary(
+export function apiCollectionCalendary(
   year: number,
   month: number,
-): Promise<ResponseData> {
-  const urlPath = `/calendar/collection?year=${year}&month=${month}`;
-  const response = await apiGet(urlPath, 0, {
-    Authorization: true,
+): Promise<ResponseData<ApiCollectionCalendary>> {
+  return apiGet<ApiCollectionCalendary>("/calendar/collection", {
+    query: { year, month },
   });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return the collection calendary!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as ApiCollectionCalendary,
-    additional: response.additional,
-  };
 }
 
-export async function apiCollectionCalendaryStatistics(
+export function apiCollectionCalendaryStatistics(
   year: number,
-): Promise<ResponseData> {
-  const urlPath = `/calendar/statistics?year=${year}`;
-  const response = await apiGet(urlPath, 0, {
-    Authorization: true,
+): Promise<ResponseData<ApiCalendaryStatistics>> {
+  return apiGet<ApiCalendaryStatistics>("/calendar/statistics", {
+    query: { year },
   });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return the statistics calendary!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as ApiCalendaryStatistics,
-    additional: response.additional,
-  };
 }

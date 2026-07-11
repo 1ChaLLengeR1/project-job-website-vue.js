@@ -11,9 +11,6 @@
 import { defineComponent } from "vue";
 import { savePage } from "@/composable/navigation";
 
-// stores
-import { LogStore } from "@/stores/log/log";
-
 //componets
 import ConditionPanelVue from "@/components/CalendarySettlement/ConditionPanel.vue";
 import CalendaryGridVue from "@/components/CalendarySettlement/CalendaryGrid.vue";
@@ -27,11 +24,6 @@ export default defineComponent({
     CalendaryGridVue,
   },
   setup() {
-    const logStore = LogStore();
-    (async () => {
-      await logStore.apiCreateLog("Kalendarz Rozliczeń");
-    })();
-
     savePage(paths.calendarSettlement);
     return {};
   },

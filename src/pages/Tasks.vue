@@ -32,7 +32,6 @@ import Statistics from "@/components/Tasks/Statistics.vue";
 
 // stores
 import { ApiTaskStore } from "@/stores/tasks/apiTasks";
-import { LogStore } from "@/stores/log/log";
 
 export default defineComponent({
   components: {
@@ -44,11 +43,6 @@ export default defineComponent({
   },
   setup() {
     const { t } = useI18n();
-    const logStore = LogStore();
-
-    (async () => {
-      await logStore.apiCreateLog("Zadania");
-    })();
 
     const showList = ref<boolean>(false);
 

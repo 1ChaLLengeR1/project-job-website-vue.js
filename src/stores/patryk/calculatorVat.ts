@@ -66,7 +66,7 @@ export const CalculatorVatStore = defineStore("calculatorVatStore", () => {
       const responseData = response.data as ApiCalculations;
       result.value = responseData;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -82,7 +82,7 @@ export const CalculatorVatStore = defineStore("calculatorVatStore", () => {
         description: "Poprawnie zaktualizowano klucze kalkulatora!",
       };
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,

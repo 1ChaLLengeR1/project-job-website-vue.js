@@ -62,7 +62,6 @@ export default defineComponent({
 
     (async () => {
       await logStore.apiFetchCollection(numberLogs.value);
-      await logStore.apiCreateLog("Logi");
     })();
 
     const getLogs = async (val: number) => {

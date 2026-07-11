@@ -2,7 +2,6 @@ export const paths = {
   default: "/",
   login: "/login_panel",
   calculatorVat: "/calculator_vat",
-  pdfFilter: "/pdf_filter",
   moneySettlement: "/money_settlement",
   fuelcalculator: "/fuel_calculator",
   logs: "/logs",
@@ -43,9 +42,5 @@ export const pathsPatryk: Link[] = [
   {
     title: "navSlider.links.patryk.calculatorVat",
     path: paths.calculatorVat,
-  },
-  {
-    title: "navSlider.links.patryk.pdfFilter",
-    path: paths.pdfFilter,
   },
 ];

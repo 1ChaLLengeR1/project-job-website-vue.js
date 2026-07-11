@@ -28,7 +28,7 @@ export const FuelCalculationStore = defineStore("fuelCalculationStore", () => {
         description: "Obliczono poprawnie złużycie paliwa!",
       };
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,

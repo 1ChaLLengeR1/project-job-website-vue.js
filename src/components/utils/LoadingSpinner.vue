@@ -26,22 +26,6 @@
       </svg>
       {{ t("loadingSpinner.description") }}
     </button>
-    <div
-      v-if="loadingSpinnerStore.progressBarPdfFilterCollection.length > 0"
-      class="w-full"
-    >
-      <ul class="flex h-96 w-full flex-col items-center gap-3 overflow-auto">
-        <li
-          v-for="(
-            item, index
-          ) in loadingSpinnerStore.progressBarPdfFilterCollection"
-          :key="index"
-          class="flex w-fit justify-center rounded-md bg-color-yellow p-1 font-bold"
-        >
-          {{ item }}
-        </li>
-      </ul>
-    </div>
   </div>
 </template>
 

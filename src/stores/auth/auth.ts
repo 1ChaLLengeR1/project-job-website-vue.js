@@ -6,7 +6,7 @@ import { navigationPage } from "@/composable/navigation";
 // types
 import type { AuthBody, Auth } from "@/types/auth/types";
 import type { ApiAuth } from "@/types/api/auth/types";
-import type { Error } from "@/types/global";
+import type { ApiError } from "@/types/global";
 
 // api
 import { automaticallyLogin } from "@/api/auth/fetch";
@@ -21,7 +21,7 @@ export const AuthStore = defineStore("authStore", () => {
     refresh_token: "",
   });
 
-  const apiLogin = async (userData: AuthBody): Promise<Auth | Error> => {
+  const apiLogin = async (userData: AuthBody): Promise<Auth | ApiError> => {
     if (auth.value.id) {
       return auth.value;
     }
@@ -39,10 +39,7 @@ export const AuthStore = defineStore("authStore", () => {
       });
       return auth.value;
     } else {
-      const responseError = response.data as Error;
-      return {
-        message: responseError.message,
-      };
+      return response.data;
     }
   };
 

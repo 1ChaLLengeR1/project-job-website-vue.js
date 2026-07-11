@@ -23,7 +23,6 @@ import OptionsVue from "../components/CalculatorVat/Options.vue";
 import { paths } from "@/utils/paths";
 
 // stores
-import { LogStore } from "@/stores/log/log";
 import { CalculatorVatStore } from "@/stores/patryk/calculatorVat";
 
 export default defineComponent({
@@ -32,7 +31,6 @@ export default defineComponent({
     OptionsVue,
   },
   setup() {
-    const logStore = LogStore();
     const calculatorVatStore = CalculatorVatStore();
     const notification_value = reactive<{
       id: number;
@@ -44,10 +42,7 @@ export default defineComponent({
       type: "",
     });
 
-    (async () => {
-      await logStore.apiCreateLog("Kalkulator_Patryka");
-      savePage(paths.calculatorVat);
-    })();
+    savePage(paths.calculatorVat);
 
     return { calculatorVatStore, notification_value };
   },

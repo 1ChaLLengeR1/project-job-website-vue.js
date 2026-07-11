@@ -15,7 +15,6 @@ import { defineComponent } from "vue";
 import { savePage } from "@/composable/navigation";
 
 // stores
-import { LogStore } from "@/stores/log/log";
 import { FuelCalculationStore } from "@/stores/fuelCalculator/fuel";
 
 //componets
@@ -29,12 +28,7 @@ export default defineComponent({
     Panel,
   },
   setup() {
-    const logStore = LogStore();
     const fuelCalculationStore = FuelCalculationStore();
-
-    (async () => {
-      await logStore.apiCreateLog("Kalkulator_Paliw");
-    })();
 
     const handlerSubmit = async (val: {
       way: number | 0;

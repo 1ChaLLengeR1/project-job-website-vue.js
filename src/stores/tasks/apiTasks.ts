@@ -11,7 +11,6 @@ import { apiDeleteTask } from "@/api/tasks/delete";
 import { apiUpdateActiveTask, apiUpdateTask } from "@/api/tasks/patch";
 
 // types
-import type { Error } from "@/types/global";
 import type { CollectionTasks, StatisticsTask } from "@/types/api/tasks/types";
 import type {
   CreateTaskBody,
@@ -43,7 +42,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
       const responseData = response.data as CollectionTasks;
       collectionTasks.value = responseData;
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,
@@ -60,7 +59,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
       collectionStatisticsTask.value = responseData;
       return true;
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,
@@ -79,7 +78,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
       };
       return true;
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,
@@ -92,7 +91,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
     if (response && response.isValid) {
       await apiGetTasks(true, true);
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,
@@ -104,7 +103,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
     if (response && response.isValid) {
       await apiGetTasks(true, true);
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,
@@ -120,7 +119,7 @@ export const ApiTaskStore = defineStore("apiTaskStore", () => {
     if (response && response.isValid) {
       await apiGetTasks(true, typeList);
     } else {
-      const responseError = response.data as Error;
+      const responseError = response.data;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError.message,

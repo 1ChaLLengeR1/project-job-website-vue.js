@@ -1,64 +1,18 @@
-import { apiPost } from "@/api/common/post";
-import type { ResponseData, Error } from "@/types/global";
+import { apiPatch } from "@/api/common/request";
+import type { ResponseData } from "@/types/global";
 import type { OneTask } from "@/types/api/tasks/types";
 import type { UpdateActiveTaskBody, UpdateTaskBody } from "@/types/tasks/type";
 
-export async function apiUpdateActiveTask(
+export function apiUpdateActiveTask(
   task_id: string,
   body: UpdateActiveTaskBody,
-): Promise<ResponseData> {
-  const urlPath = `/tasks/update/active/${task_id}`;
-  const response = await apiPost(urlPath, body, "PATCH", 0, {
-    Authorization: true,
-    UserData: true,
-  });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return update active task!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as OneTask,
-    additional: response.additional,
-  };
+): Promise<ResponseData<OneTask>> {
+  return apiPatch<OneTask>(`/tasks/update/active/${task_id}`, body);
 }
 
-export async function apiUpdateTask(
+export function apiUpdateTask(
   task_id: string,
   body: UpdateTaskBody,
-): Promise<ResponseData> {
-  const urlPath = `/tasks/update/${task_id}`;
-  const response = await apiPost(urlPath, body, "PATCH", 0, {
-    Authorization: true,
-    UserData: true,
-  });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return update task!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: response.data as OneTask,
-    additional: response.additional,
-  };
+): Promise<ResponseData<OneTask>> {
+  return apiPatch<OneTask>(`/tasks/update/${task_id}`, body);
 }

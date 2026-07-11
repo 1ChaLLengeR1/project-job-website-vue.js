@@ -32,7 +32,7 @@ export const ApiCalendaryDayStore = defineStore("apiCalendaryDayStore", () => {
         description: "Zaktualizowano dzień poprawnie",
       };
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -50,7 +50,7 @@ export const ApiCalendaryDayStore = defineStore("apiCalendaryDayStore", () => {
         description: "Zaktualizowano dni poprawnie",
       };
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -68,7 +68,7 @@ export const ApiCalendaryDayStore = defineStore("apiCalendaryDayStore", () => {
         description: "Zaktualizowano dni poprawnie z wypłatą.",
       };
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,

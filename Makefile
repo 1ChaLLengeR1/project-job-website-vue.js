@@ -1,4 +1,4 @@
-YARN ?= npx yarn
+YARN ?= yarn
 
 .PHONY: install dev build clean
 
