@@ -15,11 +15,14 @@ export const RentalSettlementsStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<SettlementSnapshot[]>([]);
+    const isLoading = ref<boolean>(false);
 
     const apiFetchCollection = async (
       filters: { period_id?: string; apartment_id?: string } = {},
     ) => {
+      isLoading.value = true;
       const response = await apiCollectionSettlements(filters);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -30,6 +33,6 @@ export const RentalSettlementsStore = defineStore(
       }
     };
 
-    return { collection, apiFetchCollection };
+    return { collection, isLoading, apiFetchCollection };
   },
 );

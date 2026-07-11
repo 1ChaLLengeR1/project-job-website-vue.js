@@ -15,11 +15,14 @@ export const RentalBeneficiarySettlementsStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<BeneficiarySettlement[]>([]);
+    const isLoading = ref<boolean>(false);
 
     const apiFetchCollection = async (
       filters: { period_id?: string; beneficiary_id?: string } = {},
     ) => {
+      isLoading.value = true;
       const response = await apiCollectionBeneficiarySettlements(filters);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -30,6 +33,6 @@ export const RentalBeneficiarySettlementsStore = defineStore(
       }
     };
 
-    return { collection, apiFetchCollection };
+    return { collection, isLoading, apiFetchCollection };
   },
 );

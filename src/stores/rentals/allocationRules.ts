@@ -23,9 +23,15 @@ export const RentalAllocationRulesStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<AllocationRule[]>([]);
+    const isLoading = ref<boolean>(false);
+    // ostatnio użyte filtry — refetch po mutacjach je zachowuje
+    const lastFilters = ref<AllocationRuleFilters>({});
 
     const apiFetchCollection = async (filters: AllocationRuleFilters = {}) => {
+      lastFilters.value = filters;
+      isLoading.value = true;
       const response = await apiCollectionAllocationRules(filters);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -41,7 +47,7 @@ export const RentalAllocationRulesStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiCreateAllocationRule(body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Dodano poprawnie regułę podziału!",
@@ -61,7 +67,7 @@ export const RentalAllocationRulesStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiUpdateAllocationRule(ruleId, body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Zaktualizowano poprawnie regułę podziału!",
@@ -78,7 +84,7 @@ export const RentalAllocationRulesStore = defineStore(
     const apiDelete = async (ruleId: string): Promise<boolean> => {
       const response = await apiDeleteAllocationRule(ruleId);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Usunięto poprawnie regułę podziału!",
@@ -92,6 +98,13 @@ export const RentalAllocationRulesStore = defineStore(
       return false;
     };
 
-    return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+    return {
+      collection,
+      isLoading,
+      apiFetchCollection,
+      apiCreate,
+      apiUpdate,
+      apiDelete,
+    };
   },
 );

@@ -8,6 +8,8 @@ export const paths = {
   tasks: "/tasks",
   calendarSettlement: "/calendar_settlement",
   rentalDictionaries: "/rentals/dictionaries",
+  rentalBilling: "/rentals/billing",
+  rentalFamily: "/rentals/family",
   notFound: "/:pathMatch(.*)*",
 };
 
@@ -40,6 +42,14 @@ export const pathsArtek: Link[] = [
   {
     title: "navSlider.links.artek.rentalDictionaries",
     path: paths.rentalDictionaries,
+  },
+  {
+    title: "navSlider.links.artek.rentalBilling",
+    path: paths.rentalBilling,
+  },
+  {
+    title: "navSlider.links.artek.rentalFamily",
+    path: paths.rentalFamily,
   },
 ];
 

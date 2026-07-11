@@ -207,6 +207,210 @@
             "isMaster": "Licznik nadrzędny"
           }
         }
+      },
+      "billing": {
+        "header": "Rozliczenia najmu",
+        "periods": {
+          "title": "Okresy rozliczeniowe",
+          "quantity": "Liczba okresów: {quantity}",
+          "columns": {
+            "month": "Miesiąc",
+            "status": "Status",
+            "electricityBill": "Rachunek prądu",
+            "electricityRate": "Stawka prądu",
+            "waterRate": "Stawka wody",
+            "note": "Notatka",
+            "options": "Opcje"
+          },
+          "status": {
+            "draft": "Otwarty",
+            "closed": "Zamknięty"
+          },
+          "button": {
+            "add": "Nowy okres",
+            "open": "Otwórz",
+            "edit": "Edytuj",
+            "delete": "Usuń"
+          },
+          "filter": {
+            "all": "Wszystkie",
+            "draft": "Otwarte",
+            "closed": "Zamknięte"
+          },
+          "form": {
+            "titleCreate": "Nowy okres rozliczeniowy",
+            "titleEdit": "Edytuj okres rozliczeniowy",
+            "periodMonth": "Miesiąc okresu",
+            "electricityBillAmount": "Kwota rachunku prądu (zł)",
+            "electricityRate": "Stawka prądu (zł/kWh)",
+            "electricityRateIsManual": "Stawka prądu wpisana ręcznie",
+            "waterRate": "Stawka wody (zł/m³)",
+            "note": "Notatka"
+          },
+          "confirm": {
+            "delete": "Czy na pewno usunąć okres wraz z odczytami i rozliczeniami?",
+            "close": "Czy na pewno zamknąć okres? Zapisane zostaną snapshoty rozliczeń.",
+            "reopen": "Czy na pewno otworzyć okres ponownie? Snapshoty rozliczeń zostaną skasowane."
+          }
+        },
+        "detail": {
+          "back": "Wróć do listy okresów",
+          "period": "Okres: {month}",
+          "button": {
+            "preview": "Przelicz podgląd",
+            "close": "Zamknij okres",
+            "reopen": "Otwórz ponownie"
+          }
+        },
+        "readings": {
+          "title": "Odczyty liczników",
+          "quantity": "Liczba odczytów: {quantity}",
+          "columns": {
+            "meter": "Licznik",
+            "apartment": "Mieszkanie",
+            "mediaType": "Medium",
+            "previousValue": "Ostatnio",
+            "currentValue": "Teraz",
+            "errorCorrection": "Korekta",
+            "consumption": "Zużycie",
+            "options": "Opcje"
+          },
+          "button": {
+            "add": "Dodaj odczyt ręcznie",
+            "save": "Zapisz",
+            "delete": "Usuń"
+          },
+          "form": {
+            "titleCreate": "Dodaj odczyt licznika",
+            "meter": "Licznik",
+            "previousValue": "Odczyt „Ostatnio”",
+            "currentValue": "Odczyt „Teraz”",
+            "errorCorrection": "Korekta błędu licznika"
+          },
+          "confirm": {
+            "delete": "Czy na pewno usunąć ten odczyt?"
+          },
+          "empty": "Brak odczytów w tym okresie."
+        },
+        "adjustments": {
+          "title": "Korekty jednorazowe",
+          "description": "Doliczane do rozliczenia mieszkania przy podglądzie i zamknięciu okresu.",
+          "apartment": "Mieszkanie",
+          "name": "Nazwa korekty",
+          "amount": "Kwota (zł)",
+          "add": "Dodaj korektę",
+          "remove": "Usuń",
+          "empty": "Brak korekt."
+        },
+        "calculation": {
+          "title": "Wyliczenie okresu",
+          "empty": "Kliknij „Przelicz podgląd”, aby zobaczyć wyliczenie okresu.",
+          "electricityRate": "Stawka prądu: {rate} zł/kWh",
+          "electricityTotal": "Całkowite zużycie prądu: {total} kWh",
+          "warnings": "Ostrzeżenia",
+          "mainMeterError": {
+            "title": "Błąd licznika głównego",
+            "mainDifference": "Licznik główny",
+            "apartmentsTotal": "Suma liczników mieszkań",
+            "error": "Różnica",
+            "proposals": "Proponowane korekty",
+            "apply": "Zastosuj propozycje do odczytów"
+          },
+          "consumptions": {
+            "title": "Zużycia liczników",
+            "columns": {
+              "meter": "Licznik",
+              "mediaType": "Medium",
+              "rawDifference": "Różnica surowa",
+              "errorCorrection": "Korekta",
+              "consumption": "Zużycie"
+            }
+          },
+          "settlements": {
+            "title": "Rozliczenia mieszkań",
+            "rent": "Czynsz",
+            "electricity": "Prąd",
+            "water": "Woda",
+            "media": "Media razem",
+            "total": "Do zapłaty",
+            "items": "Pozycje"
+          },
+          "beneficiaries": {
+            "title": "Podział rodzinny",
+            "total": "Razem"
+          }
+        }
+      },
+      "family": {
+        "header": "Podział rodzinny",
+        "tabs": {
+          "beneficiaries": "Beneficjenci",
+          "rules": "Reguły podziału",
+          "settlements": "Snapshoty podziału"
+        },
+        "beneficiaries": {
+          "columns": {
+            "name": "Nazwa",
+            "status": "Status"
+          },
+          "form": {
+            "titleCreate": "Dodaj beneficjenta",
+            "titleEdit": "Edytuj beneficjenta",
+            "name": "Nazwa (np. Ja, Ojciec, Mama)"
+          }
+        },
+        "rules": {
+          "columns": {
+            "beneficiary": "Beneficjent",
+            "component": "Składnik",
+            "mode": "Tryb",
+            "apartment": "Mieszkanie",
+            "costType": "Rodzaj kosztu",
+            "amount": "Kwota",
+            "description": "Opis",
+            "startDate": "Od",
+            "endDate": "Do"
+          },
+          "component": {
+            "rent": "Czynsz",
+            "electricity": "Prąd",
+            "water": "Woda",
+            "cost_type": "Rodzaj kosztu",
+            "recurring": "Pozycja stała"
+          },
+          "mode": {
+            "full": "Cała kwota",
+            "fixed_amount": "Konkretna kwota"
+          },
+          "allApartments": "Wszystkie mieszkania",
+          "form": {
+            "titleCreate": "Dodaj regułę podziału",
+            "titleEdit": "Edytuj regułę podziału",
+            "beneficiary": "Beneficjent",
+            "component": "Składnik podziału",
+            "mode": "Tryb",
+            "apartment": "Mieszkanie (puste = wszystkie)",
+            "costType": "Rodzaj kosztu",
+            "amount": "Kwota (zł)",
+            "description": "Opis pozycji (np. podatek)",
+            "startDate": "Obowiązuje od",
+            "endDate": "Obowiązuje do (puste = obowiązuje)"
+          }
+        },
+        "settlements": {
+          "filter": {
+            "period": "Okres",
+            "beneficiary": "Beneficjent",
+            "all": "Wszystkie"
+          },
+          "columns": {
+            "period": "Okres",
+            "beneficiary": "Beneficjent",
+            "totalAmount": "Razem"
+          },
+          "items": "Pozycje",
+          "empty": "Brak snapshotów podziału — zamknij okres rozliczeniowy, aby je wygenerować."
+        }
       }
     },
     "tasks": {
@@ -250,7 +454,9 @@
         "tasks": "Zadania",
         "log": "Logi",
         "calendarSettlement": "Kalendarz Rozliczeń",
-        "rentalDictionaries": "Wynajem mieszkań"
+        "rentalDictionaries": "Wynajem mieszkań",
+        "rentalBilling": "Rozliczenia najmu",
+        "rentalFamily": "Podział rodzinny"
       },
       "patryk": {
         "calculatorVat": "Kalkulator vat"

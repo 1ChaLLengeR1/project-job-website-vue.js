@@ -32,9 +32,17 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
   const collection = ref<Period[]>([]);
   // wynik preview/close — pełne wyliczenie okresu
   const calculation = ref<PeriodCalculation | null>(null);
+  const isLoading = ref<boolean>(false);
+  // osobna flaga: preview/close potrafią trwać dłużej niż zwykły odczyt
+  const isCalculating = ref<boolean>(false);
+  // ostatnio użyty filtr — refetch po mutacjach go zachowuje
+  const lastStatus = ref<PeriodStatus | undefined>(undefined);
 
   const apiFetchCollection = async (status?: PeriodStatus) => {
+    lastStatus.value = status;
+    isLoading.value = true;
     const response = await apiCollectionPeriods(status);
+    isLoading.value = false;
     if (response.isValid) {
       collection.value = response.data;
     } else {
@@ -48,7 +56,7 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
   const apiCreate = async (body: CreatePeriodBody): Promise<boolean> => {
     const response = await apiCreatePeriod(body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastStatus.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Utworzono poprawnie okres rozliczeniowy!",
@@ -68,7 +76,7 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
   ): Promise<boolean> => {
     const response = await apiUpdatePeriod(periodId, body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastStatus.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Zaktualizowano poprawnie okres rozliczeniowy!",
@@ -86,7 +94,9 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
     periodId: string,
     body: PeriodCalculationBody = { adjustments: [] },
   ): Promise<boolean> => {
+    isCalculating.value = true;
     const response = await apiPreviewPeriod(periodId, body);
+    isCalculating.value = false;
     if (response.isValid) {
       calculation.value = response.data;
       return true;
@@ -102,10 +112,12 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
     periodId: string,
     body: PeriodCalculationBody = { adjustments: [] },
   ): Promise<boolean> => {
+    isCalculating.value = true;
     const response = await apiClosePeriod(periodId, body);
+    isCalculating.value = false;
     if (response.isValid) {
       calculation.value = response.data;
-      await apiFetchCollection();
+      await apiFetchCollection(lastStatus.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Zamknięto poprawnie okres rozliczeniowy!",
@@ -123,7 +135,7 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
     const response = await apiReopenPeriod(periodId);
     if (response.isValid) {
       calculation.value = null;
-      await apiFetchCollection();
+      await apiFetchCollection(lastStatus.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Otwarto ponownie okres rozliczeniowy!",
@@ -141,7 +153,7 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
     const response = await apiDeletePeriod(periodId);
     if (response.isValid) {
       calculation.value = null;
-      await apiFetchCollection();
+      await apiFetchCollection(lastStatus.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Usunięto poprawnie okres rozliczeniowy!",
@@ -158,6 +170,8 @@ export const RentalPeriodsStore = defineStore("rentalPeriodsStore", () => {
   return {
     collection,
     calculation,
+    isLoading,
+    isCalculating,
     apiFetchCollection,
     apiCreate,
     apiUpdate,

@@ -11,6 +11,8 @@ import Logs from "@/pages/Logs.vue";
 import Tasks from "@/pages/Tasks.vue";
 import CalendarSettlement from "@/pages/CalendarSettlement.vue";
 import RentalDictionaries from "@/pages/RentalDictionaries.vue";
+import RentalBilling from "@/pages/RentalBilling.vue";
+import RentalFamily from "@/pages/RentalFamily.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -52,6 +54,22 @@ const router = createRouter({
       path: paths.rentalDictionaries,
       name: "rentalDictionaries",
       component: RentalDictionaries,
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
+      path: paths.rentalBilling,
+      name: "rentalBilling",
+      component: RentalBilling,
+      meta: {
+        isAuth: true,
+      },
+    },
+    {
+      path: paths.rentalFamily,
+      name: "rentalFamily",
+      component: RentalFamily,
       meta: {
         isAuth: true,
       },

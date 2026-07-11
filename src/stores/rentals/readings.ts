@@ -22,9 +22,12 @@ export const RentalReadingsStore = defineStore("rentalReadingsStore", () => {
   const collection = ref<Reading[]>([]);
   // okres, którego odczyty są aktualnie załadowane
   const currentPeriodId = ref<string | null>(null);
+  const isLoading = ref<boolean>(false);
 
   const apiFetchCollection = async (periodId: string) => {
+    isLoading.value = true;
     const response = await apiCollectionReadings(periodId);
+    isLoading.value = false;
     if (response.isValid) {
       collection.value = response.data;
       currentPeriodId.value = periodId;
@@ -99,6 +102,7 @@ export const RentalReadingsStore = defineStore("rentalReadingsStore", () => {
   return {
     collection,
     currentPeriodId,
+    isLoading,
     apiFetchCollection,
     apiCreate,
     apiUpdate,

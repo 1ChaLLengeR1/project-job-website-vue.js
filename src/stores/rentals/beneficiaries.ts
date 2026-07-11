@@ -22,9 +22,15 @@ export const RentalBeneficiariesStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<Beneficiary[]>([]);
+    const isLoading = ref<boolean>(false);
+    // ostatnio użyty filtr — refetch po mutacjach go zachowuje
+    const lastIsActive = ref<boolean | undefined>(undefined);
 
     const apiFetchCollection = async (isActive?: boolean) => {
+      lastIsActive.value = isActive;
+      isLoading.value = true;
       const response = await apiCollectionBeneficiaries(isActive);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -38,7 +44,7 @@ export const RentalBeneficiariesStore = defineStore(
     const apiCreate = async (body: CreateBeneficiaryBody): Promise<boolean> => {
       const response = await apiCreateBeneficiary(body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Dodano poprawnie beneficjenta!",
@@ -58,7 +64,7 @@ export const RentalBeneficiariesStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiUpdateBeneficiary(beneficiaryId, body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Zaktualizowano poprawnie beneficjenta!",
@@ -75,7 +81,7 @@ export const RentalBeneficiariesStore = defineStore(
     const apiDelete = async (beneficiaryId: string): Promise<boolean> => {
       const response = await apiDeleteBeneficiary(beneficiaryId);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Usunięto poprawnie beneficjenta!",
@@ -89,6 +95,13 @@ export const RentalBeneficiariesStore = defineStore(
       return false;
     };
 
-    return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+    return {
+      collection,
+      isLoading,
+      apiFetchCollection,
+      apiCreate,
+      apiUpdate,
+      apiDelete,
+    };
   },
 );
