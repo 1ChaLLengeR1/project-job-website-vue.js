@@ -13,3 +13,11 @@ export const formatDate = (isoString: string): string => {
 
   return new Intl.DateTimeFormat("pl-PL", options).format(date);
 };
+
+// Data w formacie backendu (YYYY-MM-DD), bez przesunięcia strefy czasowej
+export const formatDateApi = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};

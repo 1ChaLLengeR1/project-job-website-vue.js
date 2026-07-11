@@ -20,9 +20,15 @@ import type {
 export const RentalCostTypesStore = defineStore("rentalCostTypesStore", () => {
   const notificationStore = NotificationStore();
   const collection = ref<CostType[]>([]);
+  const isLoading = ref<boolean>(false);
+  // ostatnio użyty filtr — refetch po mutacjach go zachowuje
+  const lastIsActive = ref<boolean | undefined>(undefined);
 
   const apiFetchCollection = async (isActive?: boolean) => {
+    lastIsActive.value = isActive;
+    isLoading.value = true;
     const response = await apiCollectionCostTypes(isActive);
+    isLoading.value = false;
     if (response.isValid) {
       collection.value = response.data;
     } else {
@@ -36,7 +42,7 @@ export const RentalCostTypesStore = defineStore("rentalCostTypesStore", () => {
   const apiCreate = async (body: CreateCostTypeBody): Promise<boolean> => {
     const response = await apiCreateCostType(body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastIsActive.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Dodano poprawnie rodzaj kosztu!",
@@ -56,7 +62,7 @@ export const RentalCostTypesStore = defineStore("rentalCostTypesStore", () => {
   ): Promise<boolean> => {
     const response = await apiUpdateCostType(costTypeId, body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastIsActive.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Zaktualizowano poprawnie rodzaj kosztu!",
@@ -73,7 +79,7 @@ export const RentalCostTypesStore = defineStore("rentalCostTypesStore", () => {
   const apiDelete = async (costTypeId: string): Promise<boolean> => {
     const response = await apiDeleteCostType(costTypeId);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastIsActive.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Usunięto poprawnie rodzaj kosztu!",
@@ -87,5 +93,12 @@ export const RentalCostTypesStore = defineStore("rentalCostTypesStore", () => {
     return false;
   };
 
-  return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+  return {
+    collection,
+    isLoading,
+    apiFetchCollection,
+    apiCreate,
+    apiUpdate,
+    apiDelete,
+  };
 });

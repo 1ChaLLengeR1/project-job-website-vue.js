@@ -23,9 +23,15 @@ export const RentalApartmentCostsStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<ApartmentCost[]>([]);
+    const isLoading = ref<boolean>(false);
+    // ostatnio użyte filtry — refetch po mutacjach je zachowuje
+    const lastFilters = ref<ApartmentCostFilters>({});
 
     const apiFetchCollection = async (filters: ApartmentCostFilters = {}) => {
+      lastFilters.value = filters;
+      isLoading.value = true;
       const response = await apiCollectionApartmentCosts(filters);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -41,7 +47,7 @@ export const RentalApartmentCostsStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiCreateApartmentCost(body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Dodano poprawnie koszt mieszkania!",
@@ -61,7 +67,7 @@ export const RentalApartmentCostsStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiUpdateApartmentCost(apartmentCostId, body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Zaktualizowano poprawnie koszt mieszkania!",
@@ -78,7 +84,7 @@ export const RentalApartmentCostsStore = defineStore(
     const apiDelete = async (apartmentCostId: string): Promise<boolean> => {
       const response = await apiDeleteApartmentCost(apartmentCostId);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastFilters.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Usunięto poprawnie koszt mieszkania!",
@@ -92,6 +98,13 @@ export const RentalApartmentCostsStore = defineStore(
       return false;
     };
 
-    return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+    return {
+      collection,
+      isLoading,
+      apiFetchCollection,
+      apiCreate,
+      apiUpdate,
+      apiDelete,
+    };
   },
 );

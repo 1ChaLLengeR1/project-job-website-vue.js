@@ -73,6 +73,142 @@
         "addItem": "Dodaj do listy"
       }
     },
+    "rentals": {
+      "dictionaries": {
+        "header": "Wynajem mieszkań",
+        "tabs": {
+          "apartments": "Mieszkania",
+          "tenants": "Najemcy",
+          "tenancies": "Najmy",
+          "costTypes": "Rodzaje kosztów",
+          "apartmentCosts": "Koszty mieszkań",
+          "meters": "Liczniki"
+        },
+        "common": {
+          "quantity": "Liczba: {quantity}",
+          "options": "Opcje",
+          "add": "Dodaj",
+          "edit": "Edytuj",
+          "delete": "Usuń",
+          "save": "Zapisz",
+          "cancel": "Anuluj",
+          "active": "Aktywny",
+          "inactive": "Nieaktywny",
+          "none": "—",
+          "isActive": "Aktywne",
+          "filter": {
+            "all": "Wszystkie",
+            "active": "Aktywne",
+            "inactive": "Nieaktywne"
+          }
+        },
+        "apartments": {
+          "columns": {
+            "name": "Nazwa",
+            "description": "Opis",
+            "status": "Status"
+          },
+          "form": {
+            "titleCreate": "Dodaj mieszkanie",
+            "titleEdit": "Edytuj mieszkanie",
+            "name": "Nazwa",
+            "description": "Opis"
+          }
+        },
+        "tenants": {
+          "columns": {
+            "firstName": "Imię",
+            "lastName": "Nazwisko",
+            "note": "Notatka",
+            "status": "Status"
+          },
+          "form": {
+            "titleCreate": "Dodaj najemcę",
+            "titleEdit": "Edytuj najemcę",
+            "firstName": "Imię",
+            "lastName": "Nazwisko",
+            "note": "Notatka (telefon, uwagi)"
+          }
+        },
+        "tenancies": {
+          "columns": {
+            "apartment": "Mieszkanie",
+            "tenant": "Najemca",
+            "rentAmount": "Czynsz",
+            "personsCount": "Osoby",
+            "startDate": "Od",
+            "endDate": "Do"
+          },
+          "form": {
+            "titleCreate": "Dodaj najem",
+            "titleEdit": "Edytuj najem",
+            "apartment": "Mieszkanie",
+            "tenant": "Najemca",
+            "rentAmount": "Czynsz (zł)",
+            "personsCount": "Liczba osób",
+            "startDate": "Początek najmu",
+            "endDate": "Koniec najmu (puste = najem trwa)"
+          }
+        },
+        "costTypes": {
+          "columns": {
+            "name": "Nazwa",
+            "chargeType": "Naliczanie",
+            "status": "Status"
+          },
+          "chargeType": {
+            "fixed": "Stała kwota",
+            "per_person": "Za osobę"
+          },
+          "form": {
+            "titleCreate": "Dodaj rodzaj kosztu",
+            "titleEdit": "Edytuj rodzaj kosztu",
+            "name": "Nazwa",
+            "chargeType": "Sposób naliczania"
+          }
+        },
+        "apartmentCosts": {
+          "columns": {
+            "apartment": "Mieszkanie",
+            "costType": "Rodzaj kosztu",
+            "amount": "Kwota",
+            "startDate": "Od",
+            "endDate": "Do"
+          },
+          "form": {
+            "titleCreate": "Dodaj koszt mieszkania",
+            "titleEdit": "Edytuj koszt mieszkania",
+            "apartment": "Mieszkanie",
+            "costType": "Rodzaj kosztu",
+            "amount": "Kwota (zł)",
+            "startDate": "Obowiązuje od",
+            "endDate": "Obowiązuje do (puste = obowiązuje)"
+          }
+        },
+        "meters": {
+          "columns": {
+            "name": "Nazwa",
+            "mediaType": "Medium",
+            "apartment": "Mieszkanie",
+            "isMaster": "Główny",
+            "status": "Status"
+          },
+          "mediaType": {
+            "electricity": "Prąd",
+            "water": "Woda"
+          },
+          "mainMeter": "Licznik główny budynku",
+          "form": {
+            "titleCreate": "Dodaj licznik",
+            "titleEdit": "Edytuj licznik",
+            "name": "Nazwa",
+            "mediaType": "Medium",
+            "apartment": "Mieszkanie (puste = licznik główny budynku)",
+            "isMaster": "Licznik nadrzędny"
+          }
+        }
+      }
+    },
     "tasks": {
       "header": "Zadania",
       "description": {
@@ -113,7 +249,8 @@
         "fuelCalculator": "Kalkulator Paliw",
         "tasks": "Zadania",
         "log": "Logi",
-        "calendarSettlement": "Kalendarz Rozliczeń"
+        "calendarSettlement": "Kalendarz Rozliczeń",
+        "rentalDictionaries": "Wynajem mieszkań"
       },
       "patryk": {
         "calculatorVat": "Kalkulator vat"

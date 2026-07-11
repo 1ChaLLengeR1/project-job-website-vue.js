@@ -7,6 +7,7 @@ export const paths = {
   logs: "/logs",
   tasks: "/tasks",
   calendarSettlement: "/calendar_settlement",
+  rentalDictionaries: "/rentals/dictionaries",
   notFound: "/:pathMatch(.*)*",
 };
 
@@ -35,6 +36,10 @@ export const pathsArtek: Link[] = [
   {
     title: "navSlider.links.artek.log",
     path: paths.logs,
+  },
+  {
+    title: "navSlider.links.artek.rentalDictionaries",
+    path: paths.rentalDictionaries,
   },
 ];
 

@@ -22,9 +22,15 @@ export const RentalApartmentsStore = defineStore(
   () => {
     const notificationStore = NotificationStore();
     const collection = ref<Apartment[]>([]);
+    const isLoading = ref<boolean>(false);
+    // ostatnio użyty filtr — refetch po mutacjach go zachowuje
+    const lastIsActive = ref<boolean | undefined>(undefined);
 
     const apiFetchCollection = async (isActive?: boolean) => {
+      lastIsActive.value = isActive;
+      isLoading.value = true;
       const response = await apiCollectionApartments(isActive);
+      isLoading.value = false;
       if (response.isValid) {
         collection.value = response.data;
       } else {
@@ -38,7 +44,7 @@ export const RentalApartmentsStore = defineStore(
     const apiCreate = async (body: CreateApartmentBody): Promise<boolean> => {
       const response = await apiCreateApartment(body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Dodano poprawnie mieszkanie!",
@@ -58,7 +64,7 @@ export const RentalApartmentsStore = defineStore(
     ): Promise<boolean> => {
       const response = await apiUpdateApartment(apartmentId, body);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Zaktualizowano poprawnie mieszkanie!",
@@ -75,7 +81,7 @@ export const RentalApartmentsStore = defineStore(
     const apiDelete = async (apartmentId: string): Promise<boolean> => {
       const response = await apiDeleteApartment(apartmentId);
       if (response.isValid) {
-        await apiFetchCollection();
+        await apiFetchCollection(lastIsActive.value);
         notificationStore.data_to_notification = {
           type: "success",
           description: "Usunięto poprawnie mieszkanie!",
@@ -89,6 +95,13 @@ export const RentalApartmentsStore = defineStore(
       return false;
     };
 
-    return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+    return {
+      collection,
+      isLoading,
+      apiFetchCollection,
+      apiCreate,
+      apiUpdate,
+      apiDelete,
+    };
   },
 );

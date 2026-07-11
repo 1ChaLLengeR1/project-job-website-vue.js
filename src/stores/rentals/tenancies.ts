@@ -21,9 +21,15 @@ import type {
 export const RentalTenanciesStore = defineStore("rentalTenanciesStore", () => {
   const notificationStore = NotificationStore();
   const collection = ref<Tenancy[]>([]);
+  const isLoading = ref<boolean>(false);
+  // ostatnio użyte filtry — refetch po mutacjach je zachowuje
+  const lastFilters = ref<TenancyFilters>({});
 
   const apiFetchCollection = async (filters: TenancyFilters = {}) => {
+    lastFilters.value = filters;
+    isLoading.value = true;
     const response = await apiCollectionTenancies(filters);
+    isLoading.value = false;
     if (response.isValid) {
       collection.value = response.data;
     } else {
@@ -37,7 +43,7 @@ export const RentalTenanciesStore = defineStore("rentalTenanciesStore", () => {
   const apiCreate = async (body: CreateTenancyBody): Promise<boolean> => {
     const response = await apiCreateTenancy(body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Dodano poprawnie najem!",
@@ -57,7 +63,7 @@ export const RentalTenanciesStore = defineStore("rentalTenanciesStore", () => {
   ): Promise<boolean> => {
     const response = await apiUpdateTenancy(tenancyId, body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Zaktualizowano poprawnie najem!",
@@ -74,7 +80,7 @@ export const RentalTenanciesStore = defineStore("rentalTenanciesStore", () => {
   const apiDelete = async (tenancyId: string): Promise<boolean> => {
     const response = await apiDeleteTenancy(tenancyId);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Usunięto poprawnie najem!",
@@ -88,5 +94,12 @@ export const RentalTenanciesStore = defineStore("rentalTenanciesStore", () => {
     return false;
   };
 
-  return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+  return {
+    collection,
+    isLoading,
+    apiFetchCollection,
+    apiCreate,
+    apiUpdate,
+    apiDelete,
+  };
 });

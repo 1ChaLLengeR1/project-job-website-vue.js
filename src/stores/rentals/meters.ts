@@ -21,9 +21,15 @@ import type {
 export const RentalMetersStore = defineStore("rentalMetersStore", () => {
   const notificationStore = NotificationStore();
   const collection = ref<Meter[]>([]);
+  const isLoading = ref<boolean>(false);
+  // ostatnio użyte filtry — refetch po mutacjach je zachowuje
+  const lastFilters = ref<MeterFilters>({});
 
   const apiFetchCollection = async (filters: MeterFilters = {}) => {
+    lastFilters.value = filters;
+    isLoading.value = true;
     const response = await apiCollectionMeters(filters);
+    isLoading.value = false;
     if (response.isValid) {
       collection.value = response.data;
     } else {
@@ -37,7 +43,7 @@ export const RentalMetersStore = defineStore("rentalMetersStore", () => {
   const apiCreate = async (body: CreateMeterBody): Promise<boolean> => {
     const response = await apiCreateMeter(body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Dodano poprawnie licznik!",
@@ -57,7 +63,7 @@ export const RentalMetersStore = defineStore("rentalMetersStore", () => {
   ): Promise<boolean> => {
     const response = await apiUpdateMeter(meterId, body);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Zaktualizowano poprawnie licznik!",
@@ -74,7 +80,7 @@ export const RentalMetersStore = defineStore("rentalMetersStore", () => {
   const apiDelete = async (meterId: string): Promise<boolean> => {
     const response = await apiDeleteMeter(meterId);
     if (response.isValid) {
-      await apiFetchCollection();
+      await apiFetchCollection(lastFilters.value);
       notificationStore.data_to_notification = {
         type: "success",
         description: "Usunięto poprawnie licznik!",
@@ -88,5 +94,12 @@ export const RentalMetersStore = defineStore("rentalMetersStore", () => {
     return false;
   };
 
-  return { collection, apiFetchCollection, apiCreate, apiUpdate, apiDelete };
+  return {
+    collection,
+    isLoading,
+    apiFetchCollection,
+    apiCreate,
+    apiUpdate,
+    apiDelete,
+  };
 });
