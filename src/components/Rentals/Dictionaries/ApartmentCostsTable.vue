@@ -2,18 +2,28 @@
   <div class="w-full overflow-x-auto">
     <DataTable :value="items" :loading="loading" showGridlines>
       <template #header>
-        <div class="flex w-full flex-wrap items-center justify-between gap-2">
-          <span class="text-xl font-bold text-white">
-            {{
-              t("pages.rentals.dictionaries.common.quantity", {
-                quantity: items.length,
-              })
-            }}
-          </span>
-          <Button
-            :label="t('pages.rentals.dictionaries.common.add')"
-            severity="success"
-            @click="$emit('add')"
+        <div class="flex w-full flex-col gap-3">
+          <div class="flex w-full flex-wrap items-center justify-between gap-2">
+            <span class="text-xl font-bold text-white">
+              {{
+                t("pages.rentals.dictionaries.common.quantity", {
+                  quantity: items.length,
+                })
+              }}
+            </span>
+            <Button
+              :label="t('pages.rentals.dictionaries.common.add')"
+              severity="success"
+              @click="$emit('add')"
+            />
+          </div>
+          <HistoryFilters
+            id="apartment-costs"
+            :apartments="apartments"
+            :apartmentId="apartmentFilter"
+            :activeOn="activeOn"
+            @update:apartmentId="(val) => $emit('update:apartmentFilter', val)"
+            @update:activeOn="(val) => $emit('update:activeOn', val)"
           />
         </div>
       </template>
@@ -51,6 +61,7 @@
       </Column>
       <Column
         field="start_date"
+        sortable
         :header="
           t('pages.rentals.dictionaries.apartmentCosts.columns.startDate')
         "
@@ -97,6 +108,7 @@ import { useI18n } from "vue-i18n";
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 import Button from "primevue/button";
+import HistoryFilters from "@/components/Rentals/utils/HistoryFilters.vue";
 
 // types
 import type { ApartmentCost } from "@/types/api/rentals/apartmentCosts/types";
@@ -105,7 +117,7 @@ import type { CostType } from "@/types/api/rentals/costTypes/types";
 
 export default defineComponent({
   name: "ApartmentCostsTable",
-  components: { DataTable, Column, Button },
+  components: { DataTable, Column, Button, HistoryFilters },
   props: {
     items: {
       required: true,
@@ -124,8 +136,18 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    apartmentFilter: {
+      required: false,
+      type: String as PropType<string | null>,
+      default: null,
+    },
+    activeOn: {
+      required: false,
+      type: Date as PropType<Date | null>,
+      default: null,
+    },
   },
-  emits: ["add", "edit", "delete"],
+  emits: ["add", "edit", "delete", "update:apartmentFilter", "update:activeOn"],
   setup(props) {
     const { t } = useI18n();
 

@@ -105,7 +105,15 @@
           "filter": {
             "all": "Wszystkie",
             "active": "Aktywne",
-            "inactive": "Nieaktywne"
+            "inactive": "Nieaktywne",
+            "apartment": "Mieszkanie",
+            "allApartments": "Wszystkie mieszkania",
+            "tenant": "Najemca",
+            "allTenants": "Wszyscy najemcy",
+            "activeOn": "Obowiązujące na dzień",
+            "activeOnHint": "puste = cała historia",
+            "reset": "Pokaż całą historię",
+            "today": "Pokaż tylko aktualne"
           }
         },
         "apartments": {

@@ -5,6 +5,10 @@
       :apartments="apartmentsStore.collection"
       :costTypes="costTypesStore.collection"
       :loading="apartmentCostsStore.isLoading"
+      :apartmentFilter="apartmentFilter"
+      :activeOn="activeOn"
+      @update:apartmentFilter="handlerApartmentFilter"
+      @update:activeOn="handlerActiveOn"
       @add="handlerAdd"
       @edit="handlerEdit"
       @delete="handlerDelete"
@@ -24,6 +28,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { formatDateApi } from "@/utils/formats";
 
 // stores
 import { RentalApartmentCostsStore } from "@/stores/rentals/apartmentCosts";
@@ -55,9 +60,19 @@ export default defineComponent({
 
     const dialogVisible = ref<boolean>(false);
     const editedItem = ref<ApartmentCost | null>(null);
+    const apartmentFilter = ref<string | null>(null);
+    // domyślnie pokazujemy tylko stawki obowiązujące dziś — historia po wyczyszczeniu daty
+    const activeOn = ref<Date | null>(new Date());
+
+    const fetchCollection = async () => {
+      await apartmentCostsStore.apiFetchCollection({
+        apartment_id: apartmentFilter.value ?? undefined,
+        active_on: activeOn.value ? formatDateApi(activeOn.value) : undefined,
+      });
+    };
 
     onMounted(async () => {
-      await apartmentCostsStore.apiFetchCollection();
+      await fetchCollection();
       if (apartmentsStore.collection.length === 0) {
         await apartmentsStore.apiFetchCollection();
       }
@@ -65,6 +80,16 @@ export default defineComponent({
         await costTypesStore.apiFetchCollection();
       }
     });
+
+    const handlerApartmentFilter = async (value: string | null) => {
+      apartmentFilter.value = value;
+      await fetchCollection();
+    };
+
+    const handlerActiveOn = async (value: Date | null) => {
+      activeOn.value = value;
+      await fetchCollection();
+    };
 
     const dialogHeader = computed(() =>
       editedItem.value
@@ -110,7 +135,11 @@ export default defineComponent({
       costTypesStore,
       dialogVisible,
       editedItem,
+      apartmentFilter,
+      activeOn,
       dialogHeader,
+      handlerApartmentFilter,
+      handlerActiveOn,
       handlerAdd,
       handlerEdit,
       handlerDelete,

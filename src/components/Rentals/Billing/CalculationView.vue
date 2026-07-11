@@ -29,8 +29,8 @@
 
       <!-- ostrzeżenia z backendu -->
       <div
-          v-if="calculation.warnings.length > 0"
-          class="flex flex-col gap-1 rounded-lg border border-yellow-600 p-3"
+        v-if="calculation.warnings.length > 0"
+        class="flex flex-col gap-1 rounded-lg border border-yellow-600 p-3"
       >
         <h4 class="font-bold text-color-yellow">
           {{ t("pages.rentals.billing.calculation.warnings") }}
@@ -44,8 +44,8 @@
 
       <!-- błąd licznika głównego -->
       <div
-          v-if="calculation.main_meter_error"
-          class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
+        v-if="calculation.main_meter_error"
+        class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
       >
         <h4 class="font-syne text-xl text-color-yellow">
           {{ t("pages.rentals.billing.calculation.mainMeterError.title") }}
@@ -54,7 +54,7 @@
           <span>
             {{
               t(
-                  "pages.rentals.billing.calculation.mainMeterError.mainDifference",
+                "pages.rentals.billing.calculation.mainMeterError.mainDifference",
               )
             }}:
             <b>{{ round(calculation.main_meter_error.main_difference) }}</b>
@@ -62,7 +62,7 @@
           <span>
             {{
               t(
-                  "pages.rentals.billing.calculation.mainMeterError.apartmentsTotal",
+                "pages.rentals.billing.calculation.mainMeterError.apartmentsTotal",
               )
             }}:
             <b>{{ round(calculation.main_meter_error.apartments_total) }}</b>
@@ -70,13 +70,13 @@
           <span>
             {{ t("pages.rentals.billing.calculation.mainMeterError.error") }}:
             <b class="text-color-yellow">{{
-                round(calculation.main_meter_error.error)
-              }}</b>
+              round(calculation.main_meter_error.error)
+            }}</b>
           </span>
         </div>
         <div
-            v-if="calculation.main_meter_error.proposals.length > 0"
-            class="flex flex-col gap-1"
+          v-if="calculation.main_meter_error.proposals.length > 0"
+          class="flex flex-col gap-1"
         >
           <span class="text-sm font-bold text-color-grey">
             {{
@@ -85,8 +85,8 @@
           </span>
           <ul class="list-inside list-disc text-sm text-color-grey">
             <li
-                v-for="proposal in calculation.main_meter_error.proposals"
-                :key="proposal.meter_id"
+              v-for="proposal in calculation.main_meter_error.proposals"
+              :key="proposal.meter_id"
             >
               {{ meterLabel(proposal.meter_id) }}:
               <b>{{ round(proposal.proposed_correction) }}</b>
@@ -95,27 +95,26 @@
         </div>
       </div>
 
-
       <!-- zużycia liczników -->
       <div class="w-full overflow-x-auto">
         <DataTable
-            :value="calculation.consumptions"
-            showGridlines
-            :header="t('pages.rentals.billing.calculation.consumptions.title')"
+          :value="calculation.consumptions"
+          showGridlines
+          :header="t('pages.rentals.billing.calculation.consumptions.title')"
         >
           <Column
-              :header="
+            :header="
               t('pages.rentals.billing.calculation.consumptions.columns.meter')
             "
           >
             <template #body="slotProps">
               <span class="text-color-yellow">{{
-                  meterLabel(slotProps.data.meter_id)
-                }}</span>
+                meterLabel(slotProps.data.meter_id)
+              }}</span>
             </template>
           </Column>
           <Column
-              :header="
+            :header="
               t(
                 'pages.rentals.billing.calculation.consumptions.columns.mediaType',
               )
@@ -123,14 +122,14 @@
           >
             <template #body="slotProps">
               <span>{{
-                  t(
-                      `pages.rentals.dictionaries.meters.mediaType.${slotProps.data.media_type}`,
-                  )
-                }}</span>
+                t(
+                  `pages.rentals.dictionaries.meters.mediaType.${slotProps.data.media_type}`,
+                )
+              }}</span>
             </template>
           </Column>
           <Column
-              :header="
+            :header="
               t(
                 'pages.rentals.billing.calculation.consumptions.columns.rawDifference',
               )
@@ -141,7 +140,7 @@
             </template>
           </Column>
           <Column
-              :header="
+            :header="
               t(
                 'pages.rentals.billing.calculation.consumptions.columns.errorCorrection',
               )
@@ -152,7 +151,7 @@
             </template>
           </Column>
           <Column
-              :header="
+            :header="
               t(
                 'pages.rentals.billing.calculation.consumptions.columns.consumption',
               )
@@ -160,8 +159,8 @@
           >
             <template #body="slotProps">
               <span class="font-bold">{{
-                  round(slotProps.data.consumption)
-                }}</span>
+                round(slotProps.data.consumption)
+              }}</span>
             </template>
           </Column>
         </DataTable>
@@ -173,9 +172,9 @@
       </h4>
       <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
         <div
-            v-for="entry in calculation.settlements"
-            :key="entry.apartment_id"
-            class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
+          v-for="entry in calculation.settlements"
+          :key="entry.apartment_id"
+          class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
         >
           <div class="flex items-center justify-between">
             <span class="font-syne text-lg text-color-yellow">
@@ -213,17 +212,17 @@
             </span>
           </div>
           <div
-              v-if="entry.settlement.items.length > 0"
-              class="flex flex-col gap-1"
+            v-if="entry.settlement.items.length > 0"
+            class="flex flex-col gap-1"
           >
             <span class="text-sm font-bold text-color-grey">
               {{ t("pages.rentals.billing.calculation.settlements.items") }}
             </span>
             <ul class="flex flex-col gap-1 text-sm text-color-grey">
               <li
-                  v-for="(item, index) in entry.settlement.items"
-                  :key="index"
-                  class="flex justify-between"
+                v-for="(item, index) in entry.settlement.items"
+                :key="index"
+                class="flex justify-between"
               >
                 <span>{{ item.name }}</span>
                 <span>{{ round(item.amount) }} zł</span>
@@ -240,9 +239,9 @@
         </h4>
         <div class="grid grid-cols-1 gap-3 lg:grid-cols-2">
           <div
-              v-for="beneficiary in calculation.beneficiaries"
-              :key="beneficiary.beneficiary_id"
-              class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
+            v-for="beneficiary in calculation.beneficiaries"
+            :key="beneficiary.beneficiary_id"
+            class="flex flex-col gap-2 rounded-lg bg-color-bg p-3"
           >
             <div class="flex items-center justify-between">
               <span class="font-syne text-lg text-color-yellow">
@@ -256,9 +255,9 @@
             </div>
             <ul class="flex flex-col gap-1 text-sm text-color-grey">
               <li
-                  v-for="(item, index) in beneficiary.items"
-                  :key="index"
-                  class="flex justify-between"
+                v-for="(item, index) in beneficiary.items"
+                :key="index"
+                class="flex justify-between"
               >
                 <span>{{ item.description }}</span>
                 <span>{{ round(item.amount) }} zł</span>
@@ -272,22 +271,22 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from "vue";
-import type {PropType} from "vue";
-import {useI18n} from "vue-i18n";
+import { defineComponent } from "vue";
+import type { PropType } from "vue";
+import { useI18n } from "vue-i18n";
 
 // components
 import DataTable from "primevue/datatable";
 import Column from "primevue/column";
 
 // types
-import type {PeriodCalculation} from "@/types/api/rentals/periods/types";
-import type {Meter} from "@/types/api/rentals/meters/types";
-import type {Apartment} from "@/types/api/rentals/apartments/types";
+import type { PeriodCalculation } from "@/types/api/rentals/periods/types";
+import type { Meter } from "@/types/api/rentals/meters/types";
+import type { Apartment } from "@/types/api/rentals/apartments/types";
 
 export default defineComponent({
   name: "CalculationView",
-  components: {DataTable, Column},
+  components: { DataTable, Column },
   props: {
     calculation: {
       required: false,
@@ -304,7 +303,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const {t} = useI18n();
+    const { t } = useI18n();
 
     const meterLabel = (meterId: string): string => {
       const meter = props.meters.find((item) => item.id === meterId);
@@ -312,20 +311,20 @@ export default defineComponent({
         return meterId;
       }
       const apartment = props.apartments.find(
-          (item) => item.id === meter.apartment_id,
+        (item) => item.id === meter.apartment_id,
       );
       const place = apartment
-          ? apartment.name
-          : t("pages.rentals.dictionaries.meters.mainMeter");
+        ? apartment.name
+        : t("pages.rentals.dictionaries.meters.mainMeter");
       const media = t(
-          `pages.rentals.dictionaries.meters.mediaType.${meter.media_type}`,
+        `pages.rentals.dictionaries.meters.mediaType.${meter.media_type}`,
       );
       return `${meter.name ?? media} — ${place}`;
     };
 
     const round = (value: number): string => value.toFixed(2);
 
-    return {t, meterLabel, round};
+    return { t, meterLabel, round };
   },
 });
 </script>

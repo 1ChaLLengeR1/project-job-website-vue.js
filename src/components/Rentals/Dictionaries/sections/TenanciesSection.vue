@@ -5,6 +5,12 @@
       :apartments="apartmentsStore.collection"
       :tenants="tenantsStore.collection"
       :loading="tenanciesStore.isLoading"
+      :apartmentFilter="apartmentFilter"
+      :tenantFilter="tenantFilter"
+      :activeOn="activeOn"
+      @update:apartmentFilter="handlerApartmentFilter"
+      @update:tenantFilter="handlerTenantFilter"
+      @update:activeOn="handlerActiveOn"
       @add="handlerAdd"
       @edit="handlerEdit"
       @delete="handlerDelete"
@@ -24,6 +30,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { formatDateApi } from "@/utils/formats";
 
 // stores
 import { RentalTenanciesStore } from "@/stores/rentals/tenancies";
@@ -55,9 +62,21 @@ export default defineComponent({
 
     const dialogVisible = ref<boolean>(false);
     const editedItem = ref<Tenancy | null>(null);
+    const apartmentFilter = ref<string | null>(null);
+    const tenantFilter = ref<string | null>(null);
+    // domyślnie tylko najmy trwające dziś — historia po wyczyszczeniu daty
+    const activeOn = ref<Date | null>(new Date());
+
+    const fetchCollection = async () => {
+      await tenanciesStore.apiFetchCollection({
+        apartment_id: apartmentFilter.value ?? undefined,
+        tenant_id: tenantFilter.value ?? undefined,
+        active_on: activeOn.value ? formatDateApi(activeOn.value) : undefined,
+      });
+    };
 
     onMounted(async () => {
-      await tenanciesStore.apiFetchCollection();
+      await fetchCollection();
       if (apartmentsStore.collection.length === 0) {
         await apartmentsStore.apiFetchCollection();
       }
@@ -65,6 +84,21 @@ export default defineComponent({
         await tenantsStore.apiFetchCollection();
       }
     });
+
+    const handlerApartmentFilter = async (value: string | null) => {
+      apartmentFilter.value = value;
+      await fetchCollection();
+    };
+
+    const handlerTenantFilter = async (value: string | null) => {
+      tenantFilter.value = value;
+      await fetchCollection();
+    };
+
+    const handlerActiveOn = async (value: Date | null) => {
+      activeOn.value = value;
+      await fetchCollection();
+    };
 
     const dialogHeader = computed(() =>
       editedItem.value
@@ -110,7 +144,13 @@ export default defineComponent({
       tenantsStore,
       dialogVisible,
       editedItem,
+      apartmentFilter,
+      tenantFilter,
+      activeOn,
       dialogHeader,
+      handlerApartmentFilter,
+      handlerTenantFilter,
+      handlerActiveOn,
       handlerAdd,
       handlerEdit,
       handlerDelete,
