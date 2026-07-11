@@ -74,8 +74,14 @@
       }
     },
     "rentals": {
+      "header": "Wynajem mieszkań",
+      "tabs": {
+        "dictionaries": "Słowniki",
+        "billing": "Rozliczenia",
+        "family": "Podział rodzinny"
+      },
       "dictionaries": {
-        "header": "Wynajem mieszkań",
+        "header": "Słowniki",
         "tabs": {
           "apartments": "Mieszkania",
           "tenants": "Najemcy",
@@ -258,6 +264,7 @@
           "period": "Okres: {month}",
           "button": {
             "preview": "Przelicz podgląd",
+            "note": "Pobierz notatkę",
             "close": "Zamknij okres",
             "reopen": "Otwórz ponownie"
           }
@@ -454,9 +461,7 @@
         "tasks": "Zadania",
         "log": "Logi",
         "calendarSettlement": "Kalendarz Rozliczeń",
-        "rentalDictionaries": "Wynajem mieszkań",
-        "rentalBilling": "Rozliczenia najmu",
-        "rentalFamily": "Podział rodzinny"
+        "rentals": "Wynajem mieszkań"
       },
       "patryk": {
         "calculatorVat": "Kalkulator vat"

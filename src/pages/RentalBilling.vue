@@ -1,19 +1,12 @@
 <template>
-  <main
-    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center gap-5 p-2"
-  >
-    <h1 class="font-syne text-3xl text-color-grey sm:text-5xl">
-      {{ t("pages.rentals.billing.header") }}
-    </h1>
-    <div class="w-full max-w-7xl">
-      <PeriodDetailSection
-        v-if="selectedPeriodId"
-        :periodId="selectedPeriodId"
-        @back="selectedPeriodId = null"
-      />
-      <PeriodsSection v-else @open="handlerOpen" />
-    </div>
-  </main>
+  <section class="flex w-full flex-col gap-3">
+    <PeriodDetailSection
+      v-if="selectedPeriodId"
+      :periodId="selectedPeriodId"
+      @back="selectedPeriodId = null"
+    />
+    <PeriodsSection v-else @open="handlerOpen" />
+  </section>
 </template>
 
 <script lang="ts">

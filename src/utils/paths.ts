@@ -7,6 +7,8 @@ export const paths = {
   logs: "/logs",
   tasks: "/tasks",
   calendarSettlement: "/calendar_settlement",
+  // Wynajem mieszkań — jedna pozycja w nawigacji, w środku podstrony
+  rentals: "/rentals",
   rentalDictionaries: "/rentals/dictionaries",
   rentalBilling: "/rentals/billing",
   rentalFamily: "/rentals/family",
@@ -40,15 +42,23 @@ export const pathsArtek: Link[] = [
     path: paths.logs,
   },
   {
-    title: "navSlider.links.artek.rentalDictionaries",
+    title: "navSlider.links.artek.rentals",
+    path: paths.rentals,
+  },
+];
+
+// podstrony w obrębie sekcji "Wynajem mieszkań"
+export const pathsRentals: Link[] = [
+  {
+    title: "pages.rentals.tabs.dictionaries",
     path: paths.rentalDictionaries,
   },
   {
-    title: "navSlider.links.artek.rentalBilling",
+    title: "pages.rentals.tabs.billing",
     path: paths.rentalBilling,
   },
   {
-    title: "navSlider.links.artek.rentalFamily",
+    title: "pages.rentals.tabs.family",
     path: paths.rentalFamily,
   },
 ];

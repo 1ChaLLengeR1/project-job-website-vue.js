@@ -36,11 +36,11 @@
 
     <form
       v-if="!readonly"
-      class="flex flex-wrap items-end gap-3"
+      class="flex flex-wrap items-end gap-x-4 gap-y-3"
       @submit.prevent="handlerAdd"
     >
-      <div class="flex flex-col gap-1">
-        <label class="text-sm" for="adjustment-apartment">
+      <div class="flex w-full flex-col gap-1 sm:w-52">
+        <label class="text-sm text-color-yellow" for="adjustment-apartment">
           {{ t("pages.rentals.billing.adjustments.apartment") }}
         </label>
         <Select
@@ -49,32 +49,36 @@
           :options="apartmentOptions"
           optionLabel="label"
           optionValue="value"
-          class="w-52"
+          class="w-full"
         />
       </div>
-      <div class="flex flex-col gap-1">
-        <label class="text-sm" for="adjustment-name">
+      <div class="flex w-full flex-col gap-1 sm:w-52">
+        <label class="text-sm text-color-yellow" for="adjustment-name">
           {{ t("pages.rentals.billing.adjustments.name") }}
         </label>
-        <InputText id="adjustment-name" v-model="name" class="w-52" />
+        <InputText id="adjustment-name" v-model="name" class="w-full" />
       </div>
-      <div class="flex flex-col gap-1">
-        <label class="text-sm" for="adjustment-amount">
+      <div class="flex w-full flex-col gap-1 sm:w-40">
+        <label class="text-sm text-color-yellow" for="adjustment-amount">
           {{ t("pages.rentals.billing.adjustments.amount") }}
         </label>
         <InputNumber
           inputId="adjustment-amount"
           v-model="amount"
           :maxFractionDigits="2"
-          class="w-36"
+          class="w-full"
+          :inputStyle="{ width: '100%' }"
         />
       </div>
-      <Button
-        type="submit"
-        :label="t('pages.rentals.billing.adjustments.add')"
-        severity="success"
-        :disabled="!isValid"
-      />
+      <div class="flex w-full shrink-0 sm:w-auto">
+        <Button
+          type="submit"
+          :label="t('pages.rentals.billing.adjustments.add')"
+          severity="success"
+          :disabled="!isValid"
+          class="w-full sm:w-auto"
+        />
+      </div>
     </form>
   </div>
 </template>

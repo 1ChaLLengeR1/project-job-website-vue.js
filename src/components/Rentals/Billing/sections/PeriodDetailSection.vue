@@ -24,6 +24,12 @@
       </div>
       <div class="flex flex-wrap gap-2">
         <Button
+          :label="t('pages.rentals.billing.detail.button.note')"
+          severity="secondary"
+          :disabled="!periodsStore.calculation"
+          @click="handlerNote"
+        />
+        <Button
           :label="t('pages.rentals.billing.detail.button.preview')"
           severity="info"
           :loading="periodsStore.isCalculating"
@@ -95,6 +101,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
+import { buildRentalNote, downloadTextFile } from "@/utils/rentalNote";
 
 // stores
 import { RentalPeriodsStore } from "@/stores/rentals/periods";
@@ -239,6 +246,22 @@ export default defineComponent({
       });
     };
 
+    // notatka .txt z aktualnego wyliczenia (preview lub close)
+    const handlerNote = () => {
+      const calculation = periodsStore.calculation;
+      if (!calculation) {
+        return;
+      }
+      const note = buildRentalNote({
+        calculation,
+        readings: readingsStore.collection,
+        meters: metersStore.collection,
+        apartments: apartmentsStore.collection,
+      });
+      const month = period.value?.period_month ?? props.periodId;
+      downloadTextFile(`rozliczenie_${month}.txt`, note);
+    };
+
     const handlerClose = () => {
       confirmBoxStore.info = t("pages.rentals.billing.periods.confirm.close");
       confirmBoxStore.isActice = true;
@@ -277,6 +300,7 @@ export default defineComponent({
       handlerAddAdjustment,
       handlerRemoveAdjustment,
       handlerPreview,
+      handlerNote,
       handlerClose,
       handlerReopen,
     };

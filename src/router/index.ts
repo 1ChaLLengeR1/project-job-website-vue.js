@@ -10,6 +10,7 @@ import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
 import Tasks from "@/pages/Tasks.vue";
 import CalendarSettlement from "@/pages/CalendarSettlement.vue";
+import Rentals from "@/pages/Rentals.vue";
 import RentalDictionaries from "@/pages/RentalDictionaries.vue";
 import RentalBilling from "@/pages/RentalBilling.vue";
 import RentalFamily from "@/pages/RentalFamily.vue";
@@ -51,28 +52,32 @@ const router = createRouter({
       },
     },
     {
-      path: paths.rentalDictionaries,
-      name: "rentalDictionaries",
-      component: RentalDictionaries,
+      path: paths.rentals,
+      component: Rentals,
       meta: {
         isAuth: true,
       },
-    },
-    {
-      path: paths.rentalBilling,
-      name: "rentalBilling",
-      component: RentalBilling,
-      meta: {
-        isAuth: true,
-      },
-    },
-    {
-      path: paths.rentalFamily,
-      name: "rentalFamily",
-      component: RentalFamily,
-      meta: {
-        isAuth: true,
-      },
+      children: [
+        {
+          path: "",
+          redirect: paths.rentalDictionaries,
+        },
+        {
+          path: "dictionaries",
+          name: "rentalDictionaries",
+          component: RentalDictionaries,
+        },
+        {
+          path: "billing",
+          name: "rentalBilling",
+          component: RentalBilling,
+        },
+        {
+          path: "family",
+          name: "rentalFamily",
+          component: RentalFamily,
+        },
+      ],
     },
     {
       path: paths.fuelcalculator,

@@ -1,7 +1,12 @@
 <template>
   <div class="flex w-full flex-col gap-3">
     <div class="w-full overflow-x-auto">
-      <DataTable :value="items" :loading="loading" showGridlines>
+      <DataTable
+        :value="items"
+        :loading="loading"
+        showGridlines
+        :tableStyle="{ minWidth: '76rem' }"
+      >
         <template #header>
           <div class="flex w-full flex-wrap items-center justify-between gap-2">
             <span class="text-xl font-bold text-white">
@@ -22,25 +27,35 @@
         <template #empty>
           <span>{{ t("pages.rentals.billing.readings.empty") }}</span>
         </template>
-        <Column :header="t('pages.rentals.billing.readings.columns.meter')">
+        <Column
+          :header="t('pages.rentals.billing.readings.columns.meter')"
+          :style="{ minWidth: '11rem' }"
+        >
           <template #body="slotProps">
             <span class="text-color-yellow">{{
               meterName(slotProps.data.meter_id)
             }}</span>
           </template>
         </Column>
-        <Column :header="t('pages.rentals.billing.readings.columns.apartment')">
+        <Column
+          :header="t('pages.rentals.billing.readings.columns.apartment')"
+          :style="{ minWidth: '11rem' }"
+        >
           <template #body="slotProps">
             <span>{{ meterApartment(slotProps.data.meter_id) }}</span>
           </template>
         </Column>
-        <Column :header="t('pages.rentals.billing.readings.columns.mediaType')">
+        <Column
+          :header="t('pages.rentals.billing.readings.columns.mediaType')"
+          :style="{ minWidth: '7rem' }"
+        >
           <template #body="slotProps">
             <span>{{ meterMedia(slotProps.data.meter_id) }}</span>
           </template>
         </Column>
         <Column
           :header="t('pages.rentals.billing.readings.columns.previousValue')"
+          :style="{ minWidth: '9rem' }"
         >
           <template #body="slotProps">
             <InputNumber
@@ -49,12 +64,14 @@
               :min="0"
               :maxFractionDigits="3"
               :disabled="readonly"
-              class="w-28"
+              class="w-full"
+              :inputStyle="{ width: '100%' }"
             />
           </template>
         </Column>
         <Column
           :header="t('pages.rentals.billing.readings.columns.currentValue')"
+          :style="{ minWidth: '9rem' }"
         >
           <template #body="slotProps">
             <InputNumber
@@ -63,12 +80,14 @@
               :min="0"
               :maxFractionDigits="3"
               :disabled="readonly"
-              class="w-28"
+              class="w-full"
+              :inputStyle="{ width: '100%' }"
             />
           </template>
         </Column>
         <Column
           :header="t('pages.rentals.billing.readings.columns.errorCorrection')"
+          :style="{ minWidth: '9rem' }"
         >
           <template #body="slotProps">
             <InputNumber
@@ -76,20 +95,25 @@
               v-model="draft[slotProps.data.id].error_correction"
               :maxFractionDigits="3"
               :disabled="readonly"
-              class="w-28"
+              class="w-full"
+              :inputStyle="{ width: '100%' }"
             />
           </template>
         </Column>
         <Column
           :header="t('pages.rentals.billing.readings.columns.consumption')"
+          :style="{ minWidth: '7rem' }"
         >
           <template #body="slotProps">
             <span class="font-bold">{{ consumption(slotProps.data.id) }}</span>
           </template>
         </Column>
-        <Column :header="t('pages.rentals.billing.readings.columns.options')">
+        <Column
+          :header="t('pages.rentals.billing.readings.columns.options')"
+          :style="{ minWidth: '13rem' }"
+        >
           <template #body="slotProps">
-            <div class="flex w-fit flex-wrap gap-2">
+            <div class="flex flex-nowrap gap-2">
               <Button
                 :label="t('pages.rentals.billing.readings.button.save')"
                 severity="success"

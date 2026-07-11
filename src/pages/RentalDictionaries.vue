@@ -1,11 +1,6 @@
 <template>
-  <main
-    class="flex min-h-[calc(100vh-64px)] w-full flex-col items-center gap-5 p-2"
-  >
-    <h1 class="font-syne text-3xl text-color-grey sm:text-5xl">
-      {{ t("pages.rentals.dictionaries.header") }}
-    </h1>
-    <Tabs value="apartments" scrollable class="w-full max-w-7xl">
+  <section class="flex w-full flex-col gap-3">
+    <Tabs value="apartments" scrollable class="w-full">
       <TabList>
         <Tab value="apartments">
           {{ t("pages.rentals.dictionaries.tabs.apartments") }}
@@ -47,7 +42,7 @@
         </TabPanel>
       </TabPanels>
     </Tabs>
-  </main>
+  </section>
 </template>
 
 <script lang="ts">
