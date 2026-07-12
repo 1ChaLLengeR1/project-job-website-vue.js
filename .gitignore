@@ -6,3 +6,6 @@ dist
 .env.*.local
 
 .idea/
+
+# haslo do ansible-vault renderowane w CI
+.vault_pass

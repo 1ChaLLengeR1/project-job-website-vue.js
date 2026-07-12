@@ -1,8 +1,10 @@
+version: '3.8'
+
 services:
   app_frontend_project_job:
-    image: arturscibor/praca.strona.arturscibor.pl:latest
-    env_file:
-      - .env
+    # Obraz to sam nginx z gotowymi statykami — zmienne VITE_* są już wypieczone
+    # w bundlu na etapie builda (Doppler -> --build-arg w CI). Zero env w runtime.
+    image: ${FRONTEND_IMAGE:-arturscibor/praca.strona.arturscibor.pl:latest}
     networks:
       - traefik-public
     deploy:
@@ -10,12 +12,12 @@ services:
       restart_policy:
         condition: on-failure
       labels:
+        # Traefika stawia stack backendu — front tylko podpina się pod sieć traefik-public
         - "traefik.enable=true"
         - "traefik.http.routers.frontend.rule=Host(`praca.strona.arturscibor.pl`)"
         - "traefik.http.routers.frontend.entrypoints=websecure"
         - "traefik.http.routers.frontend.tls.certresolver=myresolver"
         - "traefik.http.services.frontend.loadbalancer.server.port=80"
-        # Opcjonalnie: retry dla frontendu (jeśli chcesz, np. przy błędach połączenia z backendem)
         - "traefik.http.middlewares.frontend-retry.retry.attempts=2"
         - "traefik.http.routers.frontend.middlewares=frontend-retry"
 

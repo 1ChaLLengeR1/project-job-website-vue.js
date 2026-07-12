@@ -1,0 +1,17 @@
+services:
+  app_frontend_project_job:
+    build:
+      context: ../../..
+      dockerfile: infra/dockerfiles/dockerfile/production.dockerfile
+      args:
+        # Vite wypieka VITE_* w trakcie builda — lokalnie bierzemy je z .env w roocie projektu
+        VITE_URL_SERVER: ${VITE_URL_SERVER:-http://127.0.0.1:3000}
+    ports:
+      - "2000:80"
+    restart: always
+    networks:
+      - project_job
+
+networks:
+  project_job:
+    driver: bridge
