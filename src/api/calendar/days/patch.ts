@@ -1,97 +1,26 @@
-import { apiPost } from "@/api/common/post";
+import { apiPatch } from "@/api/common/request";
 import type {
   PayloadBodyUpdateByIdCalendaryDay,
   PayloadBodyUpdateDaysMany,
   PayloadBodyUpdateDaysManySalary,
 } from "@/types/calendary/types";
-import type { ResponseData, Error } from "@/types/global";
+import type { ResponseData } from "@/types/global";
 
-export async function apiUpdateCalendaryDayById(
+export function apiUpdateCalendaryDayById(
   day_id: string,
   payload: PayloadBodyUpdateByIdCalendaryDay,
-): Promise<ResponseData> {
-  const urlPath = `/calendar/day/work/update/${day_id}`;
-  const response = await apiPost(urlPath, payload, "PATCH", 0, {
-    Authorization: true,
-    UserData: true,
-  });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return update calendary day!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: "Update success calendary",
-    additional: null,
-  };
+): Promise<ResponseData<unknown>> {
+  return apiPatch<unknown>(`/calendar/day/work/update/${day_id}`, payload);
 }
 
-export async function apiUpdateCalendaryDaysMany(
+export function apiUpdateCalendaryDaysMany(
   payload: PayloadBodyUpdateDaysMany,
-): Promise<ResponseData> {
-  const urlPath = `/calendar/days/work/update`;
-  const response = await apiPost(urlPath, payload, "PATCH", 0, {
-    Authorization: true,
-    UserData: true,
-  });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error("API response does not return update calendary many day!");
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: "Update success calendary many",
-    additional: null,
-  };
+): Promise<ResponseData<unknown>> {
+  return apiPatch<unknown>("/calendar/days/work/update", payload);
 }
 
-export async function apiUpdateCalendaryDaysManySalary(
+export function apiUpdateCalendaryDaysManySalary(
   payload: PayloadBodyUpdateDaysManySalary,
-): Promise<ResponseData> {
-  const urlPath = `/calendar/days/work/update/salary`;
-  const response = await apiPost(urlPath, payload, "PATCH", 0, {
-    Authorization: true,
-    UserData: true,
-  });
-
-  if (
-    !response ||
-    response.status !== "SUCCESS" ||
-    response.status_code >= 400
-  ) {
-    console.error(
-      "API response does not return update calendary many day for salary!",
-    );
-    return {
-      isValid: false,
-      data: response.data as Error,
-      additional: response.additional,
-    };
-  }
-
-  return {
-    isValid: true,
-    data: "Update success calendary many for salary",
-    additional: null,
-  };
+): Promise<ResponseData<unknown>> {
+  return apiPatch<unknown>("/calendar/days/work/update/salary", payload);
 }

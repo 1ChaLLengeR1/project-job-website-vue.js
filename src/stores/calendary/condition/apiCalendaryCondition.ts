@@ -26,7 +26,7 @@ export const ApiCalendaryCinditionStore = defineStore(
         const responseData = response.data as ApiCollectionCalendaryCondition;
         collection.value = responseData;
       } else {
-        const responseError = response.data as string;
+        const responseError = response.data.message;
         notificationStore.data_to_notification = {
           type: "error",
           description: responseError,
@@ -48,7 +48,7 @@ export const ApiCalendaryCinditionStore = defineStore(
           description: "Dodatno poprawnie stan.",
         };
       } else {
-        const responseError = response.data as string;
+        const responseError = response.data.message;
         notificationStore.data_to_notification = {
           type: "error",
           description: responseError,
@@ -74,7 +74,7 @@ export const ApiCalendaryCinditionStore = defineStore(
           };
         }, 500);
       } else {
-        const responseError = response.data as string;
+        const responseError = response.data.message;
         notificationStore.data_to_notification = {
           type: "error",
           description: responseError,
@@ -94,7 +94,7 @@ export const ApiCalendaryCinditionStore = defineStore(
           };
         }, 500);
       } else {
-        const responseError = response.data as string;
+        const responseError = response.data.message;
         notificationStore.data_to_notification = {
           type: "error",
           description: responseError,

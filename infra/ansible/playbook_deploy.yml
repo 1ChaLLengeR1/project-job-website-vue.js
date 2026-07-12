@@ -1,0 +1,28 @@
+---
+- name: Deploy project_job frontend (Vue + nginx, Docker Swarm)
+  hosts: production
+  become: true
+  vars_files:
+    - secrets.yml
+  vars:
+    # Haslo sudo z secrets.yml; pusty string = sudo NOPASSWD na serwerze
+    ansible_become_password: "{{ sudo_password | default('') }}"
+    deploy_dir: /var/www/pracaArturScibor/praca.strona.arturscibor.pl
+    repo_https_url: "https://{{ git_pat }}@github.com/1ChaLLengeR1/project-job-website-vue.js.git"
+    repo_public_url: "https://github.com/1ChaLLengeR1/project-job-website-vue.js.git"
+    repo_branch: main
+    stack_name: project_job_frontend
+    frontend_image: "{{ frontend_image_override | default('arturscibor/praca.strona.arturscibor.pl:latest') }}"
+
+  tasks:
+    - name: Checkout repozytorium
+      import_tasks: tasks/checkout.yml
+
+    - name: Sieci overlay
+      import_tasks: tasks/networks.yml
+
+    - name: Deploy stacka
+      import_tasks: tasks/deploy.yml
+
+    - name: Sprzątanie
+      import_tasks: tasks/cleanup.yml

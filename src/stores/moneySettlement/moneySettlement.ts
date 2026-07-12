@@ -46,7 +46,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       const responseData = response.data as ApiOutStandingMoneyCollection;
       collectionList.value = responseData;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -64,7 +64,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       await apiCollectionList(true);
       return true;
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -82,7 +82,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       };
       await apiCollectionList(true);
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -99,7 +99,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       };
       await apiCollectionList(true);
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -116,7 +116,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       };
       await apiCollectionList(true);
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -133,7 +133,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       };
       await apiCollectionList(true);
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,
@@ -150,7 +150,7 @@ export const MoneySettlementStore = defineStore("moneySettlementStore", () => {
       };
       await apiCollectionList(true);
     } else {
-      const responseError = response.data as string;
+      const responseError = response.data.message;
       notificationStore.data_to_notification = {
         type: "error",
         description: responseError,

@@ -5,12 +5,15 @@ import { AuthStore } from "@/stores/auth/auth";
 // Pages
 import LoginPanel from "../pages/LoginPanel.vue";
 import CalculatorVat from "../pages/CalculatorVat.vue";
-import PdfFilter from "@/pages/PdfFilter.vue";
 import MoneySettlement from "../pages/MoneySettlement.vue";
 import FuelCalculator from "../pages/FuelCalculator.vue";
 import Logs from "@/pages/Logs.vue";
 import Tasks from "@/pages/Tasks.vue";
 import CalendarSettlement from "@/pages/CalendarSettlement.vue";
+import Rentals from "@/pages/Rentals.vue";
+import RentalDictionaries from "@/pages/RentalDictionaries.vue";
+import RentalBilling from "@/pages/RentalBilling.vue";
+import RentalFamily from "@/pages/RentalFamily.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,14 +36,6 @@ const router = createRouter({
       },
     },
     {
-      path: paths.pdfFilter,
-      name: "pdfFIlter",
-      component: PdfFilter,
-      meta: {
-        isAuth: true,
-      },
-    },
-    {
       path: paths.moneySettlement,
       name: "moneySettlement",
       component: MoneySettlement,
@@ -55,6 +50,34 @@ const router = createRouter({
       meta: {
         isAuth: true,
       },
+    },
+    {
+      path: paths.rentals,
+      component: Rentals,
+      meta: {
+        isAuth: true,
+      },
+      children: [
+        {
+          path: "",
+          redirect: paths.rentalDictionaries,
+        },
+        {
+          path: "dictionaries",
+          name: "rentalDictionaries",
+          component: RentalDictionaries,
+        },
+        {
+          path: "billing",
+          name: "rentalBilling",
+          component: RentalBilling,
+        },
+        {
+          path: "family",
+          name: "rentalFamily",
+          component: RentalFamily,
+        },
+      ],
     },
     {
       path: paths.fuelcalculator,
