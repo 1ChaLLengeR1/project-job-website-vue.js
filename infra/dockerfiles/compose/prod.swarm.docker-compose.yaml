@@ -1,7 +1,8 @@
 version: '3.8'
 
 services:
-  app_frontend_project_job:
+  # Nazwa serwisu w Swarmie to {stack}_{service} -> project_job_frontend
+  frontend:
     # Obraz to sam nginx z gotowymi statykami — zmienne VITE_* są już wypieczone
     # w bundlu na etapie builda (Doppler -> --build-arg w CI). Zero env w runtime.
     image: ${FRONTEND_IMAGE:-arturscibor/praca.strona.arturscibor.pl:latest}

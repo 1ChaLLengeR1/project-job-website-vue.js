@@ -11,7 +11,8 @@
     repo_https_url: "https://{{ git_pat }}@github.com/1ChaLLengeR1/project-job-website-vue.js.git"
     repo_public_url: "https://github.com/1ChaLLengeR1/project-job-website-vue.js.git"
     repo_branch: main
-    stack_name: project_job_frontend
+    # stack "project_job" + serwis "frontend" -> serwis w Swarmie: project_job_frontend
+    stack_name: project_job
     frontend_image: "{{ frontend_image_override | default('arturscibor/praca.strona.arturscibor.pl:latest') }}"
 
   tasks:

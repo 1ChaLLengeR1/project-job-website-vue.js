@@ -1,5 +1,5 @@
 services:
-  app_frontend_project_job:
+  frontend:
     build:
       context: ../../..
       dockerfile: infra/dockerfiles/dockerfile/production.dockerfile
