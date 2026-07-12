@@ -52,7 +52,7 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets.DOPPLER_TOKEN }}
         run: |
-          doppler run --project frontend_job --config prd -- bash -c '
+          doppler run --project frontend_job --config stg -- bash -c '
             docker build . \
               --file infra/dockerfiles/dockerfile/production.dockerfile \
               --build-arg VITE_URL_SERVER="$VITE_URL_SERVER" \
