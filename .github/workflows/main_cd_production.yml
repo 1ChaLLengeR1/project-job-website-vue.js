@@ -42,13 +42,8 @@ jobs:
         run: |
           echo "--- klucze zaladowane w ssh-agent (fingerprinty) ---"
           ssh-add -l || echo "BRAK KLUCZY W AGENCIE"
-          echo "--- proba polaczenia (verbose) ---"
-          # Klient OpenSSH 9.x na runnerze domyslnie odrzuca stary ssh-rsa (SHA-1),
-          # ktorego moze wymagac serwer - dopuszczamy go jawnie.
-          ssh -vv -o BatchMode=yes \
-            -o PubkeyAcceptedKeyTypes=+ssh-rsa \
-            -o HostKeyAlgorithms=+ssh-rsa \
-            ${{ secrets.SSH_USER }}@${{ secrets.TARGET_HOST }} 'echo SSH OK; whoami'
+          echo "--- proba polaczenia ---"
+          ssh -o BatchMode=yes ${{ secrets.SSH_USER }}@${{ secrets.TARGET_HOST }} 'echo SSH OK; whoami'
 
       - name: Render inventory
         run: |
